@@ -47,6 +47,25 @@
 
 </style>
 
+<!-- <script src="https://gist.github.com/lmiller36/b65c6d3e86b8419f38b4399bb41b2eac.js"></script> -->
+
+<script type="text/javascript">
+	// getSampleText()
+	// async function getSampleText() {
+	// 	console.log( (await fetch('https://www.w3.org/TR/PNG/iso_8859-1.txt')).text() );
+	// }
+	getEnglishWords();
+	function getEnglishWords(){
+
+		fetch("https://gist.githubusercontent.com/lmiller36/b65c6d3e86b8419f38b4399bb41b2eac/raw/4f375a95ffc9b21f6da6e0c8739a3332fd981297/words.txt")
+		.then( r => r.text() )
+		.then( t => {
+			document.words = t.split("\n");
+		} )
+
+	}
+</script>
+
 <script type="text/javascript">
 	document.numberOfPlayers = 1;
 	document.boggleDice = ["AAAFRS","AAEEEE","AAFIRS","ADENNN","AEEEEM",
@@ -56,6 +75,14 @@
 	"FIPRSY","GORRVW","HIPRRY","NOOTUW","OOOTTU"
 	];
 
+	function isWord(word){
+		var isEnglishWord = document.words.indexOf(word) != -1;
+		var lengthGreaterThanThree = word.length > 3;
+		if(!isEnglishWord)alert(word+" is not a valid English word");
+		if(!lengthGreaterThanThree)alert("Words must be at least 4 characters");
+		return isEnglishWord && lengthGreaterThanThree;
+	}
+
 	function submitWord(obj){
 		// Get word
 		let word = obj.value;
@@ -63,11 +90,13 @@
 		// Reset to blank
 		obj.value = ""
 
-		// Add word to list
-		var listElement  = document.createElement("li");
-		listElement.id = word;
-		listElement.innerText = word;
-		document.getElementById("wordList").appendChild(listElement);
+		// Add word to list, if word
+		if(isWord(word)){
+			var listElement  = document.createElement("li");
+			listElement.id = word;
+			listElement.innerText = word;
+			document.getElementById("wordList").appendChild(listElement);
+		}
 
 	}
 
