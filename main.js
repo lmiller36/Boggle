@@ -34,31 +34,58 @@
 			alert("Words must be at least 4 characters"); 
 			return false
 		}
-		// if(!wordOnBoard(word)){
-		// 	alert(word+" not possible");
-		// 	return false; 
-		// }
+		if(!wordOnBoard(word.toUpperCase())){
+			alert(word+" not possible");
+			return false; 
+		}
 		return true;
 	}
 
 	function wordOnBoard(word){
-		var i = 0;
-		var j = 0;
-		var firstLetter = word.substring(0,1);
-		var found = false;
-		while(i < 5 && !found){
-			j = 0;
-			while(j < 5 && !found){
-				if(document.board[i][j] == firstLetter){
-					if(wordPossibleFromStartingPlace(word.substring(1),i,j,{i:[j]}))
-						return true;
+		console.log(word);
+		var loc = findNextLetter(0,word,[],null);
+		console.log(loc);
+		return loc;
+	}
+
+	function findNextLetter(index, word, used,prev){
+		if(index == word.length)
+			return used;
+		var goal = word.substring(index,index + 1);
+		console.log(goal);
+		for(var i = 0;i < document.board.length;i++){
+			for(var j = 0; j < document.board[i].length;j++){
+				var letter = document.board[i][j];
+				var usedAlready = 0;
+				used.forEach((arr)=>{
+					if(arr[0] == i && arr[1] == j)
+						usedAlready = 1;
+				})
+				if(letter == goal && !usedAlready && isNeighbor([i,j],prev)){
+					var copy = copyArr(used);
+					copy.push([i,j]);
+					var output = findNextLetter(index + 1, word,copy,[i,j]);
+					if(output){
+						return output;
+					}
 				}
-				j++;
 			}
-			i++;
 		}
+
 		return false;
-		
+	}
+
+	function isNeighbor(curr,prev){
+		if(prev == null) return true;
+
+		var diffI = Math.abs(curr[0] - prev[0]);
+		var diffJ = Math.abs(curr[1] - prev[1]);
+
+		return diffI <= 1 && diffJ <= 1;
+	}
+
+	function copyArr(arr){
+		return JSON.parse(JSON.stringify(arr));
 	}
 
 	function submitWord(obj){
