@@ -47,3 +47,43 @@
 	align-items: center;
 	justify-content: center;
 }
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+.wrap {
+	width: 300px;
+}
+
+.wrap table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	table-layout: fixed;
+}
+
+table tr td {
+	padding: 5px;
+	border: 1px solid #eee;
+	width: 100px;
+	word-wrap: break-word;
+}
+
+table.head tr td {
+	background: #eee;
+}
+
+.inner_table {
+	height: 400px;
+	overflow-y: auto;
+}
+.timerFont{
+	font-size: 2em;
+}

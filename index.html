@@ -22,11 +22,20 @@
 <body>
 
 	<h1 class="header">Lorne's Boggle Game</h1>
-	<div id = "rightMenu" class="rightMenu">
+	<div id = "rightMenu" class="rightMenu" style="display: none">
 		<p>Words:</p>
-		<ul id = "wordList">
-		</ul>
-
+		<div class="wrap">
+			<table class="head">
+				<tr>
+					<td>Word</td>
+					<td>Score</td>
+				</tr>
+			</table>
+			<div class="inner_table">
+				<table id="wordList">
+				</table>
+			</div>
+		</div>
 	</div>
 	<div id = "center" class = "centerContent">
 		<div id ="setup">
@@ -43,15 +52,17 @@
 			<div class = "centerContent">
 				<i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i> 
 				<i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i> 	
-				<i class="fa fa-camera-retro fa-2x icon"></i> 
+				<i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i> 
+				<i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i> 
+
 			</div>
 
 			<div class = "centerContent">
 				<div id="clockdiv" class = "timer">
-					<span class="minutes">00</span>:<span class="seconds">00</span>
+					<span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
 				</div>
 			</div>
-			
+
 
 			<div id="finishedBoard" class = "center">
 				<div id = "board-0" class="grid-container"></div>

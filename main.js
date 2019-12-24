@@ -46,9 +46,10 @@
 		};
 	}
 
-	function initializeClock(id, endtime){
+	function initializeClock(){
 		var clock = document.getElementById("clockdiv");
 		var timeinterval = setInterval(function(){
+			var endtime = document.endtime;
 			var t = getTimeRemaining(endtime);
 			var minutesSpan = clock.querySelector('.minutes');
 			var secondsSpan = clock.querySelector('.seconds');
@@ -60,6 +61,7 @@
 				clearInterval(timeinterval);
 			}
 		},1000);
+		document.timeinterval = timeinterval;
 	}
 
 	function isWord(word){
@@ -85,7 +87,6 @@
 		}
 
 		document.lastHighlighted = null;
-		removeHighlightingFromAll();
 		document.submittedWords.push(word)
 		return true;
 	}
@@ -153,21 +154,47 @@
 
 	function submitWord(obj){
 
-        		// Get word
-        		let word = obj.value
+		// Get word
+		let word = obj.value
 
 		// Reset to blank
 		obj.value = ""
 
 		// Add word to list, if word
 		if(isWord(word.toLowerCase())){
-			var listElement  = document.createElement("li");
-			listElement.id = word;
-			listElement.innerText = word;
-			document.getElementById("wordList").appendChild(listElement);
+			appendWordToTable(word.toUpperCase());
 		}
 		
+		removeHighlightingFromAll();
 
+	}
+
+	function appendWordToTable(word){
+
+		var wordScore = getScore(word);
+
+		var tableRow  = document.createElement("tr");
+		tableRow.id = word;
+
+		var wordCell =  document.createElement("td");
+		wordCell.innerText = word;
+		var scoreCell =  document.createElement("td");
+		scoreCell.innerText = wordScore;
+
+		tableRow.appendChild(wordCell);
+		tableRow.appendChild(scoreCell);
+
+		document.getElementById("wordList").appendChild(tableRow);
+	}
+
+	function getScore(word){
+		if(word.length == 4) return 1
+			if(word.length == 5) return 2;
+		if(word.length == 6) return 3;
+		if(word.length == 7) return 5;
+		if(word.length >= 8 )return 11;
+
+		return -1;
 	}
 
 	function shuffledBoard(){
@@ -240,12 +267,21 @@
 
 			document.getElementById("setup").style.display = "none";
 			document.getElementById("game").style.display = "";
+			document.getElementById("rightMenu").style.display = ""
+			
+
+			for(var i = 0; i <= 50;i ++){
+				var random = Math.round(Math.random() * 100) + "";
+				appendWordToTable(random);
+			}
+
 		}
 
 		$(document).ready(function() {
 			var durationInMilli = 20 * 60000 + 1000;
 			var end = new Date((new Date()).getTime() + durationInMilli);
-			initializeClock("clockdiv", end);
+			document.endtime = end;
+			initializeClock();
 		});
 	}
 
@@ -262,6 +298,37 @@
 				document.lastHighlighted = lettersToHighlight;
 				highlightBoard(lettersToHighlight);
 			}
+		}
+	}
+
+	function togglePause(isPaused){
+		console.log(isPaused);
+		// Pause
+		if(isPaused){
+			document.remaining = getTimeRemaining(document.endtime).total;
+			console.log(document.remaining);
+
+			document.getElementById("pause").style.display = "none";
+			document.getElementById("play").style.display = "";
+			document.getElementById("finishedBoard").style.display = "none";
+			document.getElementById("wordInputDiv").style.display = "none";
+
+			clearInterval(document.timeinterval);
+
+		}
+
+		// Play
+		else{
+
+			var end = new Date((new Date()).getTime() + document.remaining);
+			document.endtime = end;
+
+			initializeClock();
+			document.getElementById("pause").style.display = "";
+			document.getElementById("play").style.display = "none";
+			document.getElementById("finishedBoard").style.display = "";
+			document.getElementById("wordInputDiv").style.display = "";
+
 		}
 	}
 
