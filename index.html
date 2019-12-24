@@ -9,15 +9,13 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="board.js"></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <style type="text/css">
 </style>
-
-<script type="text/javascript">
-	
-</script>
 
 <body>
 	<div id = "title">
@@ -27,8 +25,9 @@
 			</div>
 		</div>
 	</div>
-	<div id = "rightMenu" class="rightMenu" style="display: none">
-		<p>Words:</p>
+	<div id = "leftMenu_ingame" class="rightMenu" style="display: none">
+		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+
 		<div class="wrap">
 			<table class="head">
 				<tr>
@@ -42,11 +41,14 @@
 			</div>
 		</div>
 	</div>
+	<div id = "leftMenu_setup" class="rightMenu" style="display: none">
+		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+	</div>
 	<div id = "center" class = "centerContent">
-		<div id ="setup">
+		<div id ="mainMenu">
 			<div class="mainMenu centeredDiv">
 				<div id="btn-container">
-					<button class="btn centered" onclick="submitBoard()">
+					<button class="btn centered" onclick="setup()">
 						<i class="fa fa-user"></i> Single
 					</button>
 				</div>
@@ -72,13 +74,27 @@
 				</div>
 			</div>
 		</div>
+		<div id ="setup" style="display: none">
+			<div class="centerContent">
+				<div id="clockdiv_setup" class = "timer">
+					<span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
+				</div>
+			</div>
+			<div class="centerContent">
+				<button onclick="changeTime(1)">+</button>
+				<button onclick="changeTime(-1)">-</button>
+			</div>
+			<br/>
+			<div class="centerContent">
+				<i class="fa fa-play fa-2x icon" onclick="startGame()"></i> 
+			</div>
+		</div>
 		<div id = "game" style="display: none">
 			<div class = "centerContent">
 				<i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i> 
 				<i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i> 	
 				<i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i> 
 				<i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i> 
-
 			</div>
 
 			<div class = "centerContent">

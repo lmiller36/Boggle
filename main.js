@@ -1,3 +1,13 @@
+document.numberOfPlayers = 1;
+document.submittedWords = [];
+document.currRotation = 0;
+
+const Pages = Object.freeze({"mainMenu":"mainMenu", "inGame":"inGame","setup":"setup"});
+document.pages = {};
+document.pages[Pages.mainMenu] = ["mainMenu"];
+document.pages[Pages.setup] = ["setup","leftMenu_setup"];
+document.pages[Pages.inGame] = ["game","leftMenu_ingame"];
+
 	// load data
 	$.ajax({
 		url: "data/tiles.txt",
@@ -20,10 +30,27 @@
 
 	});
 
-	document.numberOfPlayers = 1;
-	document.submittedWords = [];
-	document.currRotation = 0;
 
+	function mainMenu(){
+		// Stop timer & set to zeros
+		togglePause(0);
+		clearInterval(document.timeinterval);
+		document.remaining = null;
+		setClock("00","00");
+
+		// Unpause if paused
+
+		// Remove Tiles
+		removeBoardTiles();
+
+		// Go to main menu
+		toggleVisiblePage(Pages.mainMenu);
+	}
+
+	function setup(){
+		document.setupTime = 5;
+		toggleVisiblePage(Pages.setup);
+	}
 
 	function getTimeRemaining(endtime){
 		var t = Date.parse(endtime) - Date.parse(new Date());
@@ -31,11 +58,6 @@
 		var minutes = Math.floor( (t/1000/60) % 60 );
 		var hours = Math.floor( (t/(1000*60*60)) % 24 );
 		var days = Math.floor( t/(1000*60*60*24) );
-
-		if(minutes == 0)minutes = "00";
-		else if(minutes <= 9)minutes = "0" + minutes;
-		if(seconds == 0) seconds = "00";
-		else if(seconds <= 9) seconds = "0" + seconds;
 
 		return {
 			'total': t,
@@ -47,21 +69,46 @@
 	}
 
 	function initializeClock(){
-		var clock = document.getElementById("clockdiv");
+		setClock("00","00");
 		var timeinterval = setInterval(function(){
 			var endtime = document.endtime;
 			var t = getTimeRemaining(endtime);
-			var minutesSpan = clock.querySelector('.minutes');
-			var secondsSpan = clock.querySelector('.seconds');
 
-			minutesSpan.innerHTML = t.minutes;
-			secondsSpan.innerHTML = t.seconds;
+			setClock(t.minutes,t.seconds);
 
 			if(t.total<=0){
 				clearInterval(timeinterval);
 			}
 		},1000);
 		document.timeinterval = timeinterval;
+	}
+
+	function setClock(minutes,seconds){
+		var clock = document.getElementById("clockdiv");
+
+		if(minutes == 0)minutes = "00";
+		else if(minutes <= 9)minutes = "0" + minutes;
+		if(seconds == 0) seconds = "00";
+		else if(seconds <= 9) seconds = "0" + seconds;
+
+		var minutesSpan = clock.querySelector('.minutes');
+		var secondsSpan = clock.querySelector('.seconds');
+		minutesSpan.innerHTML = minutes;
+		secondsSpan.innerHTML = seconds;
+	}
+
+	function setClock_setup(minutes,seconds){
+		var clock = document.getElementById("clockdiv_setup");
+
+		if(minutes == 0)minutes = "00";
+		else if(minutes <= 9)minutes = "0" + minutes;
+		if(seconds == 0) seconds = "00";
+		else if(seconds <= 9) seconds = "0" + seconds;
+
+		var minutesSpan = clock.querySelector('.minutes');
+		var secondsSpan = clock.querySelector('.seconds');
+		minutesSpan.innerHTML = minutes;
+		secondsSpan.innerHTML = seconds;
 	}
 
 	function isWord(word){
@@ -197,37 +244,20 @@
 		return -1;
 	}
 
-	function shuffledBoard(){
-		// copy dice
-		var newBoardDice = JSON.parse(JSON.stringify(document.tiles));
-		// shuffle dice
-		newBoardDice.sort(function() {
-			return .5 - Math.random();
-		});
+	function changeTime(change){
+		var time = document.setupTime
+		time += change;
+		if(time > 5) time = Math.min(10,time);
+		else time = 5;
 
-		// iterate over dice and choose a random letter from each
-		var board = [];
-		var arr ;
-		for(var i = 0; i < newBoardDice.length;i++){
-			var str = newBoardDice[i];
-			if(i % 5 == 0) arr = [];
-			var index = Math.floor(Math.random() * str.length);
-			var letter = str.substring(index,index+1);
-			//Q => QU
-			if(letter == "Q") letter = "QU";
-			arr.push(letter.toUpperCase());
-			if((i+1) % 5 == 0) board.push(arr);
-		}
 
-		return board;
+
+		setClock_setup(time,0);
+
+		document.setupTime = time;
 	}
 
-	function changeNumberOfPlayers(change){
-		document.numberOfPlayers = Math.max(1,document.numberOfPlayers + change);
-		document.getElementById("numPlayers").innerText = "Number of players: "+document.numberOfPlayers;
-	}
-
-	function submitBoard(){
+	function startGame(){
 
 		var shuffled = shuffledBoard();
 
@@ -265,24 +295,40 @@
 				}
 			}
 
-			document.getElementById("setup").style.display = "none";
-			document.getElementById("game").style.display = "";
-			document.getElementById("rightMenu").style.display = ""
-			
+			toggleVisiblePage(Pages.inGame);
 
-			for(var i = 0; i <= 50;i ++){
-				var random = Math.round(Math.random() * 100) + "";
-				appendWordToTable(random);
-			}
+
+			// for(var i = 0; i <= 50;i ++){
+			// 	var random = Math.round(Math.random() * 100) + "";
+			// 	appendWordToTable(random);
+			// }
 
 		}
 
 		$(document).ready(function() {
-			var durationInMilli = 20 * 60000 + 1000;
+			var durationInMilli = document.setupTime * 60000 + 1000;
 			var end = new Date((new Date()).getTime() + durationInMilli);
 			document.endtime = end;
 			initializeClock();
 		});
+	}
+
+	function toggleVisiblePage(visiblePage){
+		Object.keys(Pages).forEach((page)=>{
+			// make all elems visible
+			if(page == visiblePage){
+				document.pages[page].forEach((toShow)=>{
+					document.getElementById(toShow).style.display = "";
+				});
+			}
+
+			// hide
+			else{
+				document.pages[page].forEach((toHide)=>{
+					document.getElementById(toHide).style.display = "none";
+				});
+			}
+		})
 	}
 
 	function enterLetter(event,obj){
@@ -302,19 +348,15 @@
 	}
 
 	function togglePause(isPaused){
-		console.log(isPaused);
 		// Pause
 		if(isPaused){
 			document.remaining = getTimeRemaining(document.endtime).total;
-			console.log(document.remaining);
-
 			document.getElementById("pause").style.display = "none";
 			document.getElementById("play").style.display = "";
 			document.getElementById("finishedBoard").style.display = "none";
 			document.getElementById("wordInputDiv").style.display = "none";
 
 			clearInterval(document.timeinterval);
-
 		}
 
 		// Play
@@ -332,15 +374,6 @@
 		}
 	}
 
-	function highlightBoard(lettersToHighlight){
-		removeHighlightingFromAll();
-
-		lettersToHighlight.forEach((coords)=>{
-			coords = adjustCoordinates(coords);
-			highlightLetter(coords[0],coords[1]);
-		});
-	}
-
 	function adjustCoordinates(coords){
 		switch(document.currRotation){
 			case 0:
@@ -353,43 +386,3 @@
 			return [4 - coords[1],coords[0]];
 		}
 	}
-
-	function removeHighlightingFromAll(){
-		for(var rot = 0; rot < 4;rot++){
-			for(var i = 0;i<5;i++){
-				for(var j = 0;j<5;j++){
-					var id = "row_"+i+"_column_"+j+"_"+rot;
-					var div = document.getElementById(id);
-					div.style.border = "1px solid rgba(0, 0, 0, 0.8)";
-					div.style.background = "rgba(255, 255, 255, 0.8)";
-				}
-			}
-		}
-	}
-	function highlightLetter(row,col){
-		var id = "row_"+row+"_column_"+col+"_"+document.currRotation;
-		var div = document.getElementById(id);
-		div.style.border = "white 1px solid";
-		div.style.background = "white";
-	}
-
-	function rotateBoard(direction){
-				//hide current rotation
-				var currRotation = "board-"+document.currRotation;
-				document.getElementById(currRotation).style.display = "none";
-				//advance
-				currRotation = (document.currRotation + direction) % 4;
-				if(currRotation == -1) currRotation = 3;
-
-				//show next rotation
-				var nextRotation = "board-"+currRotation;
-				document.getElementById(nextRotation).style.display = "grid";
-
-				//save
-				document.currRotation = currRotation;
-
-				//fix highlighting
-				if(document.lastHighlighted)
-					highlightBoard(document.lastHighlighted);
-
-			}
