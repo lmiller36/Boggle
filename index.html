@@ -20,8 +20,13 @@
 </script>
 
 <body>
-
-	<h1 class="header">Lorne's Boggle Game</h1>
+	<div id = "title">
+		<div id = "title-container" class = "title-container">
+			<div class = "title-background">
+				<p id = "title" class="title"> Lorne's Boggle Game </p>
+			</div>
+		</div>
+	</div>
 	<div id = "rightMenu" class="rightMenu" style="display: none">
 		<p>Words:</p>
 		<div class="wrap">
@@ -39,13 +44,32 @@
 	</div>
 	<div id = "center" class = "centerContent">
 		<div id ="setup">
-			<div class = "setup" id="submitSetupButton">
-				<button onclick="submitBoard()	">Submit</button>
-			</div>
-			<div class = "setup" id = "setupNumPlayers">
-				<button onclick="changeNumberOfPlayers(1)">+</button>
-				<button onclick="changeNumberOfPlayers(-1)">-</button>
-				<p id = "numPlayers">Number of players: 1</p>
+			<div class="mainMenu centeredDiv">
+				<div id="btn-container">
+					<button class="btn centered" onclick="submitBoard()">
+						<i class="fa fa-user"></i> Single
+					</button>
+				</div>
+				<div>
+					<button class="btn centered" onclick="">
+						<i class="fa fa-users"></i> Multiplayer
+					</button>
+				</div>
+				<div>
+					<button class="btn centered" onclick="">
+						<i class="fa fa-question-circle"></i> How to play
+					</button>
+				</div>
+				<div>
+					<button class="btn centered">
+						<i class="fa fa-info-circle"></i> Contributions
+					</button>
+				</div>
+				<div>
+					<button class="btn centered" onclick="">
+						<i class=" fa fa-times"></i> Exit
+					</button>
+				</div>
 			</div>
 		</div>
 		<div id = "game" style="display: none">
