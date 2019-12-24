@@ -10,7 +10,7 @@
 
 	document.wordlist = [];
 	[10, 20, 35, 40, 50, 55, 60, 70].forEach(function (frequency) {
-		var url = "data/words/english-words-"+frequency+".JSON";
+		var url = "data/words/english-words-"+frequency+".json";
 		$.ajax({
 			url: url,
 			dataType: "JSON",
