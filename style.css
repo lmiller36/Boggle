@@ -1,0 +1,36 @@
+.header{
+	text-align: center;
+}
+.grid-container {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto;
+	background-color: #2196F3;
+	padding: 10px;
+}
+.grid-item {
+	background-color: rgba(255, 255, 255, 0.8);
+	border: 1px solid rgba(0, 0, 0, 0.8);
+	padding: 20px;
+	font-size: 30px;
+	text-align: center;
+}
+.center{
+
+}
+.setup{
+	text-align: -moz-center; text-align: -webkit-center;
+}
+.letter{
+	width: 20px;
+}
+.rightMenu{
+	/*text-align: -moz-left; text-align: -webkit-left;*/
+	display: absolute;
+	position: absolute;
+
+}
+.centerContent{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
