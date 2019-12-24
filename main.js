@@ -22,10 +22,12 @@
 	});
 
 	document.numberOfPlayers = 1;
+	document.submittedWords = [];
 
 	function isWord(word){
 		var isEnglishWord = document.wordlist.indexOf(word) != -1;
 		var lengthGreaterThanThree = word.length > 3;
+		var isWordAlreadySubmitted = document.submittedWords.indexOf(word);
 		if(!isEnglishWord){
 			alert(word+" is not a valid English word");
 			return false;
@@ -38,13 +40,19 @@
 			alert(word+" not possible");
 			return false; 
 		}
+
+		if(isWordAlreadySubmitted != -1){
+			alert(word+" was already submitted");
+			return false; 
+		}
+
+		removeHighlightingFromAll();
+		document.submittedWords.push(word)
 		return true;
 	}
 
 	function wordOnBoard(word){
-		console.log(word);
 		var loc = findNextLetter(0,word,[],null);
-		console.log(loc);
 		return loc;
 	}
 
@@ -52,7 +60,6 @@
 		if(index == word.length)
 			return used;
 		var goal = word.substring(index,index + 1);
-		console.log(goal);
 		for(var i = 0;i < document.board.length;i++){
 			for(var j = 0; j < document.board[i].length;j++){
 				var letter = document.board[i][j];
@@ -72,7 +79,7 @@
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	function isNeighbor(curr,prev){
@@ -137,25 +144,8 @@
 	}
 
 	function submitBoard(){
-		// var arr = [];
-		// console.log(arr);
-		// var finished = 1;
-		// for(var i = 1; i <= 5;i++){
-		// 	var line = []
-		// 	// arr.push([]);
-		// 	for(var j = 1; j <= 5; j++){
-		// 		var name = "setup_tile_"+j+"_"+i;
-		// 		var value = document.getElementById(name).value;
-		// 		if(value == "") finished = 0;
-		// 		line.push(value);
-		// 	}
-		// 	arr.push(line);
-		// }
-		// document.letters = arr;
 
 		var shuffled = shuffledBoard();
-
-
 
 		finished = 1;
 		arr = shuffled;
@@ -172,9 +162,38 @@
 			}
 
 			document.getElementById("setup").style.display = "none";
-			// document.getElementById("setupNumPlayers").style.display = "none";
-			// document.getElementById("submitSetupButton").style.display = "none";
 			document.getElementById("game").style.display = "";
 		}
 
+	}
+
+	function highlightBoard(obj){
+		let word = obj.value.toUpperCase();
+		let lettersToHighlight = wordOnBoard(word);
+		if(lettersToHighlight){
+			removeHighlightingFromAll();
+
+			lettersToHighlight.forEach((coords)=>{
+				highlightLetter(coords[0],coords[1]);
+			})
+			
+		}
+	}
+
+	function removeHighlightingFromAll(){
+		for(var i = 0;i<5;i++){
+			for(var j = 0;j<5;j++){
+				var id = "row_"+i+"_column_"+j;
+				var div = document.getElementById(id);
+				div.style.border = "1px solid rgba(0, 0, 0, 0.8)";
+				div.style.background = "rgba(255, 255, 255, 0.8)";
+				// background-color: rgba(255, 255, 255, 0.8);
+			}
+		}
+	}
+	function highlightLetter(row,col){
+		var id = "row_"+row+"_column_"+col;
+		var div = document.getElementById(id);
+		div.style.border = "white 1px solid";
+		div.style.background = "white";
 	}
