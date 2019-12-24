@@ -52,7 +52,15 @@
 	}
 
 	function wordOnBoard(word){
+		//q check
+		var qIndex = word.indexOf("Q");
+		if(qIndex != -1){
+			var next = word.substring(qIndex+1,qIndex + 2);
+			if(next != "U") return null;
+		}
+
 		var loc = findNextLetter(0,word,[],null);
+
 		return loc;
 	}
 
@@ -60,18 +68,27 @@
 		if(index == word.length)
 			return used;
 		var goal = word.substring(index,index + 1);
+		var add = 1;
+
+		// if letter is Q => next is guaranteed to be a "U", so can skip
+		if(goal == "Q") {
+			goal = "QU";
+			add = 2;
+		}
+
 		for(var i = 0;i < document.board.length;i++){
 			for(var j = 0; j < document.board[i].length;j++){
 				var letter = document.board[i][j];
 				var usedAlready = 0;
-				used.forEach((arr)=>{
+				used.forEach((arr)=> {
 					if(arr[0] == i && arr[1] == j)
 						usedAlready = 1;
 				})
 				if(letter == goal && !usedAlready && isNeighbor([i,j],prev)){
 					var copy = copyArr(used);
 					copy.push([i,j]);
-					var output = findNextLetter(index + 1, word,copy,[i,j]);
+
+					var output = findNextLetter(index + add, word,copy,[i,j]);
 					if(output){
 						return output;
 					}
@@ -134,7 +151,6 @@
 			if((i+1) % 5 == 0) board.push(arr);
 		}
 
-		// return random board
 		return board;
 	}
 
@@ -187,7 +203,6 @@
 				var div = document.getElementById(id);
 				div.style.border = "1px solid rgba(0, 0, 0, 0.8)";
 				div.style.background = "rgba(255, 255, 255, 0.8)";
-				// background-color: rgba(255, 255, 255, 0.8);
 			}
 		}
 	}
