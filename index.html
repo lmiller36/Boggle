@@ -1,0 +1,54 @@
+<html>
+<head>
+	<title>Lorne's Boggle Game</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Boggle Game by Lorne">
+	<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+	<meta name="author" content="Lorne Miller">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+<!-- 	<script src="./node_modules/wordlist-english/index.js" type="text/javascript"/>
+-->		<!-- <script  type="text/javascript" src="main.js"></script> -->
+
+</head>
+<style type="text/css">
+</style>
+
+<!-- <script src="https://gist.github.com/lmiller36/b65c6d3e86b8419f38b4399bb41b2eac.js"></script> -->
+
+<body>
+	<h1 class="header">Lorne's Boggle Game</h1>
+	<div id = "rightMenu" class="rightMenu">
+		<p>Words:</p>
+		<ul id = "wordList">
+		</ul>
+
+	</div>
+	<div id = "center" class = "centerContent">
+		<div id ="setup">
+			<div class = "setup" id="submitSetupButton">
+				<button onclick="submitBoard()	">Submit</button>
+			</div>
+			<div class = "setup" id = "setupNumPlayers">
+				<button onclick="changeNumberOfPlayers(1)">+</button>
+				<button onclick="changeNumberOfPlayers(-1)">-</button>
+				<p id = "numPlayers">Number of players: 1</p>
+			</div>
+		</div>
+		<div id = "game" style="display: none">
+			<div id="finishedBoard" class = "center">
+				<div id = "grid-container" class="grid-container">
+				</div>
+
+			</div>
+			<div id ="wordInputDiv" style="text-align: -moz-center; text-align: -webkit-center;">
+				<p>Enter words here:</p>
+				<input id="wordsInput" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" type="text" name="username" onchange="submitWord(this)">
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
