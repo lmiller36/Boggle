@@ -7,7 +7,6 @@
 			node.parentNode.replaceChild(cNode, node);
 		}
 	}
-
 	function shuffledBoard(){
 		// copy dice
 		var newBoardDice = JSON.parse(JSON.stringify(document.tiles));
@@ -32,7 +31,6 @@
 
 		return board;
 	}
-
 	function rotateBoard(direction){
 				//hide current rotation
 				var currRotation = "board-"+document.currRotation;
@@ -52,8 +50,7 @@
 				if(document.lastHighlighted)
 					highlightBoard(document.lastHighlighted);
 
-			}	
-
+	}	
 	function highlightBoard(lettersToHighlight){
 		removeHighlightingFromAll();
 
@@ -62,7 +59,6 @@
 			highlightLetter(coords[0],coords[1]);
 		});
 	}
-
 	function removeHighlightingFromAll(){
 		for(var rot = 0; rot < 4;rot++){
 			for(var i = 0;i<5;i++){
