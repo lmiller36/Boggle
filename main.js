@@ -251,8 +251,8 @@
 
 	function enterLetter(event,obj){
 		if (event.key === "Enter") {
-			if(node.value != ""){
-				submitWord(node);
+			if(obj.value != ""){
+				submitWord(obj);
 			}
 		}
 		else{
