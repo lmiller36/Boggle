@@ -214,23 +214,6 @@ function rotateBoard(direction){
 
 }	
 
-function enterLetter(event,obj){
-	if (event.key === "Enter") {
-		if(obj.value != ""){
-			submitWord(obj);
-		}
-	}
-	else{
-		let word = obj.value.toUpperCase();
-		let lettersToHighlight = wordOnBoard(word);
-		if(lettersToHighlight){
-			document.lastHighlighted = lettersToHighlight;
-			highlightBoard(lettersToHighlight);
-		}
-	}
-}
-
-
 function togglePause(isPaused){
 	// Pause
 	if(isPaused){
@@ -273,77 +256,6 @@ function enterLetter(event,obj){
 			highlightBoard(lettersToHighlight);
 		}
 	}
-}
-
-function togglePause(isPaused){
-	// Pause
-	if(isPaused){
-		document.remaining = getTimeRemaining(document.endtime).total;
-		document.getElementById("pause").style.display = "none";
-		document.getElementById("play").style.display = "";
-		document.getElementById("finishedBoard").style.display = "none";
-		document.getElementById("wordInputDiv").style.display = "none";
-
-		clearInterval(document.timeinterval);
-	}
-
-	// Play
-	else{
-
-		var end = new Date((new Date()).getTime() + document.remaining);
-		document.endtime = end;
-
-		initializeClock();
-		document.getElementById("pause").style.display = "";
-		document.getElementById("play").style.display = "none";
-		document.getElementById("finishedBoard").style.display = "";
-		document.getElementById("wordInputDiv").style.display = "";
-
-	}
-}
-
-// /**
-// * Need to move ...
-// */
-
-function submitWord(obj){
-
-	// Get word
-	let word = obj.value.toLowerCase();
-
-	// Reset to blank
-	obj.value = ""
-
-	// Add word to list, if word
-	if(isWord(word)){
-		document.score += getScore(word);
-		document.words.push(word);
-
-		document.getElementById("score").innerText = document.score;
-
-		appendWordToTable(word.toUpperCase());
-	}
-	
-	removeHighlightingFromAll();
-
-}
-
-function appendWordToTable(word){
-
-	var wordScore = getScore(word);
-
-	var tableRow  = document.createElement("tr");
-	tableRow.id = "word_"+word;
-
-	var wordCell =  document.createElement("td");
-	wordCell.innerText = word;
-	var scoreCell =  document.createElement("td");
-	scoreCell.innerText = wordScore;
-
-	tableRow.appendChild(wordCell);
-	tableRow.appendChild(scoreCell);
-
-	document.getElementById("wordList").appendChild(tableRow);
 }
 
 /**
