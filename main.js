@@ -33,7 +33,7 @@ document.wordlist = [];
 });
 
 function endGame(){
-	if(document.isSinglePlayerGame){
+	if(!document.isSinglePlayerGame){
 		document.me = randomAlphanumeric();
 		document.uniqueWords = copyArr(document.words);
 		var msg = {
@@ -184,7 +184,7 @@ function startGame(){
 	}
 
 	$(document).ready(function() {
-		var durationInMilli = document.setupTime * 60000 + 1000;
+		var durationInMilli = 10000 + 1000;
 		var end = new Date((new Date()).getTime() + durationInMilli);
 		document.endtime = end;
 		initializeClock();
@@ -273,9 +273,14 @@ function submitWord(obj){
 	// Add word to list, if word
 	if(isWord(word.toLowerCase())){
 		appendWordToTable(word.toUpperCase());
+		document.score += getScore(word);
+		document.words.push(word);
+		document.getElementById("score").innerText = document.score;
 	}
 	
 	removeHighlightingFromAll();
+
+
 
 }
 
@@ -284,7 +289,7 @@ function appendWordToTable(word){
 	var wordScore = getScore(word);
 
 	var tableRow  = document.createElement("tr");
-	tableRow.id = word;
+	tableRow.id = "word_"+word;
 
 	var wordCell =  document.createElement("td");
 	wordCell.innerText = word;

@@ -44,9 +44,6 @@ function joinChannel(channelID, shouldBeHost){
 			document.board = message.message.board;
 			document.setupTime = message.message.time;
 			startGame();
-		// if(isHost){
-
-		// }
 	}
 	else if (message.type == MessageType.endGame){
 		if(message.message.sender != document.me){
@@ -58,9 +55,6 @@ function joinChannel(channelID, shouldBeHost){
 			document.uniqueWords.forEach((word)=>{
 				// not unique
 				if(opponentsWords.indexOf(word) != -1){
-					console.log(word);
-					console.log("word_"+word);
-					console.log(document.getElementById("word_"+word.toUpperCase()))
 					document.getElementById("word_"+word.toUpperCase()).style.textDecoration = "line-through";
 				}
 				else
