@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="multiplayer.js"></script>
 	<script type="text/javascript" src="utils.js"></script>
 	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
+	<script type="text/javascript" src="utils.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -99,7 +100,7 @@
 			<div id = "host" class="centerContent">
 				Game ID: <p id="game_id"></p>
 			</div>
-			<div id = "join">
+			<div id = "join" style="display:none">
 				<input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)"/>
 			</div>
 			<br/>

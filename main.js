@@ -64,8 +64,6 @@ function mainMenu(){
 	var cNode = node.cloneNode(false);
 	node.parentNode.replaceChild(cNode, node);
 
-	
-
 	// Remove Tiles
 	removeBoardTiles();
 
@@ -126,14 +124,13 @@ function changeTimeMulti(change){
 }
 
 
-
 function changeTime(change){
-	var time = document.setupTime
+	var time = document.setupTime;
 	time += change;
 	if(time > 5) time = Math.min(10,time);
 	else time = 5;
 
-	setClock_setup(time,0);
+	setClock(time,0);
 
 	document.setupTime = time;
 }
@@ -141,7 +138,7 @@ function changeTime(change){
 function startSingleGame(){
 	document.isSinglePlayerGame = true;
 	startGame();
-}
+} 	
 
 function startMultiGame(){
 	document.isSinglePlayerGame = false;
@@ -186,26 +183,17 @@ function startGame(){
 		}
 	}
 
+	$(document).ready(function() {
+		var durationInMilli = document.setupTime * 60000 + 1000;
+		var end = new Date((new Date()).getTime() + durationInMilli);
+		document.endtime = end;
+		initializeClock();
+	});
+
 	toggleVisiblePage(Pages.inGame);
+}
 
-
-		// for(var i = 0; i <= 50;i ++){
-		// 	var random = Math.round(Math.random() * 100) + "";
-		// 	appendWordToTable(random);
-		// }
-
-
-
-		$(document).ready(function() {
-			var durationInMilli = document.setupTime * 60000 + 1000;
-			console.log(document.setupTime);
-			var end = new Date((new Date()).getTime() + durationInMilli);
-			document.endtime = end;
-			initializeClock();
-		});
-	}
-
-	function rotateBoard(direction){
+function rotateBoard(direction){
 	//hide current rotation
 	var currRotation = "board-"+document.currRotation;
 	document.getElementById(currRotation).style.display = "none";
@@ -225,6 +213,51 @@ function startGame(){
 		highlightBoard(document.lastHighlighted);
 
 }	
+
+function enterLetter(event,obj){
+	if (event.key === "Enter") {
+		if(obj.value != ""){
+			submitWord(obj);
+		}
+	}
+	else{
+		let word = obj.value.toUpperCase();
+		let lettersToHighlight = wordOnBoard(word);
+		if(lettersToHighlight){
+			document.lastHighlighted = lettersToHighlight;
+			highlightBoard(lettersToHighlight);
+		}
+	}
+}
+
+
+function togglePause(isPaused){
+	// Pause
+	if(isPaused){
+		document.remaining = getTimeRemaining(document.endtime).total;
+		document.getElementById("pause").style.display = "none";
+		document.getElementById("play").style.display = "";
+		document.getElementById("finishedBoard").style.display = "none";
+		document.getElementById("wordInputDiv").style.display = "none";
+
+		clearInterval(document.timeinterval);
+	}
+
+	// Play
+	else{
+
+		var end = new Date((new Date()).getTime() + document.remaining);
+		document.endtime = end;
+
+		initializeClock();
+		document.getElementById("pause").style.display = "";
+		document.getElementById("play").style.display = "none";
+		document.getElementById("finishedBoard").style.display = "";
+		document.getElementById("wordInputDiv").style.display = "";
+
+	}
+}
+
 
 function enterLetter(event,obj){
 	if (event.key === "Enter") {
@@ -301,6 +334,45 @@ function appendWordToTable(word){
 
 	var tableRow  = document.createElement("tr");
 	tableRow.id = "word_"+word;
+
+	var wordCell =  document.createElement("td");
+	wordCell.innerText = word;
+	var scoreCell =  document.createElement("td");
+	scoreCell.innerText = wordScore;
+
+	tableRow.appendChild(wordCell);
+	tableRow.appendChild(scoreCell);
+
+	document.getElementById("wordList").appendChild(tableRow);
+}
+
+/**
+* Need to move ...
+*/
+
+function submitWord(obj){
+
+	// Get word
+	let word = obj.value
+
+	// Reset to blank
+	obj.value = ""
+
+	// Add word to list, if word
+	if(isWord(word.toLowerCase())){
+		appendWordToTable(word.toUpperCase());
+	}
+	
+	removeHighlightingFromAll();
+
+}
+
+function appendWordToTable(word){
+
+	var wordScore = getScore(word);
+
+	var tableRow  = document.createElement("tr");
+	tableRow.id = word;
 
 	var wordCell =  document.createElement("td");
 	wordCell.innerText = word;
