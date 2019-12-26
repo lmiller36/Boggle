@@ -34,13 +34,14 @@ document.wordlist = [];
 });
 
 function endGame(){
+	document.getElementById("wordInputDiv").style.display = "none";
+
 	if(!document.isSinglePlayerGame){
 		document.uniqueWords = copyArr(document.words);
 		var msg = {
 			"words":document.words,
 			"sender":document.me
 		};
-		document.getElementById("wordInputDiv").style.display = "none";
 		sendMessage(msg,MessageType.endGame);
 	}
 	else{
@@ -115,6 +116,7 @@ function exitMultiplayerSession(){
 }
 
 function multiplayer(){
+
 	document.getElementById("pause").style.display = "none";
 
 	document.setupTime = 5 * 60000;
@@ -176,6 +178,8 @@ function startMultiGame(){
 
 function startGame(){
 	document.score = 0;
+	document.getElementById("score").innerText = document.score;
+
 	document.words = []
 	var arr = document.board;
 	for(var i = 0; i < 5; i++){
