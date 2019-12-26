@@ -3,14 +3,26 @@ document.submittedWords = [];
 document.currRotation = 0;
 
 const MessageType = Object.freeze({"joinGame":"joinGame","boot":"boot","initialBoards":"initialBoards","endGame":"endGame"});
-const Pages = Object.freeze({"mainMenu":"mainMenu", "inGame":"inGame","setupSingle":"setupSingle","setupMulti":"setupMulti","highScores":"highScores"});
+const Pages = Object.freeze({"mainMenu":"mainMenu", "game":"game","setupSinglePlayer":"setupSinglePlayer","setupMulti":"setupMulti","highScores":"highScores"});
 document.pages = {};
-document.pages[Pages.mainMenu] = ["mainMenu"];
-document.pages[Pages.setupSingle] = ["setupSinglePlayer","leftMenu_setup"];
-document.pages[Pages.setupMulti] = ["setupMulti","leftMenu_setup_multi"];
-document.pages[Pages.inGame] = ["game","leftMenu_ingame"];
-document.pages[Pages.highScores] = ["highScoresPage"];
+document.pages[Pages.mainMenu] = ["mainMenu_container"];
+document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container","leftMenu_setup"];
+document.pages[Pages.setupMulti] = ["setupMulti_container","leftMenu_setup_multi"];
+document.pages[Pages.game] = ["game_container","leftMenu_ingame"];
+document.pages[Pages.highScores] = ["highScores_container"];
 
+// load pages
+$( document ).ready(function() { 
+	Object.keys(Pages).forEach((page)=>{
+		var link = document.getElementById(page + '_import');
+		var content = link.import;
+
+		var el = content.querySelector('.'+page);
+		document.getElementById(page+"_container").appendChild(el.cloneNode(true));
+
+
+	});
+});
 
 // load data
 $.ajax({
@@ -125,12 +137,12 @@ function multiplayer(){
 	// sendMessage();	
 }
 
-function setupSingle(){
+function setupSinglePlayer(){
 	document.getElementById("pause").style.display = "";
 
 	document.board = shuffledBoard();
 	document.setupTime = 5 * 60000;
-	toggleVisiblePage(Pages.setupSingle);
+	toggleVisiblePage(Pages.setupSinglePlayer);
 }
 
 function changeTimeMulti(change){
@@ -220,7 +232,7 @@ function startGame(){
 		initializeClock();
 	});
 
-	toggleVisiblePage(Pages.inGame);
+	toggleVisiblePage(Pages.game);
 }
 
 function rotateBoard(direction){
@@ -289,8 +301,9 @@ function enterLetter(event,obj){
 
 function openHighScores(){
 	toggleVisiblePage(Pages.highScores);
+
 	gapi.client.sheets.spreadsheets.values.get({
-		spreadsheetId: '14icWT4vA_GirySo4aqvYCzzLytl7Xe21httwMLPDn48',
+		spreadsheetId: SHEET_ID,
 		range: 'Sheet1!A2:E'
 	}).then(function(response) {
 		console.log(response)

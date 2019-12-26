@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+   </head>
+   <body>
+      <div class = "setupMulti">
+         <div class="centerContent">
+            <p>Please select one: </p>
+            <input type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
+            <input type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
+         </div>
+         <div id = "host" class="" style = "display: none">
+            <div class="centerContent">
+               <div id="clockdiv_setup_multi" class = "timer">
+                  <span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
+               </div>
+            </div>
+            <div class="centerContent">
+               <button onclick="changeTimeMulti(1,)">+</button>
+               <button onclick="changeTimeMulti(-1)">-</button>
+            </div>
+            <div class="centerContent">
+               Game ID: 
+               <p id="game_id"></p>
+            </div>
+            <div class="centerContent">
+               <div class="wrap">
+                  <table class="joinedPlayersTable">
+                     <tr>
+                        <td>Joined</td>
+                        <td>Remove</td>
+                     </tr>
+                  </table>
+                  <div class="inner_table">
+                     <table id="playersList">
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <br/>
+            <div class="centerContent" id = "startGameMultiButton" style = "display: none">
+               <i class="fa fa-play fa-2x icon" onclick="startMultiGame()"></i> 
+            </div>
+         </div>
+         <div>
+            <div id = "join" style="display:none">
+               <input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)"/>
+               <div>
+                  <span id = "hasJoined" style="display: none"></span>
+                  <i id ="exitMultiplayer" class=" fa fa-times" style="display: none" onclick="exitMultiplayerSession()"></i>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

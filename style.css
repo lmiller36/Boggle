@@ -48,6 +48,17 @@
 	justify-content: center;
 }
 
+.wrap {
+	width: 300px;
+}
+
+/*.wrap table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	table-layout: fixed;
+}
+
 td, th {
 	border: 1px solid #dddddd;
 	text-align: left;
@@ -56,17 +67,6 @@ td, th {
 
 tr:nth-child(even) {
 	background-color: #dddddd;
-}
-
-.wrap {
-	width: 300px;
-}
-
-.wrap table {
-	font-family: arial, sans-serif;
-	border-collapse: collapse;
-	width: 100%;
-	table-layout: fixed;
 }
 
 table tr td {
@@ -82,7 +82,7 @@ table.head tr td {
 
 table.joinedPlayersTable tr td {
 	background: #eee;
-}
+}*/
 
 .inner_table {
 	height: 400px;
@@ -145,31 +145,31 @@ table.joinedPlayersTable tr td {
 	margin-right: 1em;
 }
 
-.table {
+.highscores-table {
 	margin-top: 40px;
 	border-spacing: 1em .5em;
 	padding: 0 2em 1em 0;
 	border: 3px solid black;
-}
+}*/
 
-.table thead {
+/*.table thead {
 	background: #111;
 	color: #fff;
-}
+}*/
 
-.table tr th,
+/*.table tr th,
 .table tr td:nth-child(odd) {
 	text-align: center;
-}
+}*/
 
 .highscores-container{
 	text-align:center;
 	display:block;
 }
 
-.element {
+.highscores-element {
 	background: #d2d2d2;
 }
-*/
+
 
 /** end high scores **/
