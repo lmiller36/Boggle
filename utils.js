@@ -28,3 +28,9 @@
 	function randomAlphanumeric(){
 		return Math.random().toString(36).slice(2).toUpperCase();
 	}
+
+	function removeNode(nodeId){
+		var node = document.getElementById(nodeId);
+		var cNode = node.cloneNode(false);
+		node.parentNode.replaceChild(cNode, node);
+	}

@@ -2,13 +2,14 @@ document.numberOfPlayers = 1;
 document.submittedWords = [];
 document.currRotation = 0;
 
-const MessageType = Object.freeze({"initialBoards":"initialBoards","endGame":"endGame"});
+const MessageType = Object.freeze({"joinGame":"joinGame","boot":"boot","initialBoards":"initialBoards","endGame":"endGame"});
 const Pages = Object.freeze({"mainMenu":"mainMenu", "inGame":"inGame","setupSingle":"setupSingle","setupMulti":"setupMulti"});
 document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu"];
 document.pages[Pages.setupSingle] = ["setupSinglePlayer","leftMenu_setup"];
-document.pages[Pages.setupMulti] = ["setupMulti","leftMenu_setup"];
+document.pages[Pages.setupMulti] = ["setupMulti","leftMenu_setup_multi"];
 document.pages[Pages.inGame] = ["game","leftMenu_ingame"];
+
 
 // load data
 $.ajax({
@@ -34,7 +35,6 @@ document.wordlist = [];
 
 function endGame(){
 	if(!document.isSinglePlayerGame){
-		document.me = randomAlphanumeric();
 		document.uniqueWords = copyArr(document.words);
 		var msg = {
 			"words":document.words,
@@ -96,43 +96,67 @@ function joinMultiplayer(event,obj){
 		var val = obj.value;
 		if(val != ""){
 			joinChannel(val);
+			document.getElementById("join_id").style.display = "none";
+			document.getElementById("exitMultiplayer").style.display = "";
+			document.getElementById("hasJoined").style.display = "";
+			document.getElementById("hasJoined").innerText = "Joined: "+val+" ✔";
+			
 		}
 	}
 }
 
+function exitMultiplayerSession(){
+	unsubscribe();
+
+	document.getElementById("exitMultiplayer").style.display = "none";
+	document.getElementById("join_id").style.display = "";
+	document.getElementById("hasJoined").style.display = "none";
+	// document.getElementById("hasJoined").innerText = "Joined: "+val+" ✔";
+}
+
 function multiplayer(){
-	document.setupTime = 5;
+	document.getElementById("pause").style.display = "none";
+
+	document.setupTime = 5 * 60000;
 	toggleVisiblePage(Pages.setupMulti);
 	// sendMessage();	
 }
 
 function setupSingle(){
+	document.getElementById("pause").style.display = "";
+
 	document.board = shuffledBoard();
-	document.setupTime = 5;
+	document.setupTime = 5 * 60000;
 	toggleVisiblePage(Pages.setupSingle);
 }
 
 function changeTimeMulti(change){
-	var time = document.setupTime
+	var time = document.setupTime / 60000;
+
+	console.log(time);
+
 	time += change;
 	if(time > 5) time = Math.min(10,time);
 	else time = 5;
 
+	// time = time * 1000;
+
 	setClock_setup_multi(time,0);
 
-	document.setupTime = time;
+	document.setupTime = time * 60000;
 }
 
 
 function changeTime(change){
-	var time = document.setupTime;
+	var time = document.setupTime / 60000;
+
 	time += change;
 	if(time > 5) time = Math.min(10,time);
 	else time = 5;
 
 	setClock(time,0);
 
-	document.setupTime = time;
+	document.setupTime = time * 60000;
 }
 
 function startSingleGame(){
@@ -144,7 +168,8 @@ function startMultiGame(){
 	document.isSinglePlayerGame = false;
 	var msg = {
 		"board" : document.board,
-		"time" : document.setupTime
+		"time" : document.setupTime,
+		"numPlayers" : document.numPlayers
 	}
 	sendMessage(msg,MessageType.initialBoards);
 }
@@ -184,7 +209,7 @@ function startGame(){
 	}
 
 	$(document).ready(function() {
-		var durationInMilli = 10000 + 1000;
+		var durationInMilli = document.setupTime + 1000;
 		var end = new Date((new Date()).getTime() + durationInMilli);
 		document.endtime = end;
 		initializeClock();
@@ -237,7 +262,6 @@ function togglePause(isPaused){
 		document.getElementById("play").style.display = "none";
 		document.getElementById("finishedBoard").style.display = "";
 		document.getElementById("wordInputDiv").style.display = "";
-
 	}
 }
 
@@ -263,7 +287,6 @@ function enterLetter(event,obj){
 */
 
 function submitWord(obj){
-
 	// Get word
 	let word = obj.value
 
@@ -279,9 +302,37 @@ function submitWord(obj){
 	}
 	
 	removeHighlightingFromAll();
+}
 
 
+function appendPlayerToTable(playerId){
 
+	var tableRow  = document.createElement("tr");
+	var id = "id_"+playerId;
+	tableRow.id = id;
+
+	var idCell =  document.createElement("td");
+	idCell.innerText = playerId;
+
+	var xCell =  document.createElement("td");
+
+	var xIcon = document.createElement("i");
+	xIcon.className = "fa fa-times";
+
+
+	xIcon.id = "x_"+playerId;
+
+	xIcon.addEventListener("click",function(event){
+		bootPlayer(playerId);
+		removeNode(id);
+	});
+
+	xCell.appendChild(xIcon);
+
+	tableRow.appendChild(idCell);
+	tableRow.appendChild(xCell);
+
+	document.getElementById("playersList").appendChild(tableRow);
 }
 
 function appendWordToTable(word){
@@ -319,3 +370,4 @@ function toggleVisiblePage(visiblePage){
 		}
 	})
 }
+
