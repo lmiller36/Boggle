@@ -52,24 +52,24 @@
 	width: 300px;
 }
 
-/*.wrap table {
+.wrap table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
 	table-layout: fixed;
 }
 
-td, th {
+#wordList td, th {
 	border: 1px solid #dddddd;
 	text-align: left;
 	padding: 8px;
 }
 
-tr:nth-child(even) {
+#wordList tr:nth-child(even) {
 	background-color: #dddddd;
 }
 
-table tr td {
+#wordList table tr td {
 	padding: 5px;
 	border: 1px solid #eee;
 	width: 100px;
@@ -82,7 +82,7 @@ table.head tr td {
 
 table.joinedPlayersTable tr td {
 	background: #eee;
-}*/
+}
 
 .inner_table {
 	height: 400px;

@@ -62,10 +62,6 @@ function endGame(){
 	}
 }
 
-function receivedWords(){
-
-}
-
 function mainMenu(){
 	// Stop timer & set to zeros
 	togglePause(0);
@@ -189,6 +185,8 @@ function startMultiGame(){
 	sendMessage(msg,MessageType.initialBoards);
 }
 
+
+
 function startGame(){
 	document.score = 0;
 	document.getElementById("score").innerText = document.score;
@@ -297,55 +295,6 @@ function enterLetter(event,obj){
 			highlightBoard(lettersToHighlight);
 		}
 	}
-}
-
-function openHighScores(){
-	toggleVisiblePage(Pages.highScores);
-
-	gapi.client.sheets.spreadsheets.values.get({
-		spreadsheetId: SHEET_ID,
-		range: 'Sheet1!A2:E'
-	}).then(function(response) {
-		console.log(response)
-		let scores = response.result.values;
-
-		if(!scores) return;
-
-		let scoresSorted = scores.sort(function(a, b){
-			return parseInt(a[1]) - parseInt(b[1]);
-		});
-		console.log(scoresSorted);
-
-		let count = 1;
-		scoresSorted.forEach( (entry) => {
-			let username = entry[0];
-			let score = entry[1];
-			let timeOfPlay = entry[2];
-			let avatarUrl = entry[3];
-
-			let date = new Date(parseInt(timeOfPlay)).toLocaleDateString("en-US")
-
-			$("#highscores tbody").append(
-				"<tr class = \"element\" style = \"margin-bottom:15px;\"> <td>" +
-				count +
-				"</td><td><img class='avatar' src='" +
-				avatarUrl +
-				"'/>" +
-				username +
-				"</td><td>" +
-				score +
-				"</td><td>" +
-				date
-				+
-				"</td></tr>"
-				);
-
-			count ++;
-		})
-	}, function(response) {
-		appendPre('Error: ' + response.result.error.message);
-	});
-
 }
 
 /**

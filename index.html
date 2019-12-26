@@ -33,9 +33,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script async defer src="https://apis.google.com/js/api.js"
-	onload="this.onload=function(){};handleClientLoad()"
+	onload="handleClientLoad()"
 	onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
 </head>
+
 <body>
 	<div id = "title">
 		<div id = "title-container" class = "title-container">
@@ -57,7 +58,7 @@
 				</tr>
 			</table>
 			<div class="inner_table">
-				<table id="wordList">
+				<table id="wordList" class = "wordList">
 				</table>
 			</div>
 		</div>
@@ -75,5 +76,9 @@
 		<div id = "game_container" style="display: none"></div>
 		<div id = "highScores_container" style="display: none"></div>
 	</div>
+
+
 </body>
+
+
 </html>
