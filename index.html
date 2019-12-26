@@ -17,166 +17,230 @@
 	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
 	<script type="text/javascript" src="utils.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script async defer src="https://apis.google.com/js/api.js"
+	onload="this.onload=function(){};handleClientLoad()"
+	onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
 </head>
-<style type="text/css">
-</style>
 
-<body>
-	<div id = "title">
-		<div id = "title-container" class = "title-container">
-			<div class = "title-background">
-				<p id = "title" class="title"> Lorne's Boggle Game </p>
-			</div>
-		</div>
-	</div>
-	<div id = "leftMenu_ingame" class="rightMenu" style="display: none">
-		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
-		<div>
-			<span>total:</span><span id="score">0</span>
-		</div>
-		<div class="wrap">
-			<table class="head">
-				<tr>
-					<td>Word</td>
-					<td>Score</td>
-				</tr>
-			</table>
-			<div class="inner_table">
-				<table id="wordList">
-				</table>
-			</div>
-		</div>
-	</div>
-	<div id = "leftMenu_setup" class="rightMenu" style="display: none">
-		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
-	</div>
-	<div id = "leftMenu_setup_multi" class="rightMenu" style="display: none">
-		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
-	</div>
-	<div id = "center" class = "centerContent">
-		<div id ="mainMenu">
-			<div class="mainMenu centeredDiv">
-				<div id="btn-container">
-					<button class="btn centered" onclick="setupSingle()">
-						<i class="fa fa-user"></i> Single
-					</button>
-				</div>
-				<div>
-					<button class="btn centered" onclick="multiplayer()">
-						<i class="fa fa-users"></i> Multiplayer
-					</button>
-				</div>
-				<div>
-					<button class="btn centered" onclick="">
-						<i class="fa fa-question-circle"></i> How to play
-					</button>
-				</div>
-				<div>
-					<button class="btn centered">
-						<i class="fa fa-info-circle"></i> Contributions
-					</button>
-				</div>
-				<div>
-					<button class="btn centered" onclick="">
-						<i class=" fa fa-times"></i> Exit
-					</button>
-				</div>
-			</div>
-		</div>
-		<div id ="setupMulti" style="display: none">
-			<div class="centerContent">
-				<p>Please select one: </p>
-				<input type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
-				<input type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
-			</div>
-			<div id = "host" class="" style = "display: none">
-				<div class="centerContent">
-					<div id="clockdiv_setup_multi" class = "timer">
-						<span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
-					</div>
-				</div>
-				<div class="centerContent">
-					<button onclick="changeTimeMulti(1,)">+</button>
-					<button onclick="changeTimeMulti(-1)">-</button>
-				</div>
-				<div class="centerContent">
-					Game ID: <p id="game_id"></p>
-				</div>
-				
-				<div class="centerContent">
-					<div class="wrap">
-						<table class="joinedPlayersTable">
-							<tr>
-								<td>Joined</td>
-								<td>Remove</td>
-							</tr>
-						</table>
-						<div class="inner_table">
-							<table id="playersList">
-							</table>
-						</div>
-					</div>
-				</div>
-				<br/>
-				<div class="centerContent" id = "startGameMultiButton" style = "display: none">
-					<i class="fa fa-play fa-2x icon" onclick="startMultiGame()"></i> 
-				</div>
-			</div>
-			<div>
-				<div id = "join" style="display:none">
-					<input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)"/>
+<script type="text/javascript">
+	var CLIENT_ID = '968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com';
+	var API_KEY = 'AIzaSyAwb096dzp9ykl-v46KBA0ZPGF8OoAV_pE';
 
-					<div>
-						<span id = "hasJoined" style="display: none"></span>
-						<i id ="exitMultiplayer" class=" fa fa-times" style="display: none" onclick="exitMultiplayerSession()"></i>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id ="setupSinglePlayer" style="display: none">
-			<div class="centerContent">
-				<div id="clockdiv_setup" class = "timer">
-					<span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
-				</div>
-			</div>
-			<div class="centerContent">
-				<button onclick="changeTime(1)">+</button>
-				<button onclick="changeTime(-1)">-</button>
-			</div>
-			<br/>
-			<div class="centerContent">
-				<i class="fa fa-play fa-2x icon" onclick="startSingleGame()"></i> 
-			</div>
-		</div>
-		<div id = "game" style="display: none">
-			<div class = "centerContent">
-				<i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i> 
-				<i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i> 	
-				<i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i> 
-				<i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i> 
-			</div>
-			<div class = "centerContent">
-				<div id="clockdiv" class = "timer">
-					<span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
-				</div>
-			</div>
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
+      function handleClientLoad() {
+      	gapi.load('client:auth2', initClient);
+      }
+      function initClient() {
+      	gapi.client.init({
+      		apiKey: API_KEY,
+      		clientId: CLIENT_ID,
+      		discoveryDocs: DISCOVERY_DOCS,
+      		scope: SCOPES
+      	}).then(function () {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+          // authorizeButton.onclick = handleAuthClick;
+          // signoutButton.onclick = handleSignoutClick;
+      }, function(error) {
+      	appendPre(JSON.stringify(error, null, 2));
+      });
+      }
+
+  </script>
+
+  <body>
+  	<div id = "title">
+  		<div id = "title-container" class = "title-container">
+  			<div class = "title-background">
+  				<p id = "title" class="title"> Lorne's Boggle Game </p>
+  			</div>
+  		</div>
+  	</div>
+  	<div id = "leftMenu_ingame" class="rightMenu" style="display: none">
+  		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+  		<div>
+  			<span>total:</span><span id="score">0</span>
+  		</div>
+  		<div class="wrap">
+  			<table class="head">
+  				<tr>
+  					<td>Word</td>
+  					<td>Score</td>
+  				</tr>
+  			</table>
+  			<div class="inner_table">
+  				<table id="wordList">
+  				</table>
+  			</div>
+  		</div>
+  	</div>
+  	<div id = "leftMenu_setup" class="rightMenu" style="display: none">
+  		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+  	</div>
+  	<div id = "leftMenu_setup_multi" class="rightMenu" style="display: none">
+  		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+  	</div>
+  	<div id = "center" class = "centerContent">
+  		<div id ="mainMenu">
+  			<div class="mainMenu centeredDiv">
+  				<div id="btn-container">
+  					<button class="btn centered" onclick="setupSingle()">
+  						<i class="fa fa-user"></i> Single
+  					</button>
+  				</div>
+  				<div>
+  					<button class="btn centered" onclick="multiplayer()">
+  						<i class="fa fa-users"></i> Multiplayer
+  					</button>
+  				</div>
+  				<div>
+  					<button class="btn centered" onclick="openHighScores()">
+  						<i class="fa fa-list-ol"></i> High Scores
+  					</button>
+  				</div>
+  				<div>
+  					<button class="btn centered" onclick="">
+  						<i class="fa fa-question-circle"></i> How to play
+  					</button>
+  				</div>
+  				<div>
+  					<button class="btn centered">
+  						<i class="fa fa-info-circle"></i> Contributions
+  					</button>
+  				</div>
+  				<div>
+  					<button class="btn centered" onclick="">
+  						<i class=" fa fa-times"></i> Exit
+  					</button>
+  				</div>
+  			</div>
+  		</div>
+  		<div id ="setupMulti" style="display: none">
+  			<div class="centerContent">
+  				<p>Please select one: </p>
+  				<input type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
+  				<input type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
+  			</div>
+  			<div id = "host" class="" style = "display: none">
+  				<div class="centerContent">
+  					<div id="clockdiv_setup_multi" class = "timer">
+  						<span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
+  					</div>
+  				</div>
+  				<div class="centerContent">
+  					<button onclick="changeTimeMulti(1,)">+</button>
+  					<button onclick="changeTimeMulti(-1)">-</button>
+  				</div>
+  				<div class="centerContent">
+  					Game ID: <p id="game_id"></p>
+  				</div>
+
+  				<div class="centerContent">
+  					<div class="wrap">
+  						<table class="joinedPlayersTable">
+  							<tr>
+  								<td>Joined</td>
+  								<td>Remove</td>
+  							</tr>
+  						</table>
+  						<div class="inner_table">
+  							<table id="playersList">
+  							</table>
+  						</div>
+  					</div>
+  				</div>
+  				<br/>
+  				<div class="centerContent" id = "startGameMultiButton" style = "display: none">
+  					<i class="fa fa-play fa-2x icon" onclick="startMultiGame()"></i> 
+  				</div>
+  			</div>
+  			<div>
+  				<div id = "join" style="display:none">
+  					<input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)"/>
+
+  					<div>
+  						<span id = "hasJoined" style="display: none"></span>
+  						<i id ="exitMultiplayer" class=" fa fa-times" style="display: none" onclick="exitMultiplayerSession()"></i>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+  		<div id ="setupSinglePlayer" style="display: none">
+  			<div class="centerContent">
+  				<div id="clockdiv_setup" class = "timer">
+  					<span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
+  				</div>
+  			</div>
+  			<div class="centerContent">
+  				<button onclick="changeTime(1)">+</button>
+  				<button onclick="changeTime(-1)">-</button>
+  			</div>
+  			<br/>
+  			<div class="centerContent">
+  				<i class="fa fa-play fa-2x icon" onclick="startSingleGame()"></i> 
+  			</div>
+  		</div>
+  		<div id = "game" style="display: none">
+  			<div class = "centerContent">
+  				<i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i> 
+  				<i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i> 	
+  				<i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i> 
+  				<i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i> 
+  			</div>
+  			<div class = "centerContent">
+  				<div id="clockdiv" class = "timer">
+  					<span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
+  				</div>
+  			</div>
 
 
-			<div id="finishedBoard" class = "center">
-				<div id = "board-0" class="grid-container"></div>
-				<div id = "board-1" class="grid-container" style="display:none;"></div>
-				<div id = "board-2" class="grid-container" style="display:none;"></div>
-				<div id = "board-3" class="grid-container" style="display:none;"></div>
+  			<div id="finishedBoard" class = "center">
+  				<div id = "board-0" class="grid-container"></div>
+  				<div id = "board-1" class="grid-container" style="display:none;"></div>
+  				<div id = "board-2" class="grid-container" style="display:none;"></div>
+  				<div id = "board-3" class="grid-container" style="display:none;"></div>
 
 
-			</div>
-			<div id ="wordInputDiv" style="text-align: -moz-center; text-align: -webkit-center;">
-				<p>Enter words here:</p>
-				<input id="wordsInput" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" type="text" name="username" autocomplete="off" onkeyup="enterLetter(event,this)">
-			</div>
-		</div>
-	</div>
-</body>
+  			</div>
+  			<div id ="wordInputDiv" style="text-align: -moz-center; text-align: -webkit-center;">
+  				<p>Enter words here:</p>
+  				<input id="wordsInput" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" type="text" name="username" autocomplete="off" onkeyup="enterLetter(event,this)">
+  			</div>
+  		</div>
+  		<div id = "highScoresPage" style="display: none">
+<!--   			<div class="rightMenu">
+ -->  				<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+  			<!-- </div> -->
+  			<div class = "">
+  				<p id = "title" class="title centerContent"> High Scores </p>
 
-</html>
+  				<div class = "centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
+  					<table id="highscores" class="table striped">
+  						<thead>
+  							<tr>
+  								<th>Rank</th>
+  								<th>Username</th>
+  								<th>Score</th>
+  								<th>Date</th>
+  							</tr>
+  						</thead>
+  						<tbody id = "highscores-rows">
+  						</tbody>
+  					</table>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  </body>
+
+  </html>
