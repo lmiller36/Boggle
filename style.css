@@ -80,6 +80,10 @@ table.head tr td {
 	background: #eee;
 }
 
+table.joinedPlayersTable tr td {
+	background: #eee;
+}
+
 .inner_table {
 	height: 400px;
 	overflow-y: auto;
