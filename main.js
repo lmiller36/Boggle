@@ -46,6 +46,10 @@ document.wordlist = [];
 
 });
 
+function openHighScores(){
+
+}
+
 function endGame(){
 	document.getElementById("wordInputDiv").style.display = "none";
 
@@ -59,6 +63,7 @@ function endGame(){
 	}
 	else{
 		alert("Your score is "+document.score);
+		postHighScore(document.score,document.board,document.words)
 	}
 }
 

@@ -1,4 +1,9 @@
 <html>
+
+<script>
+	
+</script>
+
 <head>
 	<title>Lorne's Boggle Game</title>
 	<meta charset="UTF-8">
@@ -33,49 +38,361 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script async defer src="https://apis.google.com/js/api.js"
-	onload="handleClientLoad()"
-	onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+	onload="this.onload=function(){};handleClientLoad()"
+	onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-signin-client_id" content="968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com">
 </head>
 
+<script type="text/javascript">
+
+  let avatar_urls = ["https://ssl.gstatic.com/docs/common/profile/alligator_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/anteater_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/armadillo_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/auroch_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/axolotl_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/badger_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/bat_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/beaver_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/buffalo_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/camel_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/capybara_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/chameleon_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/cheetah_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/chinchilla_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/chipmunk_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/chupacabra_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/cormorant_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/coyote_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/crow_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/dingo_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/dinosaur_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/dolphin_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/duck_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/elephant_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/ferret_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/fox_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/frog_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/giraffe_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/gopher_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/grizzly_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/hedgehog_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/hippo_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/hyena_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/ibex_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/ifrit_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/iguana_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/jackal_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/kangaroo_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/koala_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/kraken_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/lemur_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/leopard_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/liger_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/llama_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/manatee_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/mink_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/monkey_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/moose_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/narwhal_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/nyancat_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/orangutan_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/otter_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/panda_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/penguin_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/platypus_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/pumpkin_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/python_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/quagga_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/rabbit_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/raccoon_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/rhino_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/sheep_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/shrew_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/skunk_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/squirrel_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/tiger_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/turtle_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/walrus_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/wolf_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/wolverine_lg.png",
+  "https://ssl.gstatic.com/docs/common/profile/wombat_lg.png"];
+
+
+  var SHEET_ID = '1vP3OHMLITjfMsmh7ICFDqqtrP1mmHVZjMkQ_2kMPVDk';
+  var CLIENT_ID = '968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com';
+  var API_KEY = 'AIzaSyAwb096dzp9ykl-v46KBA0ZPGF8OoAV_pE';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
+
+      var authorizeButton = document.getElementById('authorize_button');
+      var signoutButton = document.getElementById('signout_button');
+
+      function handleClientLoad() {
+       gapi.load('client:auth2', initClient);
+     }
+
+     function updateSigninStatus(isSignedIn) {
+       console.log(isSignedIn)
+     }
+
+
+     function initClient() {
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES
+      }).then(function () {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        }, function(error) {
+          appendPre(JSON.stringify(error, null, 2));
+        });
+    }
+
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+    document.username = profile.getEmail().substring(0,profile.getEmail().indexOf("@"));
+    document.avatar = profile.getImageUrl();
+
+
+    let image_url = profile.getImageUrl();
+    if(image_url){
+      document.getElementById("google-sign-in").style.display = "none";
+      document.getElementById("google-user-image-url").style.display = "block";
+      document.getElementById("google-user-image-url").src = image_url;
+
+    } 
+  }
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+
+    document.getElementById("google-sign-in").style.display = "block";
+    document.getElementById("google-user-image-url").style.display = "none";
+    document.getElementById("google-user-image-url").removeAttribute('src');
+
+  }
+  function loadHighScores(){
+    gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: SHEET_ID,
+      range: 'Sheet1!A1:F'
+    }).then(function(response) {
+      console.log(response)
+      let values = response.result.values;
+
+      if(!values) return;
+
+      var header = values.splice(0,1)[0];
+      var sortedScores = values.sort(function(a, b){
+        return parseInt(parseInt(b[0] - a[0]));
+      });
+
+      let count = 1;
+
+      var scoreEntries = "highscores-rows";
+      removeNode(scoreEntries);
+      var scoresList = document.getElementById(scoreEntries);
+      sortedScores.forEach( (entry) => {
+        let score = entry[0];
+        let username = entry[1];
+        let timeOfPlay = entry[2];
+        let avatarUrl = entry[3];
+        let board = JSON.parse(entry[4]);
+        let words = JSON.parse(entry[5]);
+        
+        console.log(words.length);
+
+        /**/var bestWord = "";
+        if(words.length == 1) bestWord = words[0];
+        else {
+          words.forEach((word)=>{
+            if(word.length > bestWord) bestWord = word;
+          })
+        }
+
+        let date = new Date(parseInt(timeOfPlay)).toLocaleDateString("en-US");
+        let toShow = [count,username,"avatar",score,date,bestWord.toUpperCase()];
+
+        var row = document.createElement("tr");
+        row.className = "element";
+
+        var children = [];
+
+        toShow.forEach((row)=>{
+         var entry = document.createElement("td");
+         entry.innerText = row;
+         entry.className = "font"
+         children.push(entry);
+       });
+
+        var avatar = document.createElement("img");
+        avatar.className = "avatar";
+        avatar.src = avatarUrl;
+
+        var avatarDiv = children[2];
+        avatarDiv.innerText = "";
+        avatarDiv.appendChild(avatar);
+
+        children.forEach((child)=> row.appendChild(child));
+
+        scoresList.appendChild(row);
+
+        count ++;
+      })
+    }, function(response) {
+      appendPre('Error: ' + response.result.error.message);
+    });
+
+    toggleVisiblePage(Pages.highScores);
+
+  }
+
+  function sendScore(values){
+   const resource = {
+    values:values,
+    majorDimension: "ROWS"
+  };
+
+
+  console.log(values);
+
+  gapi.client.sheets.spreadsheets.values.append({
+    spreadsheetId: SHEET_ID,
+    range: 'Sheet1!A:F'
+    ,
+    valueInputOption:"USER_ENTERED",
+    resource:resource
+  }).then(function(response) {
+    console.log(response)
+  }, function(response) {
+  });
+}
+
+function postHighScore(score,board,words){
+
+  var username = "anonymous";
+  console.log(words);
+
+  let timeInUTC = new Date(Date.now()).getTime();
+  var avatar = avatar_urls[Math.floor(Math.random()*avatar_urls.length)];
+
+        //user is signed in
+        if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+          username = document.username;
+          avatar = document.avatar;
+        }
+        else return;
+
+        let values = [[score,username,timeInUTC,avatar,
+        JSON.stringify(board),JSON.stringify(words)]];
+
+        sendScore(values);
+
+
+ //        if(words.length == 1){
+ //          values[6] = words[0];
+ //          sendScore(values)
+ //        } 
+ //        else if(words.length > 2){
+ //          bestWord = words[0];
+ //          words.forEach((word)=>{
+ //            if(word.length > bestWord.length) bestWord = word;
+ //          });
+ //   //   // bestWord = //words.reduce((a,b)=>{if(a.length > b.length) return a; else return b;});
+ //   //   bestWord = words.reduce(function(longest, currentWord) {
+ //   //    if(currentWord.length > longest.length)
+ //   //     return currentWord;
+ //   //   else
+ //   //     return longest;
+ //   // }, "");
+
+ //   console.log(bestWord);
+ //   values[6] = bestWord;
+ //   sendScore(values);
+ // }
+ // else 
+ //   sendScore(values);
+
+
+}
+
+
+
+</script>
+
 <body>
-	<div id = "title">
-		<div id = "title-container" class = "title-container">
-			<div class = "title-background">
-				<p id = "title" class="title"> Lorne's Boggle Game </p>
-			</div>
-		</div>
-	</div>
-	<div id = "leftMenu_ingame" class="rightMenu" style="display: none">
-		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
-		<div>
-			<span>total:</span><span id="score">0</span>
-		</div>
-		<div class="wrap">
-			<table class="head">
-				<tr>
-					<td>Word</td>
-					<td>Score</td>
-				</tr>
-			</table>
-			<div class="inner_table">
-				<table id="wordList" class = "wordList">
-				</table>
-			</div>
-		</div>
-	</div>
-	<div id = "leftMenu_setup" class="rightMenu" style="display: none">
-		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
-	</div>
-	<div id = "leftMenu_setup_multi" class="rightMenu" style="display: none">
-		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
-	</div>
-	<div id = "center" class = "centerContent">
-		<div id = "mainMenu_container"></div>
-		<div id = "setupMulti_container" style="display: none"></div>
-		<div id = "setupSinglePlayer_container" style="display: none"></div>
-		<div id = "game_container" style="display: none"></div>
-		<div id = "highScores_container" style="display: none"></div>
-	</div>
+ <button onclick="loadHighScores()">get</button>
+ <button onclick="postHighScore()">send</button>
+ <div id = "title-container" class = "title-container">
+  <div id = "google-login" style="overflow:auto;">
+   <div id = "google-sign-in" class="g-signin2" data-onsuccess="onSignIn" style="float:right;"></div>
+   <div class="dropdown" style="float:right;  overflow-x: hidden;">
+    <img id = "google-user-image-url" src = "./default_logo.jpg" style="float:right; display: none; cursor: pointer;" title="Sign Out" class=""></img>
+    <div class="dropdown-content">
+     <div><a href="#">Link 1</a></div>
+     <div><a href="#">Link 2</a></div>
+     <div><a href="#" onclick="signOut()">Sign Out</a></div>
+   </div>
+ </div>
+</div>
+</div>
+
+<div id = "title">
+  <div id = "title-container" class = "title-container">
+   <div class = "title-background">
+    <p id = "title" class="title"> Lorne's Boggle Game </p>
+  </div>
+</div>
+</div>
+<div id = "leftMenu_ingame" class="rightMenu" style="display: none">
+  <i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+  <div>
+   <span>total:</span><span id="score">0</span>
+ </div>
+ <div class="wrap">
+   <table class="head">
+    <tr>
+     <td>Word</td>
+     <td>Score</td>
+   </tr>
+ </table>
+ <div class="inner_table">
+  <table id="wordList" class = "wordList">
+  </table>
+</div>
+</div>
+</div>
+<div id = "leftMenu_setup" class="rightMenu" style="display: none">
+  <i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+</div>
+<div id = "leftMenu_setup_multi" class="rightMenu" style="display: none">
+  <i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+</div>
+<div id = "center" class = "centerContent">
+  <div id = "mainMenu_container"></div>
+  <div id = "setupMulti_container" style="display: none"></div>
+  <div id = "setupSinglePlayer_container" style="display: none"></div>
+  <div id = "game_container" style="display: none"></div>
+  <div id = "highScores_container" style="display: none"></div>
+</div>
 
 
 </body>

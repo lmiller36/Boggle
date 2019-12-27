@@ -28,7 +28,7 @@
 			arr.push(letter.toUpperCase());
 			if((i+1) % 5 == 0) board.push(arr);
 		}
-
+		
 		return board;
 	}
 	function rotateBoard(direction){
