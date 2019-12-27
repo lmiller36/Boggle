@@ -69,6 +69,7 @@ function unsubscribe(){
 
 function receiveMessage(message){
 	message = message.message;
+	console.log(message);
 	if(message.type == MessageType.joinGame){
 		if(isHost){
 			document.otherPlayers.add(message.message.sender);
@@ -98,7 +99,7 @@ function receiveMessage(message){
 		else if(message.type == MessageType.initialBoards){
 			document.board = message.message.board;
 			document.setupTime = message.message.time;
-			document.numPlayers = document.otherPlayers.size;
+			document.numPlayers = message.message.numPlayers;
 			startGame(true);
 		}
 		else if (message.type == MessageType.endGame){
