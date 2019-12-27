@@ -63,9 +63,9 @@ document.wordlist = [];
 
 function endGame(){
 	document.getElementById("wordInputDiv").style.display = "none";
+	// document.uniqueWords = copyArr(document.words);
 
 	if(!document.isSinglePlayerGame){
-		document.uniqueWords = copyArr(document.words);
 		var msg = {
 			"words":document.words,
 			"sender":document.me
@@ -91,6 +91,7 @@ function startGame(isMulti){
 	document.getElementById("score").innerText = document.score;
 
 	document.words = []
+	document.uniqueWords = []
 	var arr = document.board;
 	for(var i = 0; i < 5; i++){
 		for(var j = 0; j < 5; j++){
@@ -149,6 +150,7 @@ function submitWord(obj){
 		appendWordToTable(word.toUpperCase());
 		document.score += getScore(word);
 		document.words.push(word);
+		document.uniqueWords.push(word);
 		document.getElementById("score").innerText = document.score;
 	}
 	

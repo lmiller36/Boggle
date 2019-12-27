@@ -105,6 +105,8 @@ function receiveMessage(message){
 		else if (message.type == MessageType.endGame){
 			if(message.message.sender != document.me){
 				var opponentsWords = message.message.words;
+				console.log(opponentsWords);
+				console.log(document.uniqueWords);	
 
 				var newArr = [];
 				var score = 0;
@@ -122,9 +124,10 @@ function receiveMessage(message){
 				});
 
 				document.numPlayers --;
+				document.uniqueWords = newArr;
 
-				if(document.numPlayers == 1){
-					document.uniqueWords = newArr;
+				if(document.numPlayers == 0){
+					
 					document.score = score;
 
 					document.getElementById("score").innerText = score;
