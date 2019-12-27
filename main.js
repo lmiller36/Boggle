@@ -19,9 +19,16 @@ $( document ).ready(function() {
 
 		var el = content.querySelector('.'+page);
 		document.getElementById(page+"_container").appendChild(el.cloneNode(true));
-
-
 	});
+
+	// load pacman
+	var pacmanlink = document.getElementById('pacman_import');
+	var content = pacmanlink.import;
+	console.log(pacmanlink);
+	console.log(content);
+
+	var el = content.querySelector('.pacman_svg');
+	document.getElementById("pacman_container").appendChild(el.cloneNode(true));
 });
 
 // load data
@@ -223,17 +230,17 @@ function postHighScore(score,board,words){
 	let timeInUTC = new Date(Date.now()).getTime();
 	var avatar = "https://ssl.gstatic.com/docs/common/profile/badger_lg.png";
 
-        //user is signed in
-        if(gapi.auth2.getAuthInstance().isSignedIn.get()){
-        	username = document.username;
-        	avatar = document.avatar;
-        }
-        else return;
+    //user is signed in
+    if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+    	username = document.username;
+    	avatar = document.avatar;
+    }
+    else return;
 
-        let values = [[score,username,timeInUTC,avatar,
-        JSON.stringify(board),JSON.stringify(words)]];
+    let values = [[score,username,timeInUTC,avatar,
+    JSON.stringify(board),JSON.stringify(words)]];
 
-        sendScore(values);
+    sendScore(values);
 }
 
 function sendScore(values){
@@ -249,8 +256,8 @@ function sendScore(values){
 		range: 'Sheet1!A:F',
 		valueInputOption:"USER_ENTERED",
 		resource:resource
-		}).then(function(response) {
+	}).then(function(response) {
 		console.log(response)
-		}, function(response) {
+	}, function(response) {
 	});
 }

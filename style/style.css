@@ -1,3 +1,13 @@
+.main{
+margin-top:11vh;
+}
+
+.google{
+	position: absolute;
+	top:11vh;
+	right: 0;
+}
+
 .header{
 	text-align: center;
 }
@@ -26,6 +36,8 @@
 .leftMenu{
 	display: absolute;
 	position: absolute;
+	left:0;
+	top:10vh;
 }
 .centerContent{
 	display: flex;
@@ -84,7 +96,7 @@ table.joinedPlayersTable tr td {
 }
 
 .inner_table {
-	height: 400px;
+	height: auto;
 	overflow-y: auto;
 }
 .timerFont{
@@ -113,21 +125,21 @@ table.joinedPlayersTable tr td {
 	width: 100%;
 	display: block;
 	overflow: auto;
-	background-color: grey;
+	background-color: lightgray;
 }
 
 .title-container {
-	margin-top:1vw;
+	top:0;
+	position: absolute;
+	width:100%;
+	background: lightgray;	
 }
 
 .title {
 	font-family: georgia, garamond, serif;
-	font-size: 16px;
-	font-style: bold;
 	text-align: center;
 	vertical-align: top;
-	display: block;
-	font-size: 9vw;
+	font-size:	5vw;
 	margin: auto;
 }
 
