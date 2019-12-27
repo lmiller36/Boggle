@@ -2,13 +2,13 @@ document.numberOfPlayers = 1;
 document.submittedWords = [];
 document.currRotation = 0;
 
-const MessageType = Object.freeze({"joinGame":"joinGame","boot":"boot","initialBoards":"initialBoards","endGame":"endGame"});
+const MessageType = Object.freeze({"joinGame":"joinGame","booted":"booted","unsubscribe":"unsubscribe","initialBoards":"initialBoards","endGame":"endGame"});
 const Pages = Object.freeze({"mainMenu":"mainMenu", "game":"game","setupSinglePlayer":"setupSinglePlayer","setupMulti":"setupMulti","highScores":"highScores"});
 document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
 document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container","leftMenu_setup"];
 document.pages[Pages.setupMulti] = ["setupMulti_container","leftMenu_setup_multi"];
-document.pages[Pages.game] = ["game_container","leftMenu_ingame"];
+document.pages[Pages.game] = ["game_container","leftMenu_ingame","pause"];
 document.pages[Pages.highScores] = ["highScores_container"];
 
 // load pages
@@ -33,6 +33,14 @@ $.ajax({
 	}
 });
 
+// $.ajax({
+// 	url: "data/avatars.txt",
+// 	dataType: "JSON",
+// 	success: function(data) {
+// 		document.avatars = data;
+// 	}
+// });
+
 document.wordlist = [];
 [10, 20, 35, 40, 50, 55, 60, 70].forEach(function (frequency) {
 	var url = "data/words/english-words-"+frequency+".json";
@@ -45,10 +53,6 @@ document.wordlist = [];
 	});
 
 });
-
-function openHighScores(){
-
-}
 
 function endGame(){
 	document.getElementById("wordInputDiv").style.display = "none";
@@ -67,132 +71,15 @@ function endGame(){
 	}
 }
 
-function mainMenu(){
-	// Stop timer & set to zeros
-	togglePause(0);
-	clearInterval(document.timeinterval);
-	document.remaining = null;
-
-	// Remove words
-	var id = "wordList";
-	var node = document.getElementById(id);
-	var cNode = node.cloneNode(false);
-	node.parentNode.replaceChild(cNode, node);
-
-	// Remove Tiles
-	removeBoardTiles();
-
-	// Go to main menu
-	toggleVisiblePage(Pages.mainMenu);
-}
-
-function toggleHost(isHost){
-	if(isHost){
-		var seed = startChannel();
-		document.board = shuffledBoard();
-		document.multiplayerSeed = seed;
-		document.getElementById("game_id").innerText = seed;
-		document.getElementById("host").style.display = "";
-		document.getElementById("join").style.display = "none";
-		document.getElementById("startGameMultiButton").style.display = "";
-		
-	}
-	else {
-		document.board = null;
-		document.getElementById("host").style.display = "none";
-		document.getElementById("join").style.display = "";
-		document.getElementById("startGameMultiButton").style.display = "none";
-
-	}
-}
-
-function joinMultiplayer(event,obj){
-	if (event.key === "Enter") {
-		var val = obj.value;
-		if(val != ""){
-			joinChannel(val);
-			document.getElementById("join_id").style.display = "none";
-			document.getElementById("exitMultiplayer").style.display = "";
-			document.getElementById("hasJoined").style.display = "";
-			document.getElementById("hasJoined").innerText = "Joined: "+val+" ✔";
-			
-		}
-	}
-}
-
-function exitMultiplayerSession(){
+function bootMe(){
 	unsubscribe();
 
 	document.getElementById("exitMultiplayer").style.display = "none";
 	document.getElementById("join_id").style.display = "";
 	document.getElementById("hasJoined").style.display = "none";
-	// document.getElementById("hasJoined").innerText = "Joined: "+val+" ✔";
 }
 
-function multiplayer(){
-
-	document.getElementById("pause").style.display = "none";
-
-	document.setupTime = 5 * 60000;
-	toggleVisiblePage(Pages.setupMulti);
-	// sendMessage();	
-}
-
-function setupSinglePlayer(){
-	document.getElementById("pause").style.display = "";
-
-	document.board = shuffledBoard();
-	document.setupTime = 5 * 60000;
-	toggleVisiblePage(Pages.setupSinglePlayer);
-}
-
-function changeTimeMulti(change){
-	var time = document.setupTime / 60000;
-
-	console.log(time);
-
-	time += change;
-	if(time > 5) time = Math.min(10,time);
-	else time = 5;
-
-	// time = time * 1000;
-
-	setClock_setup_multi(time,0);
-
-	document.setupTime = time * 60000;
-}
-
-
-function changeTime(change){
-	var time = document.setupTime / 60000;
-
-	time += change;
-	if(time > 5) time = Math.min(10,time);
-	else time = 5;
-
-	setClock(time,0);
-
-	document.setupTime = time * 60000;
-}
-
-function startSingleGame(){
-	document.isSinglePlayerGame = true;
-	startGame();
-} 	
-
-function startMultiGame(){
-	document.isSinglePlayerGame = false;
-	var msg = {
-		"board" : document.board,
-		"time" : document.setupTime,
-		"numPlayers" : document.numPlayers
-	}
-	sendMessage(msg,MessageType.initialBoards);
-}
-
-
-
-function startGame(){
+function startGame(isMulti){
 	document.score = 0;
 	document.getElementById("score").innerText = document.score;
 
@@ -236,75 +123,12 @@ function startGame(){
 	});
 
 	toggleVisiblePage(Pages.game);
+
+	// cannot pause in a multiplayer game
+	if(isMulti) document.getElementById("pause").style.display = "none";
+
+
 }
-
-function rotateBoard(direction){
-	//hide current rotation
-	var currRotation = "board-"+document.currRotation;
-	document.getElementById(currRotation).style.display = "none";
-	//advance
-	currRotation = (document.currRotation + direction) % 4;
-	if(currRotation == -1) currRotation = 3;
-
-	//show next rotation
-	var nextRotation = "board-"+currRotation;
-	document.getElementById(nextRotation).style.display = "grid";
-
-	//save
-	document.currRotation = currRotation;
-
-	//fix highlighting
-	if(document.lastHighlighted)
-		highlightBoard(document.lastHighlighted);
-
-}	
-
-function togglePause(isPaused){
-	// Pause
-	if(isPaused){
-		document.remaining = getTimeRemaining(document.endtime).total;
-		document.getElementById("pause").style.display = "none";
-		document.getElementById("play").style.display = "";
-		document.getElementById("finishedBoard").style.display = "none";
-		document.getElementById("wordInputDiv").style.display = "none";
-
-		clearInterval(document.timeinterval);
-	}
-
-	// Play
-	else{
-
-		var end = new Date((new Date()).getTime() + document.remaining);
-		document.endtime = end;
-
-		initializeClock();
-		document.getElementById("pause").style.display = "";
-		document.getElementById("play").style.display = "none";
-		document.getElementById("finishedBoard").style.display = "";
-		document.getElementById("wordInputDiv").style.display = "";
-	}
-}
-
-
-function enterLetter(event,obj){
-	if (event.key === "Enter") {
-		if(obj.value != ""){
-			submitWord(obj);
-		}
-	}
-	else{
-		let word = obj.value.toUpperCase();
-		let lettersToHighlight = wordOnBoard(word);
-		if(lettersToHighlight){
-			document.lastHighlighted = lettersToHighlight;
-			highlightBoard(lettersToHighlight);
-		}
-	}
-}
-
-/**
-* Need to move ...
-*/
 
 function submitWord(obj){
 	// Get word
@@ -391,3 +215,42 @@ function toggleVisiblePage(visiblePage){
 	})
 }
 
+function postHighScore(score,board,words){
+
+	var username = "anonymous";
+	console.log(words);
+
+	let timeInUTC = new Date(Date.now()).getTime();
+	var avatar = "https://ssl.gstatic.com/docs/common/profile/badger_lg.png";
+
+        //user is signed in
+        if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+        	username = document.username;
+        	avatar = document.avatar;
+        }
+        else return;
+
+        let values = [[score,username,timeInUTC,avatar,
+        JSON.stringify(board),JSON.stringify(words)]];
+
+        sendScore(values);
+}
+
+function sendScore(values){
+	const resource = {
+		values:values,
+		majorDimension: "ROWS"
+	};
+
+	console.log(values);
+
+	gapi.client.sheets.spreadsheets.values.append({
+		spreadsheetId: SHEET_ID,
+		range: 'Sheet1!A:F',
+		valueInputOption:"USER_ENTERED",
+		resource:resource
+		}).then(function(response) {
+		console.log(response)
+		}, function(response) {
+	});
+}

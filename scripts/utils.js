@@ -31,6 +31,11 @@
 
 	function removeNode(nodeId){
 		var node = document.getElementById(nodeId);
+		console.log(node);
 		var cNode = node.cloneNode(false);
 		node.parentNode.replaceChild(cNode, node);
+	}
+
+	function jquerydelete(nodeId){
+		$("#"+nodeId).remove();
 	}

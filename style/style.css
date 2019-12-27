@@ -23,10 +23,9 @@
 .letter{
 	width: 20px;
 }
-.rightMenu{
+.leftMenu{
 	display: absolute;
 	position: absolute;
-
 }
 .centerContent{
 	display: flex;
@@ -118,10 +117,7 @@ table.joinedPlayersTable tr td {
 }
 
 .title-container {
-	width: 100%;
-	display: block;
-	overflow: auto;
-	margin-bottom: 100px;
+	margin-top:1vw;
 }
 
 .title {
@@ -155,24 +151,62 @@ table.joinedPlayersTable tr td {
 	border: 3px solid black;
 }
 
-/*.table thead {
-	background: #111;
-	color: #fff;
-	}*/
+.dropbtn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+}
 
-/*.table tr th,
-.table tr td:nth-child(odd) {
-	text-align: center;
-	}*/
+.dropdown {
+	display: inline-block;
+}
 
-	.highscores-container{
-		text-align:center;
-		display:block;
-	}
+.dropdown-content {
+	margin-top: 7vw;
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+}
 
-	.highscores-element {
-		background: #d2d2d2;
-	}
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
 
+.dropdown-content a:hover {
+	background-color: #ddd;
+}
 
-/** end high scores **/
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+#highscores {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#highscores td, #highscores th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#highscores tr:nth-child(even){background-color: #f2f2f2;}
+
+#highscores tr:hover {background-color: #ddd;}
+
+#highscores th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #4CAF50;
+	color: white;
+}

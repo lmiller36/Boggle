@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title></title>
+</head>
+<!-- UI Functions -->
+<script type="text/javascript">
+	function setupSinglePlayer(){
+		document.board = shuffledBoard();
+		document.setupTime = 5 * 60000;
+		toggleVisiblePage(Pages.setupSinglePlayer);
+	}
+
+	function multiplayer(){
+		document.setupTime = 5 * 60000;
+		toggleVisiblePage(Pages.setupMulti);
+	}
+
+
+	function loadHighScores(){
+		gapi.client.sheets.spreadsheets.values.get({
+			spreadsheetId: SHEET_ID,
+			range: 'Sheet1!A1:F'
+		}).then(function(response) {
+			console.log(response)
+			let values = response.result.values;
+
+			if(!values) return;
+
+			var header = values.splice(0,1)[0];
+			var sortedScores = values.sort(function(a, b){
+				return parseInt(parseInt(b[0] - a[0]));
+			});
+
+			let count = 1;
+
+			var scoreEntries = "highscores-rows";
+			removeNode(scoreEntries);
+			var scoresList = document.getElementById(scoreEntries);
+			sortedScores.forEach( (entry) => {
+				let score = entry[0];
+				let username = entry[1];
+				let timeOfPlay = entry[2];
+				let avatarUrl = entry[3];
+				let board = JSON.parse(entry[4]);
+				let words = JSON.parse(entry[5]);
+
+				console.log(words.length);
+
+				/**/var bestWord = "";
+				if(words.length == 1) bestWord = words[0];
+				else {
+					words.forEach((word)=>{
+						if(word.length > bestWord) bestWord = word;
+					})
+				}
+
+				let date = new Date(parseInt(timeOfPlay)).toLocaleDateString("en-US");
+				let toShow = [count,username,"avatar",score,date,bestWord.toUpperCase()];
+
+				var row = document.createElement("tr");
+				row.className = "element";
+
+				var children = [];
+
+				toShow.forEach((row)=>{
+					var entry = document.createElement("td");
+					entry.innerText = row;
+					entry.className = "font"
+					children.push(entry);
+				});
+
+				var avatar = document.createElement("img");
+				avatar.className = "avatar";
+				avatar.src = avatarUrl;
+
+				var avatarDiv = children[2];
+				avatarDiv.innerText = "";
+				avatarDiv.appendChild(avatar);
+
+				children.forEach((child)=> row.appendChild(child));
+
+				scoresList.appendChild(row);
+
+				count ++;
+			})
+		}, function(response) {
+			appendPre('Error: ' + response.result.error.message);
+		});
+
+		toggleVisiblePage(Pages.highScores);
+
+	}
+</script>
+<body>
+	<div class ="mainMenu centerContent">
+		<div class="mainMenu centeredDiv">
+			<div id="btn-container">
+				<button class="btn centered" onclick="setupSinglePlayer()">
+					<i class="fa fa-user"></i> Single
+				</button>
+			</div>
+			<div>
+				<button class="btn centered" onclick="multiplayer()">
+					<i class="fa fa-users"></i> Multiplayer
+				</button>
+			</div>
+			<div>
+				<button class="btn centered" onclick="loadHighScores()">
+					<i class="fa fa-list-ol"></i> High Scores
+				</button>
+			</div>
+			<div>
+				<button class="btn centered" onclick="">
+					<i class="fa fa-question-circle"></i> How to play
+				</button>
+			</div>
+			<div>
+				<button class="btn centered" onclick="submitHighScore()">
+					<i class="fa fa-info-circle"></i> Contributions
+				</button>
+			</div>
+			<div>
+				<button class="btn centered" onclick="">
+					<i class=" fa fa-times"></i> Exit
+				</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

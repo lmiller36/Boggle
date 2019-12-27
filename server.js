@@ -1,13 +1,8 @@
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
-var wordlist = require('wordlist-english');
-// var englishWords = wordlist['english'];
-// console.log(englishWords.length);
 
 http.createServer(function (request, response) {
-    console.log('request starting...');
-
     var filePath = '.' + request.url;
     if (filePath == './')
         filePath = './index.html';

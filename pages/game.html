@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title></title>
+</head>
+<style type="text/css">
+.words {
+   position: absolute;
+   right: 0;
+}
+</style>
+<!-- UI Functions -->
+<script type="text/javascript">
+   function rotateBoard(direction){
+      //hide current rotation
+      var currRotation = "board-"+document.currRotation;
+      document.getElementById(currRotation).style.display = "none";
+
+      //advance
+      currRotation = (document.currRotation + direction) % 4;
+      if(currRotation == -1) currRotation = 3;
+
+      //show next rotation
+      var nextRotation = "board-"+currRotation;
+      document.getElementById(nextRotation).style.display = "grid";
+
+      //save
+      document.currRotation = currRotation;
+
+      //fix highlighting
+      if(document.lastHighlighted)
+         highlightBoard(document.lastHighlighted);
+   }  
+
+   function togglePause(isPaused){
+      // Pause
+      if(isPaused){
+         document.remaining = getTimeRemaining(document.endtime).total;
+         document.getElementById("pause").style.display = "none";
+         document.getElementById("play").style.display = "";
+         document.getElementById("finishedBoard").style.display = "none";
+         document.getElementById("wordInputDiv").style.display = "none";
+
+         clearInterval(document.timeinterval);
+      }
+
+      // Play
+      else{
+
+         var end = new Date((new Date()).getTime() + document.remaining);
+         document.endtime = end;
+
+         initializeClock();
+         document.getElementById("pause").style.display = "";
+         document.getElementById("play").style.display = "none";
+         document.getElementById("finishedBoard").style.display = "";
+         document.getElementById("wordInputDiv").style.display = "";
+      }
+   }
+
+   function enterLetter(event,obj){
+      if (event.key === "Enter") {
+         if(obj.value != ""){
+            submitWord(obj);
+         }
+      }
+      else{
+         let word = obj.value.toUpperCase();
+         let lettersToHighlight = wordOnBoard(word);
+         if(lettersToHighlight){
+            document.lastHighlighted = lettersToHighlight;
+            highlightBoard(lettersToHighlight);
+         }
+      }
+   }
+
+   function mainMenu(){
+      // Stop timer & set to zeros
+      togglePause(0);
+      clearInterval(document.timeinterval);
+      document.remaining = null;
+
+      // Remove words
+      var id = "wordList";
+      var node = document.getElementById(id);
+      var cNode = node.cloneNode(false);
+      node.parentNode.replaceChild(cNode, node);
+
+      // Remove Tiles
+      removeBoardTiles();
+
+      // Go to main menu
+      toggleVisiblePage(Pages.mainMenu);
+   }
+</script>
+<body>
+   <div class = "game">
+      <div id = "leftMenu_ingame" class="words" style="display: none">
+        <div>
+         <span>total:</span><span id="score">0</span>
+      </div>
+      <div class="wrap">
+         <table class="head">
+          <tr>
+           <td>Word</td>
+           <td>Score</td>
+        </tr>
+     </table>
+     <div class="inner_table">
+        <table id="wordList" class = "wordList">
+        </table>
+     </div>
+  </div>
+</div>
+<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+<div class = "centerContent">
+  <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i> 
+  <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i> 	
+  <i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i> 
+  <i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i> 
+</div>
+<div class = "centerContent">
+   <div id="clockdiv_game" class = "timer">
+      <span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
+   </div>
+</div>
+<div id="finishedBoard" class = "centerContent">
+   <div id = "board-0" class="grid-container"></div>
+   <div id = "board-1" class="grid-container" style="display:none;"></div>
+   <div id = "board-2" class="grid-container" style="display:none;"></div>
+   <div id = "board-3" class="grid-container" style="display:none;"></div>
+</div>
+<div id ="wordInputDiv">
+   <p class="centerContent">Enter words here:</p>
+   <div class="centerContent">
+      <input id="wordsInput" type="text" name="username" autocomplete="off" onkeyup="enterLetter(event,this)"/>
+   </div>
+</div>
+</div>
+</body>
+</html>

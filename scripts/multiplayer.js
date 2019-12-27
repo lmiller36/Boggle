@@ -7,18 +7,18 @@ $(document).ready(function() {
 		publishKey: 'pub-c-10d297a3-4a59-41b5-8770-9a3cc3625270',
 		subscribeKey: 'sub-c-68069aa6-269d-11ea-95be-f6a3bb2caa12'
 	});
+	document.me = randomAlphanumeric();
 });
 
 function startChannel(){
 	var alphanumeric = randomAlphanumeric();
-	document.numPlayers = 1;
+	document.otherPlayers = new Set();
 	joinChannel(alphanumeric, true);
 
 	return alphanumeric;
 }
 
 function joinChannel(channelID, shouldBeHost){
-	document.me = randomAlphanumeric();
 	document.joinedPlayers = 0;
 
 	if(shouldBeHost) isHost = true;
@@ -43,48 +43,65 @@ function joinChannel(channelID, shouldBeHost){
 	}
 }
 
-	function bootPlayer(playerId){
-		var bootMsg = {
-			"booted" : playerId
-		}
-
-		document.numPlayers --;
-
-		sendMessage(bootMsg,MessageType.booted);
+function removePlayer(playerId){
+	var bootMsg = {
+		"unsubscribedId" : playerId
 	}
 
-	function unsubscribe(){
-		pubnub.unsubscribe({
-			channels: [channel]
-		});
+	sendMessage(bootMsg,MessageType.unsubscribe);
+}
+
+function bootPlayer(playerId){
+	var bootMsg = {
+		"bootedId" : playerId
 	}
 
-	function receiveMessage(message){
-		message = message.message;
-		if(message.type == MessageType.joinGame){
-			if(isHost){
-				document.numPlayers += 1;
-				appendPlayerToTable(message.message.sender);
-			}
+	document.otherPlayers.delete(playerId);
 
+	sendMessage(bootMsg,MessageType.booted);
+}
+
+function unsubscribe(){
+	pubnub.unsubscribe({
+		channels: [channel]
+	});
+}
+
+function receiveMessage(message){
+	message = message.message;
+	if(message.type == MessageType.joinGame){
+		if(isHost){
+			document.otherPlayers.add(message.message.sender);
+			appendPlayerToTable(message.message.sender);
 		}
-		else if (message.type == MessageType.booted){
-			var bootedId = message.message.booted;
 
+	}
+	else if (message.type == MessageType.booted){
+		var bootedId = message.message.bootedId;
+
+		console.log(message);
 			// Oh no! I've been booted
 			if(bootedId == document.me){
 				alert("You have been booted by the host");
-				exitMultiplayerSession();
+				bootMe();
+			}
+		}
+		else if (message.type == MessageType.unsubscribe){
+			var unsubscribedId = message.message.unsubscribedId;
+			if(isHost){
+				document.otherPlayers.delete(unsubscribedId);
+
+				var id = "id_"+unsubscribedId;
+				jquerydelete(id);
 			}
 		}
 		else if(message.type == MessageType.initialBoards){
 			document.board = message.message.board;
 			document.setupTime = message.message.time;
-			document.numPlayers = message.message.numPlayers;
-			startGame();
+			document.numPlayers = document.otherPlayers.size;
+			startGame(true);
 		}
 		else if (message.type == MessageType.endGame){
-			console.log(message.message.words);
 			if(message.message.sender != document.me){
 				var opponentsWords = message.message.words;
 

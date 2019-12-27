@@ -15,12 +15,12 @@
 	}
 
 	function initializeClock(){
-		setClock("00","00");
+		setClock("00","00","clockdiv_game");
 		var timeinterval = setInterval(function(){
 			var endtime = document.endtime;
 			var t = getTimeRemaining(endtime);
 
-			setClock(t.minutes,t.seconds);
+			setClock(t.minutes,t.seconds,"clockdiv_game");
 
 			if(t.total<=0){
 				clearInterval(timeinterval);
@@ -30,8 +30,8 @@
 		document.timeinterval = timeinterval;
 	}
 
-	function setClock(minutes,seconds){
-		var clock = document.getElementById("clockdiv");
+	function setClock(minutes,seconds,divId){
+		var clock = document.getElementById(divId);
 
 		if(minutes == 0)minutes = "00";
 		else if(minutes <= 9)minutes = "0" + minutes;
@@ -45,7 +45,7 @@
 	}
 
 	function setClock_setup_multi(minutes,seconds){
-		var clock = document.getElementById("clockdiv_setup_multi");
+		var clock = document.getElementById("");
 		if(minutes == 0)minutes = "00";
 		else if(minutes <= 9)minutes = "0" + minutes;
 		if(seconds == 0) seconds = "00";
