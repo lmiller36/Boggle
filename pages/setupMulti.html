@@ -41,10 +41,17 @@
    }
 
    function toggleHost(isHost){
+      document.getElementById("pacman_container").style.display = "";
+
+      // unsubscribe to old seed
+      if(document.channel != null){
+         unsubscribe(document.channel);
+      }
+
       if(isHost){
          var seed = startChannel();
          document.board = shuffledBoard();
-         document.multiplayerSeed = seed;
+         // document.multiplayerSeed = seed;
          var url = "lmiller36.github.io/Boggle/#/joinGame/"+seed;
          document.getElementById("game_id").innerText = seed;
          document.getElementById("host").style.display = "";
@@ -72,11 +79,12 @@
    }
 
    function mainMenu_setupMulti(){
+      unsubscribe();
 
       //TODO Unsubscribe stuff
             // Go to main menu
             toggleVisiblePage(Pages.mainMenu);
-   }
+         }
 
       </script>
       <body>
@@ -128,16 +136,18 @@
                <div class="centerContent" id = "startGameMultiButton" style = "display: none">
                   <i class="fa fa-play fa-2x icon" onclick="startMultiGame()"></i> 
                </div>
-            </div>
-            <div>
-               <div id = "join" style="" class = "centerContent">
+            </div>   
+            <div id = "join" style="" class = "">
+               <div class = "centerContent">
                   <input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)"/>
                   <div>
                      <span id = "hasJoined" style=""></span>
                      <i id ="exitMultiplayer" class=" fa fa-times" style="display: none" onclick="exitMultiplayerSession()"></i>
                   </div>
                </div>
-            </div>
+               <br/>
+               <p class = "centerContent"><b>Please ask host to start</b></p>
+            </div>       
             <div id ="pacman_container"></div>
          </div>
       </body>

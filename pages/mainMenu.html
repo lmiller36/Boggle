@@ -14,6 +14,10 @@
 
 	function multiplayer(){
 		document.setupTime = 5 * 60000;
+		document.getElementById("host").style.display = "none";
+		document.getElementById("join").style.display = "none";
+		document.getElementById("startGameMultiButton").style.display = "none";
+		document.getElementById("pacman_container").style.display = "none";
 		toggleVisiblePage(Pages.setupMulti);
 	}
 

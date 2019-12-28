@@ -1,5 +1,4 @@
 var pubnub;
-var channel;
 var isHost = false;
 
 $(document).ready(function() {
@@ -25,7 +24,7 @@ function startChannel(){
 
 function joinChannel(channelID, shouldBeHost){
 	console.log("joined!");	
-	console.log(channelID)
+	console.log(channelID);
 	document.joinedPlayers = 0;
 
 	if(shouldBeHost) isHost = true;
@@ -33,8 +32,7 @@ function joinChannel(channelID, shouldBeHost){
 		channels: [channelID]
 	});
 
-	channel = channelID;
-	document.channel = channel;
+	document.channel = channelID;
 
 	// Tell host that we've joined
 	if(!isHost){
@@ -65,7 +63,7 @@ function bootPlayer(playerId){
 
 function unsubscribe(){
 	pubnub.unsubscribe({
-		channels: [channel]
+		channels: [document.channel]
 	});
 }
 
@@ -158,6 +156,6 @@ function receiveMessage(message){
 				"message":msg,
 				"type":msgType
 			},
-			channel: channel
+			channel: document.channel
 		});
 	}

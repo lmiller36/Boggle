@@ -137,8 +137,6 @@ function startGame(isMulti){
 
 	// cannot pause in a multiplayer game
 	if(isMulti) document.getElementById("pause").style.display = "none";
-
-
 }
 
 function submitWord(obj){
@@ -159,7 +157,6 @@ function submitWord(obj){
 	
 	removeHighlightingFromAll();
 }
-
 
 function appendPlayerToTable(playerId){
 
