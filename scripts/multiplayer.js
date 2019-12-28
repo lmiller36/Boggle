@@ -7,6 +7,11 @@ $(document).ready(function() {
 		publishKey: 'pub-c-10d297a3-4a59-41b5-8770-9a3cc3625270',
 		subscribeKey: 'sub-c-68069aa6-269d-11ea-95be-f6a3bb2caa12'
 	});
+	pubnub.addListener({
+		message: function(message) {
+			receiveMessage(message)
+		}
+	});
 	document.me = randomAlphanumeric();
 });
 
@@ -19,6 +24,7 @@ function startChannel(){
 }
 
 function joinChannel(channelID, shouldBeHost){
+	console.log("joined!");	
 	console.log(channelID)
 	document.joinedPlayers = 0;
 
@@ -27,13 +33,8 @@ function joinChannel(channelID, shouldBeHost){
 		channels: [channelID]
 	});
 
-	pubnub.addListener({
-		message: function(message) {
-			receiveMessage(message)
-		}
-	});
-
 	channel = channelID;
+	document.channel = channel;
 
 	// Tell host that we've joined
 	if(!isHost){
@@ -134,6 +135,18 @@ function receiveMessage(message){
 					document.getElementById("score").innerText = score;
 
 					alert("Your score is "+score);
+
+					if(!isHost){
+						unsubscribe(document.channel);
+					}
+					else{
+						// remove all players
+						document.otherPlayers = new Set();
+						// document.getElementById("playersList").innerHtml = "";
+						removeAllChildren("playersList");
+
+						console.log(document.getElementById("playersList").children);
+					}
 				}
 			}
 		}

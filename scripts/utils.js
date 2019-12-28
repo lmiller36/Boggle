@@ -39,3 +39,12 @@
 	function jquerydelete(nodeId){
 		$("#"+nodeId).remove();
 	}
+
+	function removeAllChildren(nodeId){
+		var e = document.getElementById(nodeId);
+		var child = e.lastElementChild;  
+		while (child) { 
+			e.removeChild(child); 
+			child = e.lastElementChild; 
+		} 
+	}

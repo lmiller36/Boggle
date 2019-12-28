@@ -30,10 +30,6 @@ $( document ).ready(function() {
 
 	var el = content.querySelector('.pacman_svg');
 	document.getElementById("pacman_container").appendChild(el.cloneNode(true));
-
-	
-	
-
 });
 
 // load data
@@ -68,6 +64,7 @@ document.wordlist = [];
 
 function endGame(){
 	document.getElementById("wordInputDiv").style.display = "none";
+	document.getElementById("playAgainButton").style.display = "";
 	// document.uniqueWords = copyArr(document.words);
 
 	if(!document.isSinglePlayerGame){
@@ -94,6 +91,7 @@ function bootMe(){
 function startGame(isMulti){
 	document.score = 0;
 	document.getElementById("score").innerText = document.score;
+	document.getElementById("playAgainButton").style.display = "none";
 
 	document.words = []
 	document.uniqueWords = []

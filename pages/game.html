@@ -82,16 +82,47 @@
       document.remaining = null;
 
       // Remove words
-      var id = "wordList";
-      var node = document.getElementById(id);
-      var cNode = node.cloneNode(false);
-      node.parentNode.replaceChild(cNode, node);
+      removeWords();
 
       // Remove Tiles
       removeBoardTiles();
 
       // Go to main menu
       toggleVisiblePage(Pages.mainMenu);
+   }
+   function playAgain(){
+      // Remove words
+      removeWords();
+
+     // New board
+     document.board = shuffledBoard();
+
+     // Remove Tiles
+     removeBoardTiles();
+
+      // play multiplayer again
+      if(!document.isSinglePlayerGame){
+         if(isHost){
+            console.log()
+         }
+         else {
+            // var ackMsg = {
+            //    "sender" : document.me
+            // }
+            // sendMessage(ackMsg,MessageType.joinGame);
+            joinChannel(document.channel,false);
+         }
+
+         toggleVisiblePage(Pages.setupMulti);
+      }
+      // play single player
+      else {
+         // show entry input box and remove play again button
+         document.getElementById("wordInputDiv").style.display = "";
+         document.getElementById("playAgainButton").style.display = "none";
+
+         startGame();
+      }
    }
 </script>
 <body>
@@ -136,6 +167,9 @@
    <div class="centerContent">
       <input id="wordsInput" type="text" name="username" autocomplete="off" onkeyup="enterLetter(event,this)"/>
    </div>
+</div>
+<div id="playAgainButton" class="centerContent" style="display: none">
+   <i class="fa fa-repeat fa-2x icon" onclick="playAgain()"></i>
 </div>
 </div>
 </body>

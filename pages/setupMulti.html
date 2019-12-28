@@ -25,6 +25,7 @@
          "time" : document.setupTime,
          "numPlayers" : document.otherPlayers.size
       }
+      console.log("start");
       sendMessage(msg,MessageType.initialBoards);
    }
    function changeTimeMulti(change){
@@ -44,10 +45,12 @@
          var seed = startChannel();
          document.board = shuffledBoard();
          document.multiplayerSeed = seed;
+         var url = "lmiller36.github.io/Boggle/#/joinGame/"+seed;
          document.getElementById("game_id").innerText = seed;
          document.getElementById("host").style.display = "";
          document.getElementById("join").style.display = "none";
-         document.getElementById("game_link").innerText = " lmiller36.github.io/Boggle/#/joinGame/"+seed
+         document.getElementById("game_link").href = 
+         document.getElementById("game_link").innerText = url;
          document.getElementById("startGameMultiButton").style.display = "";
 
       }
@@ -56,7 +59,6 @@
          document.getElementById("host").style.display = "none";
          document.getElementById("join").style.display = "";
          document.getElementById("startGameMultiButton").style.display = "none";
-
       }
    }
 
@@ -74,7 +76,7 @@
       //TODO Unsubscribe stuff
             // Go to main menu
             toggleVisiblePage(Pages.mainMenu);
-         }
+   }
 
       </script>
       <body>
@@ -105,9 +107,9 @@
                   Share this link: 
                </div>
                <div class="centerContent">
-                  <p id="game_link"></p>
-
+                  <a id="game_link"></a>
                </div>
+               <br/>
                <div class="centerContent">
                   <div class="wrap">
                      <table class="joinedPlayersTable">
