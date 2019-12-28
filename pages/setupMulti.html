@@ -33,7 +33,7 @@
       document.isSinglePlayerGame = false;
       var msg = {
          "board" : document.board,
-         "time" : document.endtime,
+         "time" : document.setupTime,
          "numPlayers" : document.otherPlayers.size + 1
       }
       console.log("start");
@@ -64,10 +64,11 @@
          document.board = shuffledBoard();
          // document.multiplayerSeed = seed;
          var url = "lmiller36.github.io/Boggle/#/joinGame/"+seed;
+         console.log(url);
          document.getElementById("game_id").innerText = seed;
          document.getElementById("host").style.display = "";
          document.getElementById("join").style.display = "none";
-         document.getElementById("game_link").href = 
+         // document.getElementById("game_link").href = url;
          document.getElementById("game_link").innerText = url;
          document.getElementById("startGameMultiButton").style.display = "";
 
@@ -130,7 +131,7 @@
                   Share this link: 
                </div>
                <div class="centerContent">
-                  <a id="game_link"></a>
+                  <p id="game_link"></p>
                </div>
                <br/>
                <div class="centerContent">
