@@ -18,12 +18,23 @@
          }
       }
    }
+
+   function submitUsername(event,obj){
+      if (event.key === "Enter") {
+         var val = obj.value;
+         if(val != ""){
+            console.log(val);
+            document.username = val;
+         }
+      }
+   }
+
    function startMultiGame(){
       document.isSinglePlayerGame = false;
       var msg = {
          "board" : document.board,
-         "time" : document.setupTime,
-         "numPlayers" : document.otherPlayers.size
+         "time" : document.endtime,
+         "numPlayers" : document.otherPlayers.size + 1
       }
       console.log("start");
       sendMessage(msg,MessageType.initialBoards);
@@ -97,6 +108,10 @@
                <input id ="isHostRadio" type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
                <input id ="isJoinRadio" type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
             </div>
+            <div class="centerContent" id = "username_container">
+               <input id="username" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="submitUsername(event,this)" placeholder="username" />
+            </div>
+
             <div id = "host" class="" style = "display: none">
                <div class="centerContent">
                   <div id="clockdiv_setup_multi" class = "timer">
@@ -139,7 +154,7 @@
             </div>   
             <div id = "join" style="" class = "">
                <div class = "centerContent">
-                  <input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)"/>
+                  <input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)" placeholder="game ID"/>
                   <div>
                      <span id = "hasJoined" style=""></span>
                      <i id ="exitMultiplayer" class=" fa fa-times" style="display: none" onclick="exitMultiplayerSession()"></i>

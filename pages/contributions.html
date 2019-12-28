@@ -7,12 +7,40 @@
 	function doSomething(){
 		console.log(window.location.hash.substr(1));
 	}
-</script>s
+</script>
+<style type="text/css">
+#opponentsWords tr:nth-child(even){background-color: #f2f2f2;}
+
+#opponentsWords tr:hover {background-color: #ddd;}
+
+#opponentsWords th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #4CAF50;
+	color: white;
+}
+
+</style>
 <body>
 	<div class = "contributions">
-
-		<a href="#/joinGame/3ZFPBEFAHPC">Visit W3Schools</a>
-		<button onclick="doSomething()">click</button>
+		<i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i> 
+		<div class = "">
+			<p id = "title" class="title centerContent"> High Scores </p>
+			<div class = "centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
+				<table id="opponentsWords" class="opponentsWords-table striped">
+					<thead id = "opponentsWords-head">
+						<tr id="opponentsWords-head-row">
+							<th>Lorne</th>
+							<th>Rhonda</th>
+							<th>Paul</th>
+						</tr>
+					</thead>
+					<tbody id = "opponentsWords-rows">
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

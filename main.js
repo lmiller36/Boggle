@@ -64,76 +64,187 @@ document.wordlist = [];
 
 function endGame(){
 	document.getElementById("wordInputDiv").style.display = "none";
-	document.getElementById("playAgainButton").style.display = "";
 	// document.uniqueWords = copyArr(document.words);
 
 	if(!document.isSinglePlayerGame){
+		// document.allWords = [];
+		if(!document.allWords)document.allWords = [];
+		document.allWords.push({
+					"sender": document.me,
+					"words": document.words,
+					"username": document.username,
+				});
+
 		var msg = {
 			"words":document.words,
-			"sender":document.me
+			"sender":document.me,
+			"username" :document.username
 		};
+
 		sendMessage(msg,MessageType.endGame);
 	}
 	else{
 		alert("Your score is "+document.score);
-		postHighScore(document.score,document.board,document.words)
+		postHighScore(document.score,document.board,document.words);
+		document.getElementById("playAgainButton").style.display = "";
 	}
 }
 
-function bootMe(){
-	unsubscribe();
+function tallyScores(){
+	document.getElementById("playAgainButton").style.display = "";
 
-	document.getElementById("exitMultiplayer").style.display = "none";
-	document.getElementById("join_id").style.display = "";
-	document.getElementById("hasJoined").style.display = "none";
-}
+	var scoresReceived = document.allWords.length;
+	console.log(scoresReceived);
 
-function startGame(isMulti){
-	document.score = 0;
-	document.getElementById("score").innerText = document.score;
-	document.getElementById("playAgainButton").style.display = "none";
+	var sets = [];
+	var unique = [];
+	var scores = [];
+	var maxLength = 0;
+	var myIndex = -1;
 
-	document.words = []
-	document.uniqueWords = []
-	var arr = document.board;
-	for(var i = 0; i < 5; i++){
-		for(var j = 0; j < 5; j++){
-			var divContainer = document.createElement("div");
-			divContainer.id = "row_"+i+"_column_"+j+"_0";
-			divContainer.className = "grid-item";
-			divContainer.innerText = arr[i][j];
-
-			var divContainer1 = document.createElement("div");
-			divContainer1.id = "row_"+i+"_column_"+j+"_1";
-			divContainer1.className = "grid-item";
-			divContainer1.innerText = arr[j][4 - i];
-
-			var divContainer2 = document.createElement("div");
-			divContainer2.id = "row_"+i+"_column_"+j+"_2";
-			divContainer2.className = "grid-item";
-			divContainer2.innerText = arr[4 - i][4 - j];
-
-			var divContainer3 = document.createElement("div");
-			divContainer3.id = "row_"+i+"_column_"+j+"_3";
-			divContainer3.className = "grid-item";
-			divContainer3.innerText = arr[4 - j][i];
-
-			document.getElementById("board-0").appendChild(divContainer);
-			document.getElementById("board-1").appendChild(divContainer1);
-			document.getElementById("board-2").appendChild(divContainer2);
-			document.getElementById("board-3").appendChild(divContainer3);
-
+	var namesHeader = document.getElementById("opponentsWords-head-row");
+	var count = 0;
+	document.allWords.forEach((obj)=>{
+		if(obj.sender == document.me){
+			myIndex = count;
 		}
+		var th = document.createElement("th");
+		th.innerText = obj.username;
+		namesHeader.appendChild(th);
+
+		var wordList = obj.words;
+		maxLength = Math.max(maxLength,wordList.length);
+		scores.push(0);
+		sets.push(new Set(wordList));
+		count++;
+	})
+
+	console.log(maxLength)
+
+	var opponentsWords = document.getElementById("opponentsWords-rows");
+
+	var unique = [];
+
+	for(var i = 0;i < scoresReceived;i++){
+		var currUnique = new Set(sets[i]);
+		console.log(currUnique);
+		for(var j = 0;j < scoresReceived;j++){
+			if(i != j){
+				currUnique = currUnique.difference(sets[j]);
+			}
+		}
+		unique.push(currUnique);
 	}
 
-	$(document).ready(function() {
-		var durationInMilli = document.setupTime + 1000;
-		var end = new Date((new Date()).getTime() + durationInMilli);
-		document.endtime = end;
-		initializeClock();
-	});
+	console.log(unique);
 
-	toggleVisiblePage(Pages.game);
+	// console.log(unique);
+
+	for(var i = 0; i < maxLength;i++){
+		var row = document.createElement("tr");
+		row.className = "element";
+
+		for(var j = 0;j < scoresReceived;j++){
+
+			var entry = document.createElement("td");
+			var word = "";
+			if(i < document.allWords[j].words.length){
+				word = document.allWords[j].words[i];
+				 // is not unique
+				 if(!unique[j].has(word)){
+				 	entry.style.textDecoration = "line-through"
+				 }
+				 else{
+				 	scores[j] += getScore(word);
+				 }
+				}
+				entry.innerText = word.toUpperCase();
+				entry.className = "font";
+				row.appendChild(entry);
+			}
+
+			opponentsWords.appendChild(row);
+		}
+
+	// 	console.log(scores);
+
+		// add scores
+		var score_row = document.createElement("tr");
+		score_row.className = "element";
+
+		scores.forEach((score)=>{
+			console.log(score);
+			var entry = document.createElement("td");
+			entry.innerText = score;
+			entry.className = "font"
+			entry.style.textAlign = "center";
+
+			score_row.appendChild(entry);
+		});
+
+		opponentsWords.appendChild(score_row);
+		document.getElementById("opponentsWords_container").style.display = "";
+
+		alert("Your score is "+scores[myIndex])
+
+		console.log(document.allWords);
+		console.log(document.numPlayers);
+	}
+
+	function bootMe(){
+		unsubscribe();
+
+		document.getElementById("exitMultiplayer").style.display = "none";
+		document.getElementById("join_id").style.display = "";
+		document.getElementById("hasJoined").style.display = "none";
+	}
+
+	function startGame(isMulti){
+		document.score = 0;
+		document.getElementById("score").innerText = document.score;
+		document.getElementById("playAgainButton").style.display = "none";
+
+		document.words = []
+		document.uniqueWords = []
+		var arr = document.board;
+		for(var i = 0; i < 5; i++){
+			for(var j = 0; j < 5; j++){
+				var divContainer = document.createElement("div");
+				divContainer.id = "row_"+i+"_column_"+j+"_0";
+				divContainer.className = "grid-item";
+				divContainer.innerText = arr[i][j];
+
+				var divContainer1 = document.createElement("div");
+				divContainer1.id = "row_"+i+"_column_"+j+"_1";
+				divContainer1.className = "grid-item";
+				divContainer1.innerText = arr[j][4 - i];
+
+				var divContainer2 = document.createElement("div");
+				divContainer2.id = "row_"+i+"_column_"+j+"_2";
+				divContainer2.className = "grid-item";
+				divContainer2.innerText = arr[4 - i][4 - j];
+
+				var divContainer3 = document.createElement("div");
+				divContainer3.id = "row_"+i+"_column_"+j+"_3";
+				divContainer3.className = "grid-item";
+				divContainer3.innerText = arr[4 - j][i];
+
+				document.getElementById("board-0").appendChild(divContainer);
+				document.getElementById("board-1").appendChild(divContainer1);
+				document.getElementById("board-2").appendChild(divContainer2);
+				document.getElementById("board-3").appendChild(divContainer3);
+
+			}
+		}
+
+		$(document).ready(function() {
+			var durationInMilli = document.setupTime + 1000;
+			var end = new Date((new Date()).getTime() + durationInMilli);
+			document.endtime = end;
+			initializeClock();
+		});
+
+		toggleVisiblePage(Pages.game);
 
 	// cannot pause in a multiplayer game
 	if(isMulti) document.getElementById("pause").style.display = "none";

@@ -33,11 +33,15 @@ function joinChannel(channelID, shouldBeHost){
 	});
 
 	document.channel = channelID;
+	document.username = document.username ? document.username : document.me;
+
 
 	// Tell host that we've joined
 	if(!isHost){
+		// console.log(username);
 		var ackMsg = {
-			"sender" : document.me
+			"sender" : document.me,
+			"username" : document.username
 		}
 		sendMessage(ackMsg,MessageType.joinGame);
 	}
@@ -73,7 +77,7 @@ function receiveMessage(message){
 	if(message.type == MessageType.joinGame){
 		if(isHost){
 			document.otherPlayers.add(message.message.sender);
-			appendPlayerToTable(message.message.sender);
+			appendPlayerToTable(message.message.username);
 		}
 
 	}
@@ -104,47 +108,16 @@ function receiveMessage(message){
 		}
 		else if (message.type == MessageType.endGame){
 			if(message.message.sender != document.me){
+				if(!document.allWords) document.allWords = [];
 				var opponentsWords = message.message.words;
-				console.log(opponentsWords);
-				console.log(document.uniqueWords);	
-
-				var newArr = [];
-				var score = 0;
-
-				document.uniqueWords.forEach((word)=>{
-					// not unique
-					if(opponentsWords.indexOf(word) != -1){
-						document.getElementById("word_"+word.toUpperCase()).style.textDecoration = "line-through";
-					}
-					else
-					{
-						newArr.push(word);
-						score += getScore(word);
-					}
+				document.allWords.push({
+					"sender": message.message.sender,
+					"username": message.message.username,
+					"words": opponentsWords
 				});
 
-				document.numPlayers --;
-				document.uniqueWords = newArr;
-
-				if(document.numPlayers == 0){
-					
-					document.score = score;
-
-					document.getElementById("score").innerText = score;
-
-					alert("Your score is "+score);
-
-					if(!isHost){
-						unsubscribe(document.channel);
-					}
-					else{
-						// remove all players
-						document.otherPlayers = new Set();
-						// document.getElementById("playersList").innerHtml = "";
-						removeAllChildren("playersList");
-
-						console.log(document.getElementById("playersList").children);
-					}
+				if(document.allWords.length == document.numPlayers){
+					tallyScores();
 				}
 			}
 		}
