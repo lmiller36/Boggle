@@ -47,6 +47,7 @@
          document.getElementById("game_id").innerText = seed;
          document.getElementById("host").style.display = "";
          document.getElementById("join").style.display = "none";
+         document.getElementById("game_link").innerText = " lmiller36.github.io/Boggle/#/joinGame/"+seed
          document.getElementById("startGameMultiButton").style.display = "";
 
       }
@@ -83,8 +84,8 @@
             </div>
             <div class="centerContent">
                <p>Please select one: </p>
-               <input type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
-               <input type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
+               <input id ="isHostRadio" type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
+               <input id ="isJoinRadio" type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
             </div>
             <div id = "host" class="" style = "display: none">
                <div class="centerContent">
@@ -99,6 +100,13 @@
                <div class="centerContent">
                   Game ID: 
                   <p id="game_id"></p>
+               </div>
+               <div class="centerContent">
+                  Share this link: 
+               </div>
+               <div class="centerContent">
+                  <p id="game_link"></p>
+
                </div>
                <div class="centerContent">
                   <div class="wrap">
@@ -120,10 +128,10 @@
                </div>
             </div>
             <div>
-               <div id = "join" style="display:none" class = "centerContent">
+               <div id = "join" style="" class = "centerContent">
                   <input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)"/>
                   <div>
-                     <span id = "hasJoined" style="display: none"></span>
+                     <span id = "hasJoined" style=""></span>
                      <i id ="exitMultiplayer" class=" fa fa-times" style="display: none" onclick="exitMultiplayerSession()"></i>
                   </div>
                </div>

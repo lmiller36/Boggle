@@ -19,6 +19,7 @@ function startChannel(){
 }
 
 function joinChannel(channelID, shouldBeHost){
+	console.log(channelID)
 	document.joinedPlayers = 0;
 
 	if(shouldBeHost) isHost = true;

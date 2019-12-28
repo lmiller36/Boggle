@@ -24,10 +24,32 @@
   <link rel="import" id = "game_import" href="./pages/game.html">
   <link rel="import" id = "highScores_import" href="./pages/highScores.html">
   <link rel="import" id = "setupMulti_import" href="./pages/setupMulti.html">
+  <link rel="import" id = "contributions_import" href="./pages/contributions.html">
+
   <link rel="import" id = "pacman_import" href="./data/pacman.html">
 
+  <script type="text/javascript">
+    function myFunction(){
+      $( document ).ready(function() { 
+        var queryString = window.location.hash.substr(1);
+    // join game
+    if(queryString.startsWith("/joinGame/")){
+      var gameId = queryString.substring(queryString.lastIndexOf("/") + 1);
+      toggleVisiblePage(Pages.setupMulti);
+     
+      joinChannel(gameId);
+      document.getElementById("isJoinRadio").checked = true;
+      document.getElementById("join_id").style.display = "none";
+      document.getElementById("exitMultiplayer").style.display = "";
+      document.getElementById("hasJoined").style.display = "";
+      document.getElementById("hasJoined").innerText = "Joined: "+gameId+" ✔";
+    }
+  });
+    }
+  </script>
+
   <!-- external code  -->
-  <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
+  <script onload="myFunction()" src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script async defer src="https://apis.google.com/js/api.js"
@@ -37,6 +59,7 @@
   <meta name="google-signin-client_id" content="968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com">
 </head>
 <script type="text/javascript">
+
   var SHEET_ID = '1vP3OHMLITjfMsmh7ICFDqqtrP1mmHVZjMkQ_2kMPVDk';
   var CLIENT_ID = '968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com';
   var API_KEY = 'AIzaSyAwb096dzp9ykl-v46KBA0ZPGF8OoAV_pE';
@@ -133,6 +156,7 @@
          <div id = "setupSinglePlayer_container" style="display: none"></div>
          <div id = "game_container" style="display: none"></div>
          <div id = "highScores_container" style="display: none"></div>
+         <div id = "contributions_container" style="display: none"></div>
        </div>
      </body>
      </html>

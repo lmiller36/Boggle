@@ -3,13 +3,14 @@ document.submittedWords = [];
 document.currRotation = 0;
 
 const MessageType = Object.freeze({"joinGame":"joinGame","booted":"booted","unsubscribe":"unsubscribe","initialBoards":"initialBoards","endGame":"endGame"});
-const Pages = Object.freeze({"mainMenu":"mainMenu", "game":"game","setupSinglePlayer":"setupSinglePlayer","setupMulti":"setupMulti","highScores":"highScores"});
+const Pages = Object.freeze({"mainMenu":"mainMenu", "game":"game","setupSinglePlayer":"setupSinglePlayer","setupMulti":"setupMulti","highScores":"highScores","contributions":"contributions"});
 document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
 document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container","leftMenu_setup"];
 document.pages[Pages.setupMulti] = ["setupMulti_container","leftMenu_setup_multi"];
 document.pages[Pages.game] = ["game_container","leftMenu_ingame","pause"];
 document.pages[Pages.highScores] = ["highScores_container"];
+document.pages[Pages.contributions] = ["contributions_container"];
 
 // load pages
 $( document ).ready(function() { 
@@ -29,6 +30,10 @@ $( document ).ready(function() {
 
 	var el = content.querySelector('.pacman_svg');
 	document.getElementById("pacman_container").appendChild(el.cloneNode(true));
+
+	
+	
+
 });
 
 // load data
