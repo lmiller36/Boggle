@@ -91,6 +91,7 @@ function mainMenu(){
       toggleVisiblePage(Pages.mainMenu);
     }
     function playAgain(){
+      document.hasTallied = false;
       document.allWords = [];
       document.submittedWords = [];
       document.getElementById("wordInputDiv").style.display = "";

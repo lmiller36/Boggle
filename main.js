@@ -25,8 +25,6 @@ $( document ).ready(function() {
 	// load pacman
 	var pacmanlink = document.getElementById('pacman_import');
 	var content = pacmanlink.import;
-	console.log(pacmanlink);
-	console.log(content);
 
 	var el = content.querySelector('.pacman_svg');
 	document.getElementById("pacman_container").appendChild(el.cloneNode(true));
@@ -70,10 +68,10 @@ function endGame(){
 		// document.allWords = [];
 		if(!document.allWords)document.allWords = [];
 		document.allWords.push({
-					"sender": document.me,
-					"words": document.words,
-					"username": document.username,
-				});
+			"sender": document.me,
+			"words": document.words,
+			"username": document.username,
+		});
 
 		var msg = {
 			"words":document.words,
@@ -82,6 +80,20 @@ function endGame(){
 		};
 
 		sendMessage(msg,MessageType.endGame);
+
+		// Show scores if all responses not received in 3 seconds
+		var countDown = 5;
+		var x = setInterval(function() {
+			countDown--;
+
+		  // If the count down is finished, write some text
+		  if (countDown == 0) {
+		  	console.log("clear")
+		  	clearInterval(x);
+		  	tallyScores();
+		  }
+		}, 1000);
+
 	}
 	else{
 		alert("Your score is "+document.score);
@@ -91,10 +103,13 @@ function endGame(){
 }
 
 function tallyScores(){
+	console.log("tallied");
+	if(document.hasTallied) return;
+
+	document.hasTallied = true;
 	document.getElementById("playAgainButton").style.display = "";
 
 	var scoresReceived = document.allWords.length;
-	console.log(scoresReceived);
 
 	var sets = [];
 	var unique = [];
@@ -119,15 +134,12 @@ function tallyScores(){
 		count++;
 	})
 
-	console.log(maxLength)
-
 	var opponentsWords = document.getElementById("opponentsWords-rows");
 
 	var unique = [];
 
 	for(var i = 0;i < scoresReceived;i++){
 		var currUnique = new Set(sets[i]);
-		console.log(currUnique);
 		for(var j = 0;j < scoresReceived;j++){
 			if(i != j){
 				currUnique = currUnique.difference(sets[j]);
@@ -135,10 +147,6 @@ function tallyScores(){
 		}
 		unique.push(currUnique);
 	}
-
-	console.log(unique);
-
-	// console.log(unique);
 
 	for(var i = 0; i < maxLength;i++){
 		var row = document.createElement("tr");
@@ -166,14 +174,11 @@ function tallyScores(){
 			opponentsWords.appendChild(row);
 		}
 
-	// 	console.log(scores);
-
 		// add scores
 		var score_row = document.createElement("tr");
 		score_row.className = "element";
 
 		scores.forEach((score)=>{
-			console.log(score);
 			var entry = document.createElement("td");
 			entry.innerText = score;
 			entry.className = "font"
@@ -186,9 +191,6 @@ function tallyScores(){
 		document.getElementById("opponentsWords_container").style.display = "";
 
 		alert("Your score is "+scores[myIndex])
-
-		console.log(document.allWords);
-		console.log(document.numPlayers);
 	}
 
 	function bootMe(){
@@ -201,6 +203,7 @@ function tallyScores(){
 
 	function startGame(isMulti){
 		document.score = 0;
+		document.hasTallied = false;
 		document.getElementById("score").innerText = document.score;
 		document.getElementById("playAgainButton").style.display = "none";
 
@@ -338,7 +341,6 @@ function toggleVisiblePage(visiblePage){
 function postHighScore(score,board,words){
 
 	var username = "anonymous";
-	console.log(words);
 
 	let timeInUTC = new Date(Date.now()).getTime();
 	var avatar = "https://ssl.gstatic.com/docs/common/profile/badger_lg.png";

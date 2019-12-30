@@ -117,6 +117,8 @@ function receiveMessage(message){
 				});
 
 				if(document.allWords.length == document.numPlayers){
+					console.log(document.allWords);
+					console.log(numPlayers);
 					tallyScores();
 				}
 			}
