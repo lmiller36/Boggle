@@ -50,37 +50,39 @@ function rotateBoard(direction){
 			if(document.lastHighlighted)
 				highlightBoard(document.lastHighlighted);
 
-}	
-function highlightBoard(lettersToHighlight){
-	removeHighlightingFromAll();
+		}	
+		function highlightBoard(lettersToHighlight){
+			removeHighlightingFromAll();
 
-	lettersToHighlight.forEach((coords)=>{
-		coords = adjustCoordinates(coords);
-		highlightLetter(coords[0],coords[1]);
-	});
-}
-function removeHighlightingFromAll(){
-	for(var rot = 0; rot < 4;rot++){
-		for(var i = 0;i<5;i++){
-			for(var j = 0;j<5;j++){
-				var id = "row_"+i+"_column_"+j+"_"+rot;
-				var div = document.getElementById(id);
-				div.style.border = "1px solid rgba(0, 0, 0, 0.8)";
-				div.style.background = "rgba(255, 255, 255, 0.8)";
+			lettersToHighlight.forEach((coords)=>{
+				coords = adjustCoordinates(coords);
+				highlightLetter(coords[0],coords[1]);
+			});
+		}
+		function removeHighlightingFromAll(){
+			for(var rot = 0; rot < 4;rot++){
+				for(var i = 0;i<5;i++){
+					for(var j = 0;j<5;j++){
+						var id = "row_"+i+"_column_"+j+"_"+rot;
+						var div = document.getElementById(id);
+						if(div){
+							div.style.border = "1px solid rgba(0, 0, 0, 0.8)";
+							div.style.background = "rgba(255, 255, 255, 0.8)";
+						}
+					}
+				}
 			}
 		}
-	}
-}
-function highlightLetter(row,col){
-	var id = "row_"+row+"_column_"+col+"_"+document.currRotation;
-	var div = document.getElementById(id);
-	div.style.border = "white 1px solid";
-	div.style.background = "white";
-}
-	
-function removeWords(){
-	var id = "wordList";
-	var node = document.getElementById(id);
-	var cNode = node.cloneNode(false);
-	node.parentNode.replaceChild(cNode, node);
-}
+		function highlightLetter(row,col){
+			var id = "row_"+row+"_column_"+col+"_"+document.currRotation;
+			var div = document.getElementById(id);
+			div.style.border = "white 1px solid";
+			div.style.background = "white";
+		}
+		
+		function removeWords(){
+			var id = "wordList";
+			var node = document.getElementById(id);
+			var cNode = node.cloneNode(false);
+			node.parentNode.replaceChild(cNode, node);
+		}

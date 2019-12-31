@@ -19,8 +19,6 @@ $(document).ready(function() {
         document.head.appendChild(script);
     });
 
-    // function pubnubStartup(){
-
     // check if a game is joinable
     $(document.me && document.googleLoggedIn).ready(function() {
         console.log(document.me);
@@ -59,7 +57,7 @@ $(document).ready(function() {
     if(content){
         var el = content.querySelector('.pacman_svg');
         document.getElementById("pacman_container").appendChild(el.cloneNode(true));
-    }
+    }   
 });
 
 document.wordlist = [];

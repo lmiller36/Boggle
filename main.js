@@ -21,9 +21,30 @@ document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
 document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container", "leftMenu_setup"];
 document.pages[Pages.setupMulti] = ["setupMulti_container", "leftMenu_setup_multi", "pacman_container"];
-document.pages[Pages.game] = ["game_container", "leftMenu_ingame"];
+document.pages[Pages.game] = ["game_container", "leftMenu_ingame","mainMenu_ingame"];
 document.pages[Pages.highScores] = ["highScores_container"];
 document.pages[Pages.contributions] = ["contributions_container"];
+
+var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};
 
 function endGame() {
     document.getElementById("wordInputDiv").style.display = "none";
@@ -177,6 +198,7 @@ function bootMe() {
 }
 
 function startGame(isMulti) {
+
     document.score = 0;
     document.hasTallied = false;
     document.getElementById("score").innerText = document.score;
@@ -193,25 +215,26 @@ function startGame(isMulti) {
     var arr = document.board;
     for (var i = 0; i < 5; i++) {
         for (var j = 0; j < 5; j++) {
-            var divContainer = document.createElement("div");
-            divContainer.id = "row_" + i + "_column_" + j + "_0";
-            divContainer.className = "grid-item";
-            divContainer.innerText = arr[i][j];
+            // createLetterDiv(val,i,j)
+            var divContainer = createLetterDiv(arr[i][j],i,j);
+            var divContainer1 = createLetterDiv(arr[j][4 - i],j,4 - i);
+            var divContainer2 = createLetterDiv(arr[4 - i][4 - j],4 - i, 4 - j);
+            var divContainer3 = createLetterDiv(arr[4 - j][i],4 - j,i);
 
-            var divContainer1 = document.createElement("div");
-            divContainer1.id = "row_" + i + "_column_" + j + "_1";
-            divContainer1.className = "grid-item";
-            divContainer1.innerText = arr[j][4 - i];
+            // var divContainer1 = document.createElement("div");
+            // divContainer1.id = "row_" + i + "_column_" + j + "_1";
+            // divContainer1.className = "grid-item";
+            // divContainer1.innerText = arr[j][4 - i];
 
-            var divContainer2 = document.createElement("div");
-            divContainer2.id = "row_" + i + "_column_" + j + "_2";
-            divContainer2.className = "grid-item";
-            divContainer2.innerText = arr[4 - i][4 - j];
+            // var divContainer2 = document.createElement("div");
+            // divContainer2.id = "row_" + i + "_column_" + j + "_2";
+            // divContainer2.className = "grid-item";
+            // divContainer2.innerText = arr[4 - i][4 - j];
 
-            var divContainer3 = document.createElement("div");
-            divContainer3.id = "row_" + i + "_column_" + j + "_3";
-            divContainer3.className = "grid-item";
-            divContainer3.innerText = arr[4 - j][i];
+            // var divContainer3 = document.createElement("div");
+            // divContainer3.id = "row_" + i + "_column_" + j + "_3";
+            // divContainer3.className = "grid-item";
+            // divContainer3.innerText = arr[4 - j][i];
 
             document.getElementById("board-0").appendChild(divContainer);
             document.getElementById("board-1").appendChild(divContainer1);
@@ -237,6 +260,66 @@ function startGame(isMulti) {
    else 
        document.getElementById("pause").style.display = "";
 
+
+   ensureAllPagesLoaded(()=>{
+       if( isMobile.any() ){
+        document.isMobile = true;
+        setupMobile();
+    }
+    else {
+     setupMobile();
+ }
+}) 
+
+
+//    document.isMobile = true;
+
+
+// }
+// else {
+//    document.isMobile = false;
+// }
+
+}
+
+function setupMobile(){
+    var mobile = document.isMobile ? "" : "none";
+    var browser = (!document.isMobile) ? "" : "none";
+
+    document.getElementById("leftMenu_ingame").style.display = browser;
+    document.getElementById("mainMenu_ingame").style.display = browser;
+    document.getElementById("google-login").style.display = browser;
+
+    document.getElementById("sidebar_words_mobile_button").style.display = mobile;
+    document.getElementById("sidebar_words_mobile_button").style.display = mobile;
+    document.getElementById("mainMenu_ingame_mobile").style.display = mobile;
+    document.getElementById("submit_word_mobile").style.display = mobile;
+    document.getElementById("remove_letter_mobile").style.display = mobile;
+    document.getElementById("score_mobile").style.display = mobile;
+
+    if(document.isMobile){
+
+        document.getElementById("center").style.marginTop = "5vh"
+    }
+}
+
+function createLetterDiv(val,i,j){
+    var divContainer = document.createElement("div");
+    divContainer.id = "row_" + i + "_column_" + j + "_0";
+    divContainer.className = "grid-item";
+    divContainer.innerText = val;
+
+
+
+    divContainer.onmousedown = (event)=>{
+        // var input = document.getElementById("wordsInput");
+        // var letter = .innerText;
+        // input.value += letter;
+        enterLetterViaClick(event.srcElement)
+        // console.log()
+    };
+
+    return divContainer;
 }
 
 function submitWord(obj) {
@@ -250,9 +333,12 @@ function submitWord(obj) {
     if (isWord(word.toLowerCase())) {
         appendWordToTable(word.toUpperCase());
         document.score += getScore(word);
+
         document.words.push(word);
         document.uniqueWords.push(word);
+
         document.getElementById("score").innerText = document.score;
+        document.getElementById("score_mobile_span").innerText = document.score;
     }
 
     removeHighlightingFromAll();
@@ -302,7 +388,11 @@ function appendWordToTable(word) {
     tableRow.appendChild(wordCell);
     tableRow.appendChild(scoreCell);
 
-    document.getElementById("wordList").appendChild(tableRow);
+    if(document.isMobile){
+        document.getElementById("wordList_mobile").appendChild(tableRow);
+    }
+    else 
+        document.getElementById("wordList").appendChild(tableRow);
 }
 
 function ensureAllPagesLoaded(callback) {
