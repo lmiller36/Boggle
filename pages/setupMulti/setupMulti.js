@@ -15,7 +15,8 @@ function changeSetupState(setupState) {
     document.getElementById("join_id").style.display = "none";
     document.getElementById("game_id").style.display = "none";
     document.getElementById("game_id").innerText = "";
-    document.getElementById("pacman").style.display = "none";
+    if(document.getElementById("pacman"))   
+        document.getElementById("pacman").style.display = "none";
     document.getElementById("hasJoined_container").style.display = "none";
     document.getElementById("hostJoinRadio").style.display = "none";
 
@@ -51,7 +52,8 @@ function changeSetupState(setupState) {
         } else {
             document.getElementById("hasJoined_container").style.display = "";
             document.getElementById("hasJoined").innerText = "Joined: " + document.channel;
-            document.getElementById("pacman").style.display = "";
+            if(document.getElementById("pacman"))   
+                document.getElementById("pacman").style.display = "block";
         }
     } else {
         alert('invalid state');

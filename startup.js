@@ -5,13 +5,13 @@ $(document).ready(function() {
         var divContainer = page + "_container";
         var scriptId = "./pages/" + page + "/" + page + ".js";
         fetch(htmlUrl)
-            .then(response => {
-                return response.text()
-            })
-            .then(data => {
-                document.getElementById(divContainer).innerHTML = data;
-                document.page = true;
-            });
+        .then(response => {
+            return response.text()
+        })
+        .then(data => {
+            document.getElementById(divContainer).innerHTML = data;
+            document.page = true;
+        });
 
         var script = document.createElement('script');
         script.src = scriptId;
@@ -56,8 +56,10 @@ $(document).ready(function() {
     var pacmanlink = document.getElementById('pacman_import');
     var content = pacmanlink.import;
 
-    var el = content.querySelector('.pacman_svg');
-    document.getElementById("pacman_container").appendChild(el.cloneNode(true));
+    if(content){
+        var el = content.querySelector('.pacman_svg');
+        document.getElementById("pacman_container").appendChild(el.cloneNode(true));
+    }
 });
 
 document.wordlist = [];
