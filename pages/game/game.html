@@ -4,11 +4,11 @@
     <title></title>
 </head>
 <style type="text/css">
-    .words {
-        position: absolute;
-        right: 1vw;
-        top: 23vh;
-    }
+.words {
+    position: absolute;
+    right: 1vw;
+    top: 23vh;
+}
 </style>
 
 <body>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i>
+        <i id = "mainMenu_ingame" class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i>
         <div class="centerContent">
             <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
             <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
@@ -52,6 +52,10 @@
             <p class="centerContent">Enter words here:</p>
             <div class="centerContent">
                 <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)" />
+                <br/>
+                <i class="fa fa-paper-plane" aria-hidden="true" onclick="submitViaButton()"></i>
+                <br/>
+                <i class="fa fa-arrow-left" aria-hidden="true" onclick="removeLetter()"></i>
             </div>
         </div>
         <div id="playAgainButton" class="centerContent" style="display: none">

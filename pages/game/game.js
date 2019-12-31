@@ -45,8 +45,10 @@ function togglePause(isPaused) {
     }
 }
 
+
+
 function enterLetter(event, obj) {
-    if (event.key === "Enter") {
+    if (event && event.key === "Enter") {
         if (obj.value != "") {
             submitWord(obj);
         }
@@ -59,6 +61,15 @@ function enterLetter(event, obj) {
         }
     }
 }
+
+// function addLetter(word){
+//  // let word = obj.value.toUpperCase();
+//  let lettersToHighlight = wordOnBoard(word);
+//  if (lettersToHighlight) {
+//     document.lastHighlighted = lettersToHighlight;
+//     highlightBoard(lettersToHighlight);
+// } 
+// }
 
 function mainMenu() {
     // Stop timer & set to zeros
@@ -116,5 +127,57 @@ function playAgain() {
         document.getElementById("playAgainButton").style.display = "none";
 
         startGame();
+    }
+}
+
+
+/* Function for mobile */ 
+function submitViaButton(){
+    var wordElem = document.getElementById("wordsInput");
+    if(wordElem.value == "") return;
+
+    submitWord(wordElem);
+    document.lastHighlighted = [];
+}
+
+function enterLetterViaClick(clickedTile){
+    var input = document.getElementById("wordsInput");
+    var letter = clickedTile.innerText;
+    var word = input.value + letter;
+
+    // check if can highlight, but we will enforce that 
+    // the correct letter is highlighted
+    if(wordOnBoard(word)){
+        input.value = word;
+        if(!document.lastHighlighted) document.lastHighlighted = [];
+        var arr = clickedTile.id.split("_");
+        var i,j;
+        i = parseInt(arr[1]);
+        j = parseInt(arr[3]);
+        document.lastHighlighted.push([i,j]);
+        highlightBoard(document.lastHighlighted);
+    }
+}
+
+function removeLetter(){
+    var input = document.getElementById("wordsInput");
+    var word = input.value.toUpperCase();
+
+    if(word.length > 0)
+    {
+        var wordMinusChar = word.substring(0,word.length - 1);
+        console.log(document.lastHighlighted);
+        if(word.length == document.lastHighlighted.length){
+            var remainder = document.lastHighlighted.splice(0,wordMinusChar.length);
+            highlightBoard(remainder);
+            document.lastHighlighted = remainder;
+        }
+        input.value = wordMinusChar;
+        // // let lettersToHighlight = wordOnBoard(wordMinusChar);
+        // if (lettersToHighlight) {
+        //     document.lastHighlighted = lettersToHighlight;
+        //     highlightBoard(lettersToHighlight);
+        // }
+        console.log(wordMinusChar);
     }
 }
