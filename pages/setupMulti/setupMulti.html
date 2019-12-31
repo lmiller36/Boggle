@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <div class="setupMulti">
+        <div id="leftMenu_setup_multi" class="leftSide">
+            <i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu_setupMulti()"></i>
+        </div>
+        <div class="centerContent" id="hostJoinRadio">
+            <p>Please select one: </p>
+            <input id="isHostRadio" type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
+            <input id="isJoinRadio" type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
+        </div>
+        <div class="centerContent" id="username_container">
+            <input id="username" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="usernameEntered(event,this)" placeholder="username" />
+        </div>
+        <div id="username_submitted" class="centerContent">
+            <span id="username_submitted_span"></span>
+        </div>
+        <br />
+        <div class="centerContent">
+            <input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)" placeholder="game ID" />
+            <div id="hasJoined_container">
+                <span id="hasJoined"></span>
+                <i id="exitMultiplayer" class=" fa fa-times" onclick="exitMultiplayerSession()"></i>
+            </div>
+        </div>
+
+        <div id="host" class="" style="display: none">
+            <div class="centerContent">
+                <div id="clockdiv_setup_multi" class="timer">
+                    <span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
+                </div>
+            </div>
+            <div class="centerContent">
+                <button onclick="changeTimeMulti(1)">+</button>
+                <button onclick="changeTimeMulti(-1)">-</button>
+            </div>
+            <div class="centerContent">
+                Game ID:
+                <p id="game_id"></p>
+            </div>
+            <div class="centerContent">
+                Share this link:
+            </div>
+            <div class="centerContent">
+                <p id="game_link"></p>
+            </div>
+            <br />
+            <div class="centerContent">
+                <div class="wrap">
+                    <table class="joinedPlayersTable">
+                        <tr>
+                            <td>Joined</td>
+                            <td>Remove</td>
+                        </tr>
+                    </table>
+                    <div class="inner_table">
+                        <table id="playersList">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="centerContent" id="startGameMultiButton" style="display: none">
+                <i class="fa fa-play fa-2x icon" onclick="startMultiGame()"></i>
+            </div>
+        </div>
+
+
+        <br />
+        <br />
+        <p id="pls_start" class="centerContent"><b>Please ask host to start</b></p>
+    </div>
+</body>
+
+</html>

@@ -1,181 +1,69 @@
+<!DOCTYPE html>
 <html>
-<script></script>
 <head>
-  <title>Lorne's Boggle Game</title>
-  <meta charset="UTF-8">
-  <meta name="description" content="Boggle Game by Lorne">
-  <meta name="keywords" content="HTML,CSS,XML,JavaScript">
-  <meta name="author" content="Lorne Miller">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- jquery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- style -->
-  <link rel="stylesheet" type="text/css" href="./style/style.css">
-  <!-- js files -->
-  <script type="text/javascript" src="main.js"></script>
-  <script type="text/javascript" src="scripts/board.js"></script>
-  <script type="text/javascript" src="scripts/timer.js"></script>
-  <script type="text/javascript" src="scripts/game.js"></script>
-  <script type="text/javascript" src="scripts/multiplayer.js"></script>
-  <script type="text/javascript" src="scripts/utils.js"></script>
-  <!-- html pages -->
-  <link rel="import" id = "mainMenu_import" href="./pages/mainMenu.html">
-  <link rel="import" id = "setupSinglePlayer_import" href="./pages/setupSinglePlayer.html">
-  <link rel="import" id = "game_import" href="./pages/game.html">
-  <link rel="import" id = "highScores_import" href="./pages/highScores.html">
-  <link rel="import" id = "setupMulti_import" href="./pages/setupMulti.html">
-  <link rel="import" id = "contributions_import" href="./pages/contributions.html">
+    <title>Lorne's Boggle Game</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Boggle Game by Lorne">
+    <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+    <meta name="author" content="Lorne Miller">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="import" id = "pacman_import" href="./data/pacman.html">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
 
-  <script type="text/javascript">
-    function myFunction(){
+    <!-- style -->
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
 
-      $( document).ready(function() { 
-        // document.pubnubHasLoaded = true;
-        var queryString = window.location.hash.substr(1);
-    // join game
-    if(queryString.startsWith("/joinGame/")){
-      var gameId = queryString.substring(queryString.lastIndexOf("/") + 1);
-      toggleVisiblePage(Pages.setupMulti);
+    <!-- font awesome icons  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-      joinChannel(gameId);
-      document.getElementById("isJoinRadio").checked = true;
-      document.getElementById("join_id").style.display = "none";
-      document.getElementById("exitMultiplayer").style.display = "";
-      document.getElementById("hasJoined").style.display = "";
-      document.getElementById("hasJoined").innerText = "Joined: "+gameId+" ✔";
-    }
-  });
-    }
-  </script>
+    <!-- google apis -->
+    <script type="text/javascript" src="google.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com">
 
-  <!-- external code  -->
-  <script onload="myFunction()" src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script async defer src="https://apis.google.com/js/api.js"
-  onload="this.onload=function(){};handleClientLoad()"
-  onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="google-signin-client_id" content="968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com">
+    <!-- pubnub for multiplayer -->
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
+
+    <!-- pacman -->
+    <link rel="import" id="pacman_import" href="./data/pacman.html">
+
+    <!-- js files -->
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="startup.js"></script>
+    <script type="text/javascript" src="scripts/board.js"></script>
+    <script type="text/javascript" src="scripts/timer.js"></script>
+    <script type="text/javascript" src="scripts/game.js"></script>
+    <script type="text/javascript" src="scripts/multiplayer.js"></script>
+    <script type="text/javascript" src="scripts/utils.js"></script>
 </head>
-<script type="text/javascript">
 
-  var SHEET_ID = '1vP3OHMLITjfMsmh7ICFDqqtrP1mmHVZjMkQ_2kMPVDk';
-  var CLIENT_ID = '968840994510-d1gefhobjq4be9ofad0v81ek2qlmdo8u.apps.googleusercontent.com';
-  var API_KEY = 'AIzaSyAwb096dzp9ykl-v46KBA0ZPGF8OoAV_pE';
-
-  // Array of API discovery doc URLs for APIs used by the quickstart
-  var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
-
-  // Authorization scopes required by the API; multiple scopes can be
-  // included, separated by spaces.
-  var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
-
-  var authorizeButton = document.getElementById('authorize_button');
-  var signoutButton = document.getElementById('signout_button');
-
-  function handleClientLoad() {
-   gapi.load('client:auth2', initClient);
- }
-
- function updateSigninStatus(isSignedIn) {
-   console.log(isSignedIn)
- }
-
-
- function initClient() {
-
-  gapi.client.init({
-    apiKey: API_KEY,
-    clientId: CLIENT_ID,
-    discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES,
-    cookie_policy :"single_host_origin"
-  }).then(function (res) {
-    console.log(res);
-    res.setHeader('set-cookie', [
-      'same-site-cookie=bar; SameSite=Lax',
-      'cross-site-cookie=foo; SameSite=None; Secure',
-      ]);
-    // res.header("Set-Cookie", "HttpOnly;Secure;SameSite=None");
-      // Listen for sign-in state changes.
-      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-      // Handle the initial sign-in state.
-      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-      console.log(document.cookie);
-
-    }, function(error) {
-      appendPre(JSON.stringify(error, null, 2));
-    });
-}
-
-function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-console.log('Name: ' + profile.getName());
-console.log('Image URL: ' + profile.getImageUrl());
-console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-document.username = profile.getEmail().substring(0,profile.getEmail().indexOf("@"));
-document.avatar = profile.getImageUrl();
-
-if(document.username)
-  document.getElementById("username_container").style.display = "none";
-
-
-let image_url = profile.getImageUrl();
-if(image_url){
-  document.getElementById("google-sign-in").style.display = "none";
-  document.getElementById("google-user-image-url").style.display = "block";
-  document.getElementById("google-user-image-url").src = image_url;
-
-} 
-}
-function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    console.log('User signed out.');
-  });
-
-  if(document.username)
-    document.getElementById("username_container").style.display = "none";
-
-  document.getElementById("google-sign-in").style.display = "block";
-  document.getElementById("google-user-image-url").style.display = "none";
-  document.getElementById("google-user-image-url").removeAttribute('src');
-
-  document.username = null;
-  document.avatar = null;
-}
-
-
-</script>
 <body>
-  <div id = "title" class="title-container">
-   <p id = "title" class="title"> Lorne's Boggle Game </p>
- </div>
-
- <div id = "google-login" class = "google">
-  <div id = "google-sign-in" class="g-signin2" data-onsuccess="onSignIn" style="float:right;"></div>
-  <div class="dropdown" style="float:right;  overflow-x: hidden;">
-   <img id = "google-user-image-url" src = "./default_logo.jpg" style="float:right; display: none; cursor: pointer;" title="Sign Out" class=""></img>
-   <div class="dropdown-content">
-    <div><a href="#">My Stats</a></div>
-    <div><a href="#" onclick="signOut()">Sign Out</a></div>
-  </div>
-</div>
-</div>
-
-<div id = "center" class = "main">
- <div id = "mainMenu_container"></div>
- <div id = "setupMulti_container" style="display: none"></div>
- <div id = "setupSinglePlayer_container" style="display: none"></div>
- <div id = "game_container" style="display: none"></div>
- <div id = "highScores_container" style="display: none"></div>
- <div id = "contributions_container" style="display: none"></div>
-</div>
+    <div id="title" class="title-container">
+        <p id="title" class="title"> Lorne's Boggle Game </p>
+    </div>
+    <div id="google-login" class="google">
+        <div id="google-sign-in" class="g-signin2" data-onsuccess="onSignIn" style="float:right;"></div>
+        <div class="dropdown" style="float:right;  overflow-x: hidden;">
+            <img id="google-user-image-url" src="./default_logo.jpg" style="float:right; display: none; cursor: pointer;" title="Sign Out" class=""></img>
+            <div class="dropdown-content">
+                <div><a href="#">My Stats</a></div>
+                <div><a href="#" onclick="signOut()">Sign Out</a></div>
+            </div>
+        </div>
+    </div>
+    <div id="center" class="main">
+        <div id="mainMenu_container"></div>
+        <div id="setupMulti_container" style="display: none"></div>
+        <div id="setupSinglePlayer_container" style="display: none"></div>
+        <div id="game_container" style="display: none"></div>
+        <div id="highScores_container" style="display: none"></div>
+        <div id="contributions_container" style="display: none"></div>
+        <div id="pacman_container" class="pacman_container centerContent" style="display: none"></div>
+    </div>
 </body>
+
 </html>

@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<title></title>
-</head>
-<!-- UI Functions -->
-<script type="text/javascript">
+// Main Menu UI Functions
 
-	Set.prototype.difference = function(otherSet) 
-	{ 
+Set.prototype.difference = function(otherSet) 
+{ 
 	// creating new set to store difference 
 	var differenceSet = new Set(); 
 
@@ -33,12 +26,13 @@ function setupSinglePlayer(){
 
 function multiplayer(){
 	document.setupTime = 5 * 60000;
-	document.getElementById("host").style.display = "none";
-	document.getElementById("join").style.display = "none";
+	// document.getElementById("host").style.display = "none";
+	// document.getElementById("join").style.display = "none";
 
 	document.getElementById("startGameMultiButton").style.display = "none";
 	document.getElementById("pacman_container").style.display = "none";
 	toggleVisiblePage(Pages.setupMulti);
+	changeSetupState(SetupStates.radioButton);
 }
 
 
@@ -204,42 +198,4 @@ function openContributions(){
 		opponentsWords.appendChild(score_row);
 
 		toggleVisiblePage(Pages.contributions);
-}
-</script>
-<body>
-	<div class ="mainMenu centerContent">
-		<div class="mainMenu centeredDiv">
-			<div id="btn-container">
-				<button class="btn centered" onclick="setupSinglePlayer()">
-					<i class="fa fa-user"></i> Single
-				</button>
-			</div>
-			<div>
-				<button class="btn centered" onclick="multiplayer()">
-					<i class="fa fa-users"></i> Multiplayer
-				</button>
-			</div>
-			<div>
-				<button class="btn centered" onclick="loadHighScores()">
-					<i class="fa fa-list-ol"></i> High Scores
-				</button>
-			</div>
-			<div>
-				<button class="btn centered" onclick="">
-					<i class="fa fa-question-circle"></i> How to play
-				</button>
-			</div>
-			<div>
-				<button class="btn centered" onclick="openContributions()">
-					<i class="fa fa-info-circle"></i> Contributions
-				</button>
-			</div>
-			<div>
-				<button class="btn centered" onclick="">
-					<i class=" fa fa-times"></i> Exit
-				</button>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
+	}
