@@ -206,6 +206,13 @@ function tallyScores(){
 		document.hasTallied = false;
 		document.getElementById("score").innerText = document.score;
 		document.getElementById("playAgainButton").style.display = "none";
+		
+		// auto focus on input box when starting game
+		window.setTimeout(function ()
+		{
+			var elem = document.getElementById("wordsInput");
+			elem.focus();
+		}, 0);
 
 		document.words = []
 		document.uniqueWords = []
