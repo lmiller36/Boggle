@@ -21,7 +21,7 @@ document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
 document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container", "leftMenu_setup"];
 document.pages[Pages.setupMulti] = ["setupMulti_container", "leftMenu_setup_multi", "pacman_container"];
-document.pages[Pages.game] = ["game_container", "leftMenu_ingame", "pause"];
+document.pages[Pages.game] = ["game_container", "leftMenu_ingame"];
 document.pages[Pages.highScores] = ["highScores_container"];
 document.pages[Pages.contributions] = ["contributions_container"];
 
@@ -231,7 +231,12 @@ function startGame(isMulti) {
     toggleVisiblePage(Pages.game);
 
     // cannot pause in a multiplayer game
-    if (isMulti) document.getElementById("pause").style.display = "none";
+    if (isMulti){
+       document.getElementById("pause").style.display = "none";
+   }
+   else 
+       document.getElementById("pause").style.display = "";
+
 }
 
 function submitWord(obj) {
@@ -350,9 +355,9 @@ function postHighScore(score, board, words) {
     } else return;
 
     let values = [
-        [score, username, timeInUTC, avatar,
-            JSON.stringify(board), JSON.stringify(words)
-        ]
+    [score, username, timeInUTC, avatar,
+    JSON.stringify(board), JSON.stringify(words)
+    ]
     ];
 
     sendScore(values);
