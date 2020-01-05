@@ -1,53 +1,68 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title></title>
 </head>
 <style type="text/css">
-.words {
-    position: absolute;
-    right: 1vw;
-    top: 23vh;
-}
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: white;
-  border-radius: 2px #FFFFFF;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
+    .words {
+        position: absolute;
+        right: 1vw;
+        top: 23vh;
+    }
 
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        background-color: white;
+        border-radius: 2px #FFFFFF;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
 
-.sidenav a:hover {
-  color: #f1f1f1;
-}
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
 
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    .border_black {
+        border: black 1px solid;
+    }
+
+    .give_me_space {
+        margin: 2vw;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
 </style>
 
 <body>
@@ -70,78 +85,77 @@
             </div>
         </div>
         <div id="mySidenav" class="sidenav">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-          <div class="wrap">
-            <table class="head">
-                <tr>
-                    <td>Word</td>
-                    <td>Score</td>
-                </tr>
-            </table>
-            <div class="inner_table">
-                <table id="wordList_mobile" class="wordList">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="wrap">
+                <table class="head">
+                    <tr>
+                        <td>Word</td>
+                        <td>Score</td>
+                    </tr>
+                </table>
+                <div class="inner_table">
+                    <table id="wordList_mobile" class="wordList">
+                    </table>
+                </div>
+            </div>
+            <!--    <a href="#">About</a>
+               <a href="#">Services</a>
+               <a href="#">Clients</a>
+               <a href="#">Contact</a> -->
+        </div>
+        <i id="mainMenu_ingame" class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i>
+        <div class="centerContent">
+            <i class="fa fa-caret-square-o-left fa-2x icon" aria-hidden="true" onclick="mainMenu()" id="mainMenu_ingame_mobile"></i>
+            <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
+            <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
+            <i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i>
+            <i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i>
+        </div>
+        <div class="centerContent">
+            <div id="clockdiv_game" class="timer">
+                <span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
+            </div>
+            <div id="score_mobile" class="timer">
+                <span class="timerFont">score:</span>
+                <span class="timerFont" id="score_mobile_span">0</span>
+            </div>
+        </div>
+        <div id="finishedBoard" class="centerContent">
+            <div id="board-0" class="grid-container"></div>
+            <div id="board-1" class="grid-container" style="display:none;"></div>
+            <div id="board-2" class="grid-container" style="display:none;"></div>
+            <div id="board-3" class="grid-container" style="display:none;"></div>
+        </div>
+        <div id="wordInputDiv" class="wordInputDiv">
+            <p class="centerContent">Enter words here:</p>
+            <div class="centerContent">
+                <i class="fa fa-2x fa-paper-plane border_black give_me_space" aria-hidden="true" onclick="submitViaButton()" id="submit_word_mobile"></i>
+                <br />
+                <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)" />
+                <br />
+                <i class="fa fa-2x fa-arrow-left border_black give_me_space" aria-hidden="true" onclick="removeLetter()" id="remove_letter_mobile"></i>
+            </div>
+            <div id="sidebar_words_mobile_button" class="centerContent">
+                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Words</span>
+            </div>
+        </div>
+        <div id="playAgainButton" class="centerContent" style="display: none">
+            <i class="fa fa-repeat fa-2x icon" onclick="playAgain()"></i>
+        </div>
+        <div class="" id="opponentsWords_container" style="display: none">
+            <p id="title" class="title centerContent"> High Scores </p>
+            <div class="centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
+                <table id="opponentsWords" class="opponentsWords-table striped">
+                    <thead id="opponentsWords-head">
+                        <tr id="opponentsWords-head-row">
+                        </tr>
+                    </thead>
+                    <tbody id="opponentsWords-rows">
+                    </tbody>
                 </table>
             </div>
         </div>
-
-       <!--    <a href="#">About</a>
-          <a href="#">Services</a>
-          <a href="#">Clients</a>
-          <a href="#">Contact</a> -->
-      </div>
-      <i id = "mainMenu_ingame" class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i>
-      <div class="centerContent">
-        <i class="fa fa-caret-square-o-left fa-2x icon" aria-hidden="true" onclick="mainMenu()" id ="mainMenu_ingame_mobile"></i>
-        <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
-        <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
-        <i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i>
-        <i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i>
     </div>
-    <div class="centerContent">
-        <div id="clockdiv_game" class="timer">
-            <span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
-        </div>
-        <div id = "score_mobile" class="timer">
-            <span class = "timerFont">score:</span>
-            <span class = "timerFont" id="score_mobile_span">0</span>
-        </div>
-    </div>
-    <div id="finishedBoard" class="centerContent">
-        <div id="board-0" class="grid-container"></div>
-        <div id="board-1" class="grid-container" style="display:none;"></div>
-        <div id="board-2" class="grid-container" style="display:none;"></div>
-        <div id="board-3" class="grid-container" style="display:none;"></div>
-    </div>
-    <div id="wordInputDiv" class="wordInputDiv">
-        <p class="centerContent">Enter words here:</p>
-        <div class="centerContent">
-            <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)" />
-            <br/>
-            <i class="fa fa-paper-plane" aria-hidden="true" onclick="submitViaButton()" id ="submit_word_mobile"></i>
-            <br/>
-            <i class="fa fa-arrow-left" aria-hidden="true" onclick="removeLetter()" id ="remove_letter_mobile"></i>
-        </div>
-        <div id ="sidebar_words_mobile_button" class="centerContent">
-            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Words</span>
-        </div>
-    </div>
-    <div id="playAgainButton" class="centerContent" style="display: none">
-        <i class="fa fa-repeat fa-2x icon" onclick="playAgain()"></i>
-    </div>
-    <div class="" id="opponentsWords_container" style="display: none">
-        <p id="title" class="title centerContent"> High Scores </p>
-        <div class="centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
-            <table id="opponentsWords" class="opponentsWords-table striped">
-                <thead id="opponentsWords-head">
-                    <tr id="opponentsWords-head-row">
-                    </tr>
-                </thead>
-                <tbody id="opponentsWords-rows">
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 </body>
 
 </html>
