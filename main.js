@@ -215,26 +215,11 @@ function startGame(isMulti) {
     var arr = document.board;
     for (var i = 0; i < 5; i++) {
         for (var j = 0; j < 5; j++) {
-            // createLetterDiv(val,i,j)
-            var divContainer = createLetterDiv(arr[i][j],i,j);
-            var divContainer1 = createLetterDiv(arr[j][4 - i],j,4 - i);
-            var divContainer2 = createLetterDiv(arr[4 - i][4 - j],4 - i, 4 - j);
-            var divContainer3 = createLetterDiv(arr[4 - j][i],4 - j,i);
 
-            // var divContainer1 = document.createElement("div");
-            // divContainer1.id = "row_" + i + "_column_" + j + "_1";
-            // divContainer1.className = "grid-item";
-            // divContainer1.innerText = arr[j][4 - i];
-
-            // var divContainer2 = document.createElement("div");
-            // divContainer2.id = "row_" + i + "_column_" + j + "_2";
-            // divContainer2.className = "grid-item";
-            // divContainer2.innerText = arr[4 - i][4 - j];
-
-            // var divContainer3 = document.createElement("div");
-            // divContainer3.id = "row_" + i + "_column_" + j + "_3";
-            // divContainer3.className = "grid-item";
-            // divContainer3.innerText = arr[4 - j][i];
+            var divContainer = createLetterDiv(arr[i][j],i,j,0);
+            var divContainer1 = createLetterDiv(arr[j][4 - i],i,j,1);
+            var divContainer2 = createLetterDiv(arr[4 - i][4 - j],i,j,2);
+            var divContainer3 = createLetterDiv(arr[4 - j][i],i,j,3);
 
             document.getElementById("board-0").appendChild(divContainer);
             document.getElementById("board-1").appendChild(divContainer1);
@@ -255,31 +240,12 @@ function startGame(isMulti) {
 
     // cannot pause in a multiplayer game
     if (isMulti){
-       document.getElementById("pause").style.display = "none";
-   }
-   else 
-       document.getElementById("pause").style.display = "";
-
-
-   ensureAllPagesLoaded(()=>{
-       if( isMobile.any() ){
-        document.isMobile = true;
-        setupMobile();
-    }
-    else {
-     setupMobile();
+     document.getElementById("pause").style.display = "none";
  }
-}) 
+ else 
+     document.getElementById("pause").style.display = "";
 
-
-//    document.isMobile = true;
-
-
-// }
-// else {
-//    document.isMobile = false;
-// }
-
+   setupMobile();
 }
 
 function setupMobile(){
@@ -303,20 +269,16 @@ function setupMobile(){
     }
 }
 
-function createLetterDiv(val,i,j){
+function createLetterDiv(val,i,j,rot){
     var divContainer = document.createElement("div");
-    divContainer.id = "row_" + i + "_column_" + j + "_0";
+    divContainer.id = "row_" + i + "_column_" + j + "_"+rot;
     divContainer.className = "grid-item";
     divContainer.innerText = val;
 
 
 
     divContainer.onmousedown = (event)=>{
-        // var input = document.getElementById("wordsInput");
-        // var letter = .innerText;
-        // input.value += letter;
         enterLetterViaClick(event.srcElement)
-        // console.log()
     };
 
     return divContainer;
@@ -396,7 +358,12 @@ function appendWordToTable(word) {
 }
 
 function ensureAllPagesLoaded(callback) {
-    if (document.hasLoaded) callback();
+    if (document.hasLoaded){
+        if( isMobile.any() ){
+            document.isMobile = true;
+        }
+        callback();
+    } 
 
     var readyStateCheckInterval = setInterval(function() {
         if (document.readyState === "complete") {

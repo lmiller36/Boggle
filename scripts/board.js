@@ -65,10 +65,12 @@ function rotateBoard(direction){
 					for(var j = 0;j<5;j++){
 						var id = "row_"+i+"_column_"+j+"_"+rot;
 						var div = document.getElementById(id);
-						if(div){
-							div.style.border = "1px solid rgba(0, 0, 0, 0.8)";
-							div.style.background = "rgba(255, 255, 255, 0.8)";
+						if(!div){
+							console.log(i+" " +j+" "+rot);
+							console.log(div);
 						}
+						div.style.border = "1px solid rgba(0, 0, 0, 0.8)";
+						div.style.background = "rgba(255, 255, 255, 0.8)";
 					}
 				}
 			}

@@ -70,15 +70,6 @@ function enterLetter(event, obj) {
     }
 }
 
-// function addLetter(word){
-//  // let word = obj.value.toUpperCase();
-//  let lettersToHighlight = wordOnBoard(word);
-//  if (lettersToHighlight) {
-//     document.lastHighlighted = lettersToHighlight;
-//     highlightBoard(lettersToHighlight);
-// } 
-// }
-
 function mainMenu() {
     // Stop timer & set to zeros
     togglePause(0);
@@ -174,18 +165,12 @@ function removeLetter(){
     if(word.length > 0)
     {
         var wordMinusChar = word.substring(0,word.length - 1);
-        console.log(document.lastHighlighted);
+
         if(word.length == document.lastHighlighted.length){
             var remainder = document.lastHighlighted.splice(0,wordMinusChar.length);
             highlightBoard(remainder);
             document.lastHighlighted = remainder;
         }
         input.value = wordMinusChar;
-        // // let lettersToHighlight = wordOnBoard(wordMinusChar);
-        // if (lettersToHighlight) {
-        //     document.lastHighlighted = lettersToHighlight;
-        //     highlightBoard(lettersToHighlight);
-        // }
-        console.log(wordMinusChar);
     }
 }
