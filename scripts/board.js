@@ -55,7 +55,8 @@ function rotateBoard(direction){
 			removeHighlightingFromAll();
 
 			lettersToHighlight.forEach((coords)=>{
-				coords = adjustCoordinates(coords);
+				if(!coords[2])
+					coords = adjustCoordinates(coords);
 				highlightLetter(coords[0],coords[1]);
 			});
 		}

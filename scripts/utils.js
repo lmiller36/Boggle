@@ -2,8 +2,10 @@
 		return JSON.parse(JSON.stringify(arr));
 	}
 
-	function adjustCoordinates(coords){
-		switch(document.currRotation){
+	function adjustCoordinates(coords,rot){
+		var currRot = document.currRotation;
+		if(rot) currRot = rot;
+		switch(currRot){
 			case 0:
 			return coords;
 			case 3:

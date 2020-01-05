@@ -134,7 +134,6 @@ function playAgain() {
 function submitViaButton(){
     var wordElem = document.getElementById("wordsInput");
     if(wordElem.value == "") return;
-
     submitWord(wordElem);
     document.lastHighlighted = [];
 }
@@ -150,10 +149,13 @@ function enterLetterViaClick(clickedTile){
         input.value = word;
         if(!document.lastHighlighted) document.lastHighlighted = [];
         var arr = clickedTile.id.split("_");
-        var i,j;
+        var i,j,rot;
         i = parseInt(arr[1]);
         j = parseInt(arr[3]);
-        document.lastHighlighted.push([i,j]);
+        rot = (document.currRotation + 2) % 4;
+        var coords = [i,j,true]
+        document.lastHighlighted.push(coords);
+
         highlightBoard(document.lastHighlighted);
     }
 }

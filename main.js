@@ -199,10 +199,10 @@ function bootMe() {
 
 function startGame(isMulti) {
 
-    document.score = 0;
-    document.hasTallied = false;
-    document.getElementById("score").innerText = document.score;
-    document.getElementById("playAgainButton").style.display = "none";
+   document.currRotation = 0;
+   document.score = 0;
+   document.getElementById("score").innerText = document.score;
+   document.getElementById("playAgainButton").style.display = "none";
 
     // auto focus on input box when starting game
     window.setTimeout(function() {
@@ -245,7 +245,7 @@ function startGame(isMulti) {
  else 
      document.getElementById("pause").style.display = "";
 
-   setupMobile();
+ setupMobile();
 }
 
 function setupMobile(){

@@ -1,0 +1,3 @@
+mobile issues
+highlight is wrong
+doesnt cross off words on scoring for mobile
