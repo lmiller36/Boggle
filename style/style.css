@@ -1,5 +1,5 @@
 .main{
-margin-top:11vh;
+	margin-top:11vh;
 }
 
 .google{
@@ -23,6 +23,19 @@ margin-top:11vh;
 	padding: 20px;
 	font-size: 30px;
 	text-align: center;
+
+	/*Make unhighlightable*/
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+     */
+     -ms-user-select: none;
+     user-select: none;
+ }
 }
 .center{
 
