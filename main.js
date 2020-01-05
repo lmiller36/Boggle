@@ -21,7 +21,7 @@ document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
 document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container", "leftMenu_setup"];
 document.pages[Pages.setupMulti] = ["setupMulti_container", "leftMenu_setup_multi", "pacman_container"];
-document.pages[Pages.game] = ["game_container", "leftMenu_ingame","mainMenu_ingame"];
+document.pages[Pages.game] = ["game_container","mainMenu_ingame"];
 document.pages[Pages.highScores] = ["highScores_container"];
 document.pages[Pages.contributions] = ["contributions_container"];
 
