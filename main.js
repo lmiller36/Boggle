@@ -1,6 +1,8 @@
 document.numberOfPlayers = 1;
 document.submittedWords = [];
 document.currRotation = 0;
+document.over = new Set();
+document.word = "";
 
 const MessageType = Object.freeze({
     "joinGame": "joinGame",
@@ -21,7 +23,7 @@ document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
 document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container", "leftMenu_setup"];
 document.pages[Pages.setupMulti] = ["setupMulti_container", "leftMenu_setup_multi", "pacman_container"];
-document.pages[Pages.game] = ["game_container","mainMenu_ingame"];
+document.pages[Pages.game] = ["game_container"];
 document.pages[Pages.highScores] = ["highScores_container"];
 document.pages[Pages.contributions] = ["contributions_container"];
 
@@ -199,10 +201,10 @@ function bootMe() {
 
 function startGame(isMulti) {
 
-   document.currRotation = 0;
-   document.score = 0;
-   document.getElementById("score").innerText = document.score;
-   document.getElementById("playAgainButton").style.display = "none";
+ document.currRotation = 0;
+ document.score = 0;
+ document.getElementById("score").innerText = document.score;
+ document.getElementById("playAgainButton").style.display = "none";
 
     // auto focus on input box when starting game
     window.setTimeout(function() {
@@ -217,9 +219,14 @@ function startGame(isMulti) {
         for (var j = 0; j < 5; j++) {
 
             var divContainer = createLetterDiv(arr[i][j],i,j,0);
+            // divContainer.ontouchend = ()=>{
+            //     alert(arr[i][j]);
+            // }
             var divContainer1 = createLetterDiv(arr[j][4 - i],i,j,1);
             var divContainer2 = createLetterDiv(arr[4 - i][4 - j],i,j,2);
             var divContainer3 = createLetterDiv(arr[4 - j][i],i,j,3);
+
+            // addMouseOver(divContainer);
 
             document.getElementById("board-0").appendChild(divContainer);
             document.getElementById("board-1").appendChild(divContainer1);
@@ -240,12 +247,51 @@ function startGame(isMulti) {
 
     // cannot pause in a multiplayer game
     if (isMulti){
-     document.getElementById("pause").style.display = "none";
- }
- else 
-     document.getElementById("pause").style.display = "";
+       document.getElementById("pause").style.display = "none";
+   }
+   else 
+       document.getElementById("pause").style.display = "";
 
- setupMobile();
+   setupMobile();
+
+   document.getElementById("finishedBoard").addEventListener("ontouchend", function(event) {
+    alert('finished');
+});
+}
+
+function doTouch(e){
+    // alert('happened');
+}
+function doMouseOver(e){
+    // alert(e);
+    // console.log(e);
+}
+
+function addMouseOver(divContainer,i,j,value){
+
+//     var letter = divContainer.innerText;
+//     divContainer.ontouchstart = (e) => {
+//         var str = "START:"+letter+" "+i+" "+j+" "+value;
+//         document.dragArr = [str];
+//     // document.startDrag = divContainer.innerText
+//     // document.dragged = [divContainer.innerText];
+// };
+
+// divContainer.ontouchmove = (e) => {
+
+//     var str = "MOVE:"+letter+" "+i+" "+j+" "+value;
+//     document.dragArr.push(str);
+
+//         // document.dragged.push(divContainer.innerText);
+//     }
+
+//     divContainer.ontouchend = (e) => {
+
+//         var str = "END:"+letter+" "+i+" "+j+" "+value;
+//         document.dragArr.push(str);
+//         alert(document.dragArr);
+//         alert(e);
+//     }
 }
 
 function setupMobile(){
@@ -272,14 +318,67 @@ function setupMobile(){
 function createLetterDiv(val,i,j,rot){
     var divContainer = document.createElement("div");
     divContainer.id = "row_" + i + "_column_" + j + "_"+rot;
-    divContainer.className = "grid-item";
+    divContainer.className = "grid-item dragProps";
     divContainer.innerText = val;
+    divContainer.onmouseover= ()=>{
+        // document.doMouseOver.push(val);
+    }
+    divContainer.ontouchend= (event)=>{
+        // alert(document.over)
+    }
 
     divContainer.onmousedown = (event)=>{
         enterLetterViaClick(event.srcElement)
     };
 
-    return divContainer;
+
+    divContainer.draggable = "true";
+    var id = divContainer.id;
+    divContainer.ondragover = (event) =>{
+        if(!document.over.has(id)){
+            document.word += val;
+        }
+        document.over.add(divContainer.id);
+        // console.log(val);
+        // console.log(event)
+    }
+
+    // divContainer.ondragstart = () => {
+    //     divContainer
+    // }
+
+    divContainer.ondragend = (event) =>{
+        alert(document.word);
+        document.word = "";
+        document.over = new Set();
+        // console.log(val);
+        // console.log(event)
+    }
+
+    addMouseOver(divContainer,i,j,val);
+
+
+//     divContainer.onmousedown = (event)=>{
+//         enterLetterViaClick(event.srcElement)
+//     };
+
+//     divContainer.ontouchstart = (e) => {
+//         alert(letter);
+//     };
+
+//     divContainer.ontouchmove = (e) => {
+//         alert(letter);
+//         // document.dragged.push(divContainer.innerText);
+//     }
+
+//     divContainer.ontouchend = (e) => {
+
+//     // alert( document.dragged);
+//     alert(letter);
+
+// }
+
+return divContainer;
 }
 
 function submitWord(obj) {

@@ -103,15 +103,15 @@
                <a href="#">Clients</a>
                <a href="#">Contact</a> -->
         </div>
-        <i id="mainMenu_ingame" class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i>
-        <div class="centerContent">
+        <i id="mainMenu_ingame" class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()" style="display: none"></i>
+        <div class="centerContent" style="display: none">
             <i class="fa fa-caret-square-o-left fa-2x icon" aria-hidden="true" onclick="mainMenu()" id="mainMenu_ingame_mobile"></i>
             <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
             <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
             <i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i>
             <i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i>
         </div>
-        <div class="centerContent">
+        <div class="centerContent" style="display: none">
             <div id="clockdiv_game" class="timer">
                 <span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
             </div>
@@ -120,15 +120,15 @@
                 <span class="timerFont" id="score_mobile_span">0</span>
             </div>
         </div>
-        <div id="finishedBoard" class="centerContent">
+        <div id="finishedBoard" class="centerContent" onmousedown="doMouseOver(event)" ontouchend="doTouch()">
             <div id="board-0" class="grid-container"></div>
             <div id="board-1" class="grid-container" style="display:none;"></div>
             <div id="board-2" class="grid-container" style="display:none;"></div>
             <div id="board-3" class="grid-container" style="display:none;"></div>
         </div>
         <div id="wordInputDiv" class="wordInputDiv">
-            <p class="centerContent">Enter words here:</p>
-            <div class="centerContent">
+<!--             <p class="centerContent">Enter words here:</p>
+ -->            <div class="centerContent">
                 <i class="fa fa-2x fa-paper-plane border_black give_me_space" aria-hidden="true" onclick="submitViaButton()" id="submit_word_mobile"></i>
                 <br />
                 <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)" />
