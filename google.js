@@ -82,6 +82,29 @@ function signOut() {
     document.googleLoggedIn = false;
 }
 
+function postFakeWords(words){
+    console.log(words);
+    console.log(document.username);
+
+    // check if signed in
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) return;
+    
+
+    let date = new Date();
+    let timeInUTC = date.getTime();
+    var username = document.username;
+
+    let values = [
+    [JSON.stringify(words),username,date,timeInUTC]
+    ];
+
+    console.log(values);
+
+     var range = 'FakeWords!A:D';
+
+    postToGoogleSheets(values,range);
+}
+
 function postHighScore(score, board, words) {
 
     var username = "anonymous";
@@ -100,18 +123,17 @@ function postHighScore(score, board, words) {
 
     let values = [
         [score, username, timeInUTC, avatar,
-        JSON.stringify(board), JSON.stringify(words)
-        ]
+        JSON.stringify(board), JSON.stringify(words)]
     ];
 
-    var range = 'Sheet1!A:F';
+    var range = 'Highscores!A:F';
 
     postToGoogleSheets(values,range);
 }
 
 function postToGoogleSheets(values,range) {
     if(!document.googleLoggedIn){
-        console.log("score was not submitted");
+        console.log("User not logged in");
         return;
     }
     const resource = {

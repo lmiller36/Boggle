@@ -2,19 +2,21 @@ function isWord(word){
 		var isEnglishWord = document.wordlist.indexOf(word) != -1;
 		var lengthGreaterThanThree = word.length > 3;
 		var isWordAlreadySubmitted = document.submittedWords.indexOf(word);
-		if(!isEnglishWord){
-			alert(word+" is not a valid English word");
-			return false;
-		}
+
 		if(!lengthGreaterThanThree){
 			alert("Words must be at least 4 characters"); 
 			return false
+		}
+		if(!isEnglishWord){
+			alert(word+" is not a valid English word");
+			// Track words submitted that are not english
+			document.fakeWords.push(word);
+			return false;
 		}
 		if(!wordOnBoard(word.toUpperCase())){
 			alert(word+" not possible");
 			return false; 
 		}
-
 		if(isWordAlreadySubmitted != -1){
 			alert(word+" was already submitted");
 			return false; 

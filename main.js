@@ -47,9 +47,15 @@ var isMobile = {
 };
 
 function endGame() {
-    document.getElementById("wordInputDiv").style.display = "none";
-    // document.uniqueWords = copyArr(document.words);
+    /** Common tasks to single & multi player games **/
 
+    // Hide input bar
+    document.getElementById("wordInputDiv").style.display = "none";
+
+    // Post fake words to server for later review
+    postFakeWords(document.fakeWords);
+
+    // Multi-player
     if (!document.isSinglePlayerGame) {
         // document.allWords = [];
         if (!document.allWords) document.allWords = [];
@@ -84,7 +90,9 @@ function endGame() {
             }
         }, 1000);
 
-    } else {
+    } 
+    // Single player
+    else {
         alert("Your score is " + document.score);
         postHighScore(document.score, document.board, document.words);
         document.getElementById("playAgainButton").style.display = "";
@@ -201,6 +209,7 @@ function startGame(isMulti) {
 
  document.currRotation = 0;
  document.score = 0;
+ document.fakeWords = []
  document.getElementById("score").innerText = document.score;
  document.getElementById("playAgainButton").style.display = "none";
 
