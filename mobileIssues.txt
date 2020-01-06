@@ -1,3 +1,5 @@
 mobile issues
 highlight is wrong
 doesnt cross off words on scoring for mobile
+
+Check if clicked and typing works

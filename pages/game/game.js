@@ -6,27 +6,6 @@ function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 
-function rotateBoard(direction) {
-    //hide current rotation
-    var currRotation = "board-" + document.currRotation;
-    document.getElementById(currRotation).style.display = "none";
-
-    //advance
-    currRotation = (document.currRotation + direction) % 4;
-    if (currRotation == -1) currRotation = 3;
-
-    //show next rotation
-    var nextRotation = "board-" + currRotation;
-    document.getElementById(nextRotation).style.display = "grid";
-
-    //save
-    document.currRotation = currRotation;
-
-    //fix highlighting
-    if (document.lastHighlighted)
-        highlightBoard(document.lastHighlighted);
-}
-
 function togglePause(isPaused) {
     // Pause
     if (isPaused) {

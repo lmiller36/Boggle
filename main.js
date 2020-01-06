@@ -275,8 +275,6 @@ function createLetterDiv(val,i,j,rot){
     divContainer.className = "grid-item";
     divContainer.innerText = val;
 
-
-
     divContainer.onmousedown = (event)=>{
         enterLetterViaClick(event.srcElement)
     };

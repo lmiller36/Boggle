@@ -47,8 +47,12 @@ function rotateBoard(direction){
 			document.currRotation = currRotation;
 
 			//fix highlighting
-			if(document.lastHighlighted)
-				highlightBoard(document.lastHighlighted);
+			if(document.lastHighlighted){
+				// remove adjusting
+				var copyLast = [];
+				document.lastHighlighted.forEach((x)=>copyLast.push([x[0],x[1]]));
+				highlightBoard(copyLast);
+			}
 
 		}	
 		function highlightBoard(lettersToHighlight){
