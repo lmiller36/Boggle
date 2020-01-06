@@ -229,6 +229,7 @@ table.joinedPlayersTable tr td {
 #highscores tr:hover {background-color: #ddd;}
 
 #highscores th {
+	font-size:xx-large;
 	padding-top: 12px;
 	padding-bottom: 12px;
 	text-align: left;

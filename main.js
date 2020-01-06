@@ -199,10 +199,10 @@ function bootMe() {
 
 function startGame(isMulti) {
 
-   document.currRotation = 0;
-   document.score = 0;
-   document.getElementById("score").innerText = document.score;
-   document.getElementById("playAgainButton").style.display = "none";
+ document.currRotation = 0;
+ document.score = 0;
+ document.getElementById("score").innerText = document.score;
+ document.getElementById("playAgainButton").style.display = "none";
 
     // auto focus on input box when starting game
     window.setTimeout(function() {
@@ -240,12 +240,12 @@ function startGame(isMulti) {
 
     // cannot pause in a multiplayer game
     if (isMulti){
-     document.getElementById("pause").style.display = "none";
- }
- else 
-     document.getElementById("pause").style.display = "";
+       document.getElementById("pause").style.display = "none";
+   }
+   else 
+       document.getElementById("pause").style.display = "";
 
- setupMobile();
+   setupMobile();
 }
 
 function setupMobile(){
@@ -394,44 +394,4 @@ function toggleVisiblePage(visiblePage) {
     };
 
     ensureAllPagesLoaded(loadPage);
-}
-
-function postHighScore(score, board, words) {
-
-    var username = "anonymous";
-
-    let timeInUTC = new Date(Date.now()).getTime();
-    var avatar = "https://ssl.gstatic.com/docs/common/profile/badger_lg.png";
-
-    //user is signed in
-    if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-        username = document.username;
-        avatar = document.avatar;
-    } else return;
-
-    let values = [
-    [score, username, timeInUTC, avatar,
-    JSON.stringify(board), JSON.stringify(words)
-    ]
-    ];
-
-    sendScore(values);
-}
-
-function sendScore(values) {
-    const resource = {
-        values: values,
-        majorDimension: "ROWS"
-    };
-
-    console.log(values);
-
-    gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: SHEET_ID,
-        range: 'Sheet1!A:F',
-        valueInputOption: "USER_ENTERED",
-        resource: resource
-    }).then(function(response) {
-        console.log(response)
-    }, function(response) {});
 }

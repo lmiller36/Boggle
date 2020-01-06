@@ -79,4 +79,54 @@ function signOut() {
 
     document.username = null;
     document.avatar = null;
+    document.googleLoggedIn = false;
+}
+
+function postHighScore(score, board, words) {
+
+    var username = "anonymous";
+
+    let timeInUTC = new Date(Date.now()).getTime();
+    var avatar = "https://ssl.gstatic.com/docs/common/profile/badger_lg.png";
+
+    //user is signed in
+    if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        username = document.username;
+        avatar = document.avatar;
+    } else {
+        console.log("score was not submitted");
+        return;
+    }
+
+    let values = [
+        [score, username, timeInUTC, avatar,
+        JSON.stringify(board), JSON.stringify(words)
+        ]
+    ];
+
+    var range = 'Sheet1!A:F';
+
+    postToGoogleSheets(values,range);
+}
+
+function postToGoogleSheets(values,range) {
+    if(!document.googleLoggedIn){
+        console.log("score was not submitted");
+        return;
+    }
+    const resource = {
+        values: values,
+        majorDimension: "ROWS"
+    };
+
+    console.log(values);
+
+    gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: SHEET_ID,
+        range: range,
+        valueInputOption: "USER_ENTERED",
+        resource: resource
+    }).then(function(response) {
+        console.log(response)
+    }, function(response) {});
 }
