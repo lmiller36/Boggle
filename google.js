@@ -152,3 +152,14 @@ function postToGoogleSheets(values,range) {
         console.log(response)
     }, function(response) {});
 }
+
+function readFromGoogleSheets(callback){
+        gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: SHEET_ID,
+        range: 'Highscores!A1:F'
+    }).then(function(response) {
+        callback(response)
+    }, function(response) {
+        appendPre('Error: ' + response.result.error.message);
+    });
+}

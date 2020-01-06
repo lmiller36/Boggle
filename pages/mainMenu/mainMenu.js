@@ -37,10 +37,8 @@ function multiplayer(){
 
 
 function loadHighScores(){
-	gapi.client.sheets.spreadsheets.values.get({
-		spreadsheetId: SHEET_ID,
-		range: 'Sheet1!A1:F'
-	}).then(function(response) {
+
+	readFromGoogleSheets((response)=>{
 		console.log(response)
 		let values = response.result.values;
 
@@ -105,10 +103,8 @@ function loadHighScores(){
 
 			count ++;
 		})
-	}, function(response) {
-		appendPre('Error: ' + response.result.error.message);
-	});
-
+	})
+	
 	toggleVisiblePage(Pages.highScores);
 
 }

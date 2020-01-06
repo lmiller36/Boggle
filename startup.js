@@ -30,6 +30,7 @@ $(document).ready(function() {
             document.channel = channelID;
             document.isHost = false;
             ensureAllPagesLoaded(() => {
+                linkGame();
                 toggleVisiblePage(Pages.setupMulti);
                 changeSetupState(SetupStates.submitUsername)
             });

@@ -6,6 +6,27 @@ const SetupStates = Object.freeze({
     "waitingForStart": "waitingForStart"
 });
 
+function grayPic1(should){
+    if(should){
+        document.getElementById("pic1").style.filter = "grayscale(100)";
+        document.getElementById("pic2").style.filter = "grayscale(0)";
+    }
+    else {
+        document.getElementById("pic1").style.filter = "grayscale(0)";
+        document.getElementById("pic2").style.filter = "grayscale(100)";
+    }
+}
+
+function linkGame(){
+    document.getElementById("viaLink").style.display = "";
+    grayPic1(false);
+}
+
+function onlineGame(){
+    document.getElementById("viaLink").style.display = "none";
+    grayPic1(true);
+}
+
 function changeSetupState(setupState) {
 
     document.getElementById("host").style.display = "none";
