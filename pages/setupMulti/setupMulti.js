@@ -22,9 +22,52 @@ function linkGame(){
     grayPic1(false);
 }
 
-function onlineGame(){
+function onlineGame(){  
     document.getElementById("viaLink").style.display = "none";
     grayPic1(true);
+    removeAllChildren("onlineGames-rows");
+    readFromGoogleSheets('OnlineGames!A2:D',(response)=>{
+        var games = response.result.values;
+        console.log(response);
+        var gameList = document.getElementById("onlineGames-rows");
+        var i = 0;
+        games.forEach((game)=>{
+            console.log(game);
+            var row = document.createElement("tr");
+            row.className = "element";
+            let host = game[0];
+            let playersInGame = game[1];
+            var toShow = [host,playersInGame];
+
+            toShow.forEach((elem)=>{
+                var entry = document.createElement("td");
+                entry.innerText = elem;
+                entry.className = "font"
+                row.appendChild(entry)
+            });
+            row.onclick = () => {
+                var players = ["Lorne","Mom","Rhonda"];
+                players.forEach((player)=>{
+                    var playerRow = document.createElement("tr");
+                    var div = document.createElement()
+                    var playerEntry = document.createElement("td");
+                    playerEntry.innerText = player;
+                    playerEntry.className = "font"
+                    playerRow.appendChild(playerEntry);
+                    // gameList.appendChild(playerRow);
+                    gameList.insertBefore(playerRow, gameList.children[1]);
+
+                })
+                // var div = document.createElement("div");
+                // div.id = "dropdownPlayers";
+                // div.innerText = "Hello!"
+                
+            }
+            gameList.appendChild(row);
+            i++;
+        })
+        console.log(response);
+    })
 }
 
 function changeSetupState(setupState) {

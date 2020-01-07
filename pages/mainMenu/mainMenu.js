@@ -38,7 +38,7 @@ function multiplayer(){
 
 function loadHighScores(){
 
-	readFromGoogleSheets((response)=>{
+	readFromGoogleSheets('Highscores!A1:F',(response)=>{
 		console.log(response)
 		let values = response.result.values;
 
