@@ -6,188 +6,215 @@
 </head>
 
 <style type="text/css">
-.multiplayer-options-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.multiplayer-options-container .multiplayer-option {
-    position: relative;
-    width: 500px;
-    height: 200px;
-    background-color: #fff;
-    overflow: hidden;
-    margin-bottom: 4px;
-}
-.multiplayer-options-container .multiplayer-option:before {
-    content: "";
-    z-index: 99;
-    position: absolute;
-    top: -10px;
-    left: 32px;
-    display: block;
-    width: 16px;
-    height: 16px;
-    border-radius: 16px;
-    background-color: #e6e5e1;
-}
-.multiplayer-options-container .multiplayer-option:after {
-    content: "";
-    z-index: 99;
-    position: absolute;
-    bottom: -10px;
-    left: 32px;
-    display: block;
-    width: 16px;
-    height: 16px;
-    border-radius: 16px;
-    background-color: #e6e5e1;
-}
-.multiplayer-options-container .multiplayer-option h2 {
-    z-index: 99;
-    font-family: "Poppins", sans-serif;
-    position: absolute;
-    bottom: 0;
-    right: 130px;
-    font-size: 60px;
-    font-weight: 700;
-    color: #fff;
-}
-.multiplayer-options-container .multiplayer-option .fa-arrow-right {
-    z-index: 100;
-    position: absolute;
-    right: 75px;
-    bottom: 25px;
-    font-size: 40px;
-    cursor: pointer;
-}
-.multiplayer-options-container .multiplayer-option p {
-    z-index: 99;
-    position: absolute;
-    top: 20px;
-    right: 70px;
-    color: #333;
-    opacity: 0.7;
-    font-size: 12px;
-    letter-spacing: 1px;
-    writing-mode: vertical-lr;
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-}
-.multiplayer-options-container .multiplayer-option .pic {
-    z-index: 100;
-    width: 400px;
-    height: 200px;
-    background-image: url("https://images.unsplash.com/photo-1525543907410-b2562b6796d6?ixlib=rb-0.3.5&s=9ff8e5e718a6a40cbd0e1471235912f4&auto=format&fit=crop&w=3452&q=80");
-    background-size: 100% 100%;
-    filter: grayscale(100%);
-}
-.multiplayer-options-container .multiplayer-option .social {
-    position: absolute;
-    left: 60px;
-    top: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    width: 180px;
-    height: 64px;
-    border-radius: 80px;
-}
-.multiplayer-options-container .multiplayer-option .social i:nth-of-type(1) {
-    -webkit-transition-delay: 0.4s;
-    transition-delay: 0.4s;
-}
-.multiplayer-options-container .multiplayer-option .social i:nth-of-type(2) {
-    -webkit-transition-delay: 0.3s;
-    transition-delay: 0.3s;
-}
-.multiplayer-options-container .multiplayer-option .social i:nth-of-type(3) {
-    -webkit-transition-delay: 0.2s;
-    transition-delay: 0.2s;
-}
-.multiplayer-options-container .multiplayer-option .social i:nth-of-type(4) {
-    -webkit-transition-delay: 0.1s;
-    transition-delay: 0.1s;
-}
-.multiplayer-options-container .multiplayer-option:hover i {
-    opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-}
-.multiplayer-options-container .multiplayer-option button {
-    position: absolute;
-    right: 14px;
-    bottom: 14px;
-    width: 30px;
-    height: 30px;
-    background-color: #da4d1d;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    outline: none;
-    transition: all 0.3s ease;
-    mix-blend-mode: hard-light;
-}
-.multiplayer-options-container .multiplayer-option button i {
-    font-size: 3rem;
-}
-.multiplayer-options-container .multiplayer-option:hover button {
-    transform: scale(16.5);
-}
-.multiplayer-options-container .multiplayer-option:hover p {
-    color: #fff;
-}
-.multiplayer-options-container .multiplayer-option:hover .pic {
-    filter: grayscale(0);
-}
-.multiplayer-options-container .multiplayer-option2 .pic {
-    background-image: url("https://images.unsplash.com/photo-1528785198459-ec50485704c7?ixlib=rb-0.3.5&s=3a2fc3039516555bbb2e9cd2967bd321&auto=format&fit=crop&w=1537&q=80");
-}
-.multiplayer-options-container .multiplayer-option2 button {
-    background-color: #2b26c3;
-}
-.onlineGames-table {
-   margin-top: 40px;
-   border-spacing: 1em .5em;
-   padding: 0 2em 1em 0;
-   border: 3px solid black;
-}
-#onlineGames {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
+    .multiplayer-options-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 
-#onlineGames td, #onlineGames th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
+    .multiplayer-options-container .multiplayer-option {
+        position: relative;
+        width: 500px;
+        height: 200px;
+        background-color: #fff;
+        overflow: hidden;
+        margin-bottom: 4px;
+    }
 
-#onlineGames tr:nth-child(even){background-color: #f2f2f2;}
+    .multiplayer-options-container .multiplayer-option:before {
+        content: "";
+        z-index: 99;
+        position: absolute;
+        top: -10px;
+        left: 32px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        border-radius: 16px;
+        background-color: #e6e5e1;
+    }
 
-#onlineGames tr:hover {background-color: #ddd;}
+    .multiplayer-options-container .multiplayer-option:after {
+        content: "";
+        z-index: 99;
+        position: absolute;
+        bottom: -10px;
+        left: 32px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        border-radius: 16px;
+        background-color: #e6e5e1;
+    }
 
-#onlineGames th {
-    font-size:xx-large;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-}
+    .multiplayer-options-container .multiplayer-option h2 {
+        z-index: 99;
+        font-family: "Poppins", sans-serif;
+        position: absolute;
+        bottom: 0;
+        right: 130px;
+        font-size: 60px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .multiplayer-options-container .multiplayer-option .fa-arrow-right {
+        z-index: 100;
+        position: absolute;
+        right: 75px;
+        bottom: 25px;
+        font-size: 40px;
+        cursor: pointer;
+    }
+
+    .multiplayer-options-container .multiplayer-option p {
+        z-index: 99;
+        position: absolute;
+        top: 20px;
+        right: 70px;
+        color: #333;
+        opacity: 0.7;
+        font-size: 12px;
+        letter-spacing: 1px;
+        writing-mode: vertical-lr;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+    }
+
+    .multiplayer-options-container .multiplayer-option .pic {
+        z-index: 100;
+        width: 400px;
+        height: 200px;
+        background-image: url("https://images.unsplash.com/photo-1525543907410-b2562b6796d6?ixlib=rb-0.3.5&s=9ff8e5e718a6a40cbd0e1471235912f4&auto=format&fit=crop&w=3452&q=80");
+        background-size: 100% 100%;
+        filter: grayscale(100%);
+    }
+
+    .multiplayer-options-container .multiplayer-option .social {
+        position: absolute;
+        left: 60px;
+        top: 0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 180px;
+        height: 64px;
+        border-radius: 80px;
+    }
+
+    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(1) {
+        -webkit-transition-delay: 0.4s;
+        transition-delay: 0.4s;
+    }
+
+    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(2) {
+        -webkit-transition-delay: 0.3s;
+        transition-delay: 0.3s;
+    }
+
+    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(3) {
+        -webkit-transition-delay: 0.2s;
+        transition-delay: 0.2s;
+    }
+
+    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(4) {
+        -webkit-transition-delay: 0.1s;
+        transition-delay: 0.1s;
+    }
+
+    .multiplayer-options-container .multiplayer-option:hover i {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    .multiplayer-options-container .multiplayer-option button {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        width: 30px;
+        height: 30px;
+        background-color: #da4d1d;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.3s ease;
+        mix-blend-mode: hard-light;
+    }
+
+    .multiplayer-options-container .multiplayer-option button i {
+        font-size: 3rem;
+    }
+
+    .multiplayer-options-container .multiplayer-option:hover button {
+        transform: scale(16.5);
+    }
+
+    .multiplayer-options-container .multiplayer-option:hover p {
+        color: #fff;
+    }
+
+    .multiplayer-options-container .multiplayer-option:hover .pic {
+        filter: grayscale(0);
+    }
+
+    .multiplayer-options-container .multiplayer-option2 .pic {
+        background-image: url("https://images.unsplash.com/photo-1528785198459-ec50485704c7?ixlib=rb-0.3.5&s=3a2fc3039516555bbb2e9cd2967bd321&auto=format&fit=crop&w=1537&q=80");
+    }
+
+    .multiplayer-options-container .multiplayer-option2 button {
+        background-color: #2b26c3;
+    }
+
+    .onlineGames-table {
+        margin-top: 40px;
+        border-spacing: 1em .5em;
+        padding: 0 2em 1em 0;
+        border: 3px solid black;
+    }
+
+    #onlineGames {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #onlineGames td,
+    #onlineGames th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #onlineGames tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #onlineGames tr:hover {
+        background-color: #ddd;
+    }
+
+    #onlineGames th {
+        font-size: xx-large;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
 </style>
 
 <body>
-    <div class="setupMulti"> 
-        <div id ="multiGameTypeContainer" class="multiplayer-options-container">
+    <div class="setupMulti">
+        <div id="multiGameTypeContainer" class="multiplayer-options-container">
             <div class="multiplayer-option" onclick="linkGame()">
                 <h2>Via Link</h2>
                 <i class="fa fa-arrow-right"></i>
@@ -201,11 +228,11 @@
                 <i class="fa fa-arrow-right"></i>
                 <p> See online games</p>
                 <div id="pic2" class="pic"></div>
-                <button >
+                <button>
                 </button>
             </div>
         </div>
-        <div id = "viaLink" style="display: none">
+        <div id="viaLink" style="display: none">
             <div id="leftMenu_setup_multi" class="leftSide">
                 <i class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu_setupMulti()"></i>
             </div>
@@ -276,24 +303,24 @@
             <p id="pls_start" class="centerContent"><b>Please ask host to start</b></p>
         </div>
 
-        <div id ="onlineGame" class = "">
-            <br/>
-            <br/>   
-           <p id = "title" class="title centerContent"> Games </p>
-           <div class = "centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
-            <table id="onlineGames" class="onlineGames-table striped">
-             <thead id = "onlineGames-head">
-              <tr id="onlineGames-head-row">
-               <th>Host</th>
-               <th>Players in game</th>
-           </tr>
-       </thead>
-       <tbody id = "onlineGames-rows">
-       </tbody>
-   </table>
-</div>
-</div>
-</div>
+        <div id="onlineGame" class="" style="display: none">
+            <br />
+            <br />
+            <p id="title" class="title centerContent"> Games </p>
+            <div class="centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
+                <table id="onlineGames" class="onlineGames-table striped">
+                    <thead id="onlineGames-head">
+                        <tr id="onlineGames-head-row">
+                            <th>Host</th>
+                            <th>Players in game</th>
+                        </tr>
+                    </thead>
+                    <tbody id="onlineGames-rows">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -108,8 +108,14 @@ function playAgain() {
     }
 }
 
+function setFocusOnInput(){
+     window.setTimeout(function() {
+        var elem = document.getElementById("wordsInput");
+        elem.focus();
+    }, 0);
+}
 
-/* Function for mobile */ 
+/* Functions for mobile */ 
 function submitViaButton(){
     var wordElem = document.getElementById("wordsInput");
     if(wordElem.value == "") return;
@@ -118,20 +124,26 @@ function submitViaButton(){
 }
 
 function enterLetterViaClick(clickedTile){
-    var input = document.getElementById("wordsInput");
-    var letter = clickedTile.innerText;
-    var word = input.value + letter;
+  var arr = clickedTile.id.split("_");
+  var i,j,rot;
+  i = parseInt(arr[1]);
+  j = parseInt(arr[3]);
+  rot = (document.currRotation + 2) % 4;
+
+  var input = document.getElementById("wordsInput");
+
+
+  var letter = clickedTile.innerText;
+  var word = input.value + letter;
+
+  setFocusOnInput();
 
     // check if can highlight, but we will enforce that 
     // the correct letter is highlighted
     if(wordOnBoard(word)){
         input.value = word;
         if(!document.lastHighlighted) document.lastHighlighted = [];
-        var arr = clickedTile.id.split("_");
-        var i,j,rot;
-        i = parseInt(arr[1]);
-        j = parseInt(arr[3]);
-        rot = (document.currRotation + 2) % 4;
+
         var coords = [i,j,true]
         document.lastHighlighted.push(coords);
 
