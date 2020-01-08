@@ -298,7 +298,7 @@ function getBoardTile(x, y) {
     while (i < 5) {
         j = 0;
         while (j < 5) {
-            var id = "row_" + i + "_column_" + j + "_0";
+            var id = "row_" + i + "_column_" + j + "_"+document.currRotation;
             var elem = document.getElementById(id);
             var bound = elem.getBoundingClientRect();
             var xMatch = x >= bound.left && x <= bound.right;
