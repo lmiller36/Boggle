@@ -156,7 +156,7 @@ function toggleHost(isHost) {
         var seed = startChannel();
         document.board = shuffledBoard();
         document.channel = seed;
-        var url = "lmiller36.github.io/Boggle/#/joinGame/" + seed;
+        var url = "lmiller36.github.io/Boggle/#/setupMulti/joinGame/" + seed;
         console.log(url);
         document.joinUrl = url;
     }
@@ -177,11 +177,6 @@ function exitMultiplayerSession() {
 }
 
 function mainMenu_setupMulti() {
-    document.getElementById("pacman").style.display = "none";
-
-    unsubscribe();
-
-    //TODO Unsubscribe stuff
     // Go to main menu
-    toggleVisiblePage(Pages.mainMenu);
+    mainMenu();
 }

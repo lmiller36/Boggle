@@ -1,3 +1,49 @@
+function setupGame(isMulti) {
+    document.currRotation = 0;
+    document.score = 0;
+    document.fakeWords = []
+    document.getElementById("score").innerText = document.score;
+    document.getElementById("playAgainButton").style.display = "none";
+
+    // auto focus on input box when starting game
+    setFocusOnInput();
+
+    document.words = []
+    document.uniqueWords = []
+    var arr = document.board;
+    for (var i = 0; i < 5; i++) {
+        for (var j = 0; j < 5; j++) {
+
+            var divContainer = createLetterDiv(arr[i][j], i, j, 0);
+            var divContainer1 = createLetterDiv(arr[j][4 - i], i, j, 1);
+            var divContainer2 = createLetterDiv(arr[4 - i][4 - j], i, j, 2);
+            var divContainer3 = createLetterDiv(arr[4 - j][i], i, j, 3);
+
+            document.getElementById("board-0").appendChild(divContainer);
+            document.getElementById("board-1").appendChild(divContainer1);
+            document.getElementById("board-2").appendChild(divContainer2);
+            document.getElementById("board-3").appendChild(divContainer3);
+
+        }
+    }
+
+    $(document).ready(function() {
+        setClockEnd();
+        initializeClock();
+    });
+
+    // cannot pause in a multiplayer game
+    if (isMulti) {
+        document.getElementById("pause").style.display = "none";
+    } else
+    document.getElementById("pause").style.display = "";
+    document.getElementById("wordInputDiv").style.display = "";
+
+    // document.getElementById("wordsInputDiv").style.display = "";
+
+    setupMobile();
+}
+
 function isWord(word){
 		var isEnglishWord = document.wordlist.indexOf(word) != -1;
 		var lengthGreaterThanThree = word.length > 3;

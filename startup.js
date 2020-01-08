@@ -24,7 +24,7 @@ $(document).ready(function() {
         console.log(document.me);
         var queryString = window.location.hash.substr(1);
         // join game
-        if (queryString.startsWith("/joinGame/")) {
+        if (queryString.startsWith("setupMulti/joinGame/")) {
 
             var channelID = queryString.substring(queryString.lastIndexOf("/") + 1);
             document.channel = channelID;
@@ -70,3 +70,19 @@ document.wordlist = [];
     });
 
 });
+
+window.addEventListener('hashchange',() => {
+   transition();
+})
+
+function checkFirstVisit(){
+    if(document.cookie.indexOf('mycookie') == -1){
+        document.cookie = 'mycookie=1';
+    }
+    else 
+    {
+        // when refreshed go to main menu
+        // TODO: dont always do this
+        mainMenu();
+    }
+}

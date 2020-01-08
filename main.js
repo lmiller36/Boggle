@@ -20,8 +20,8 @@ const Pages = Object.freeze({
 });
 document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
-document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container", "leftMenu_setup"];
-document.pages[Pages.setupMulti] = ["setupMulti_container", "leftMenu_setup_multi", "pacman_container"];
+document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container"];
+document.pages[Pages.setupMulti] = ["setupMulti_container", "pacman_container"];
 document.pages[Pages.game] = ["game_container"];
 document.pages[Pages.highScores] = ["highScores_container"];
 document.pages[Pages.contributions] = ["contributions_container"];
@@ -203,60 +203,11 @@ function bootMe() {
     document.getElementById("hasJoined").style.display = "none";
 }
 
-
-function startGame(isMulti) {
-    document.currRotation = 0;
-    document.score = 0;
-    document.fakeWords = []
-    document.getElementById("score").innerText = document.score;
-    document.getElementById("playAgainButton").style.display = "none";
-
-    // auto focus on input box when starting game
-    setFocusOnInput();
-
-    document.words = []
-    document.uniqueWords = []
-    var arr = document.board;
-    for (var i = 0; i < 5; i++) {
-        for (var j = 0; j < 5; j++) {
-
-            var divContainer = createLetterDiv(arr[i][j], i, j, 0);
-            var divContainer1 = createLetterDiv(arr[j][4 - i], i, j, 1);
-            var divContainer2 = createLetterDiv(arr[4 - i][4 - j], i, j, 2);
-            var divContainer3 = createLetterDiv(arr[4 - j][i], i, j, 3);
-
-            document.getElementById("board-0").appendChild(divContainer);
-            document.getElementById("board-1").appendChild(divContainer1);
-            document.getElementById("board-2").appendChild(divContainer2);
-            document.getElementById("board-3").appendChild(divContainer3);
-
-        }
-    }
-
-    $(document).ready(function() {
-        var durationInMilli = document.setupTime + 1000;
-        var end = new Date((new Date()).getTime() + durationInMilli);
-        document.endtime = end;
-        initializeClock();
-    });
-
-    toggleVisiblePage(Pages.game);
-
-    // cannot pause in a multiplayer game
-    if (isMulti) {
-        document.getElementById("pause").style.display = "none";
-    } else
-    document.getElementById("pause").style.display = "";
-
-    setupMobile();
-}
-
 function setupMobile() {
     var mobile = document.isMobile ? "" : "none";
     var browser = (!document.isMobile) ? "" : "none";
 
     document.getElementById("leftMenu_ingame").style.display = browser;
-    document.getElementById("mainMenu_ingame").style.display = browser;
     document.getElementById("google-login").style.display = browser;
     document.getElementById("browser_controls_container").style.display = browser;
     document.getElementById("spacer_game").style.display = browser;
@@ -319,7 +270,7 @@ function touchStart(event) {
  * has been held on touch several times to 
  * combat false positives
  **/
-function touchmove(event) {
+ function touchmove(event) {
     var x = event.touches[0].clientX;
     var y = event.touches[0].clientY;
     var val = getBoardTile(x, y);
@@ -445,29 +396,4 @@ function ensureAllPagesLoaded(callback) {
             callback();
         }
     }, 10);
-}
-
-/** Shows all elements corresponding to given page, hides others **/
-function toggleVisiblePage(visiblePage) {
-
-    var loadPage = function() {
-        Object.keys(Pages).forEach((page) => {
-            document.page
-            // make all elems visible
-            if (page == visiblePage) {
-                document.pages[page].forEach((toShow) => {
-                    document.getElementById(toShow).style.display = "";
-                });
-            }
-
-            // hide
-            else {
-                document.pages[page].forEach((toHide) => {
-                    document.getElementById(toHide).style.display = "none";
-                });
-            }
-        })
-    };
-
-    ensureAllPagesLoaded(loadPage);
 }

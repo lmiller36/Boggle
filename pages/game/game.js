@@ -14,6 +14,7 @@ function togglePause(isPaused) {
         document.getElementById("play").style.display = "";
         document.getElementById("finishedBoard").style.display = "none";
         document.getElementById("wordInputDiv").style.display = "none";
+        console.log("wordInputDiv:none");
 
         clearInterval(document.timeinterval);
     }
@@ -47,22 +48,6 @@ function enterLetter(event, obj) {
     }
 }
 
-function mainMenu() {
-    // Stop timer & set to zeros
-    togglePause(0);
-    clearInterval(document.timeinterval);
-    document.remaining = null;
-
-    // Remove words
-    removeWords();
-
-    // Remove Tiles
-    removeBoardTiles();
-
-    // Go to main menu
-    toggleVisiblePage(Pages.mainMenu);
-}
-
 function playAgain() {
     document.hasTallied = false;
     document.allWords = [];
@@ -93,7 +78,7 @@ function playAgain() {
 
         changeSetupState(SetupStates.waitingForStart);
 
-        toggleVisiblePage(Pages.setupMulti);
+        multiplayer();
     }
     // play single player
     else {
@@ -101,7 +86,7 @@ function playAgain() {
         document.getElementById("wordInputDiv").style.display = "";
         document.getElementById("playAgainButton").style.display = "none";
 
-        startGame();
+        game();
     }
 }
 
@@ -162,7 +147,6 @@ function enterLetterViaClick(clickedTile){
   rot = (document.currRotation + 2) % 4;
 
   var input = document.getElementById("wordsInput");
-
 
   var letter = clickedTile.innerText;
   var word = input.value + letter;
