@@ -94,3 +94,20 @@ function removeWords() {
     var cNode = node.cloneNode(false);
     node.parentNode.replaceChild(cNode, node);
 }
+
+/** Create tile element **/
+function createLetterDiv(val, i, j, rot) {
+    var divContainer = document.createElement("div");
+    divContainer.id = "row_" + i + "_column_" + j + "_" + rot;
+    divContainer.className = "grid-item";
+    divContainer.innerText = val;
+
+    // Allow element to be clicked
+    divContainer.onmousedown = (event) => {
+        if(!document.isMobile)
+            enterLetterViaClick(event.srcElement)
+    };
+    
+
+    return divContainer;
+}

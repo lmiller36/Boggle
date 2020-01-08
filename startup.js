@@ -38,9 +38,6 @@ $(document).ready(function() {
     });
 });
 
-
-
-
 // load data
 $.ajax({
     url: "data/tiles.txt",

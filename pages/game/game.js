@@ -32,8 +32,6 @@ function togglePause(isPaused) {
     }
 }
 
-
-
 function enterLetter(event, obj) {
     if (event && event.key === "Enter") {
         if (obj.value != "") {
@@ -70,7 +68,6 @@ function playAgain() {
     document.allWords = [];
     document.submittedWords = [];
     document.getElementById("wordInputDiv").style.display = "";
-
 
     // Remove words
     removeWords();
@@ -115,6 +112,40 @@ function setFocusOnInput(){
     }, 0);
 }
 
+function removeLetter(){
+    var input = document.getElementById("wordsInput");
+    var word = input.value.toUpperCase();
+
+    if(word.length > 0)
+    {
+        var wordMinusChar = word.substring(0,word.length - 1);
+
+        if(word.length == document.lastHighlighted.length){
+            var remainder = document.lastHighlighted.splice(0,wordMinusChar.length);
+            highlightBoard(remainder);
+            document.lastHighlighted = remainder;
+        }
+        input.value = wordMinusChar;
+    }
+}
+
+function removeLetter(){
+    var input = document.getElementById("wordsInput");
+    var word = input.value.toUpperCase();
+
+    if(word.length > 0)
+    {
+        var wordMinusChar = word.substring(0,word.length - 1);
+
+        if(word.length == document.lastHighlighted.length){
+            var remainder = document.lastHighlighted.splice(0,wordMinusChar.length);
+            highlightBoard(remainder);
+            document.lastHighlighted = remainder;
+        }
+        input.value = wordMinusChar;
+    }
+}
+
 /* Functions for mobile */ 
 function submitViaButton(){
     var wordElem = document.getElementById("wordsInput");
@@ -148,22 +179,5 @@ function enterLetterViaClick(clickedTile){
         document.lastHighlighted.push(coords);
 
         highlightBoard(document.lastHighlighted);
-    }
-}
-
-function removeLetter(){
-    var input = document.getElementById("wordsInput");
-    var word = input.value.toUpperCase();
-
-    if(word.length > 0)
-    {
-        var wordMinusChar = word.substring(0,word.length - 1);
-
-        if(word.length == document.lastHighlighted.length){
-            var remainder = document.lastHighlighted.splice(0,wordMinusChar.length);
-            highlightBoard(remainder);
-            document.lastHighlighted = remainder;
-        }
-        input.value = wordMinusChar;
     }
 }

@@ -193,8 +193,6 @@ function tallyScores() {
     }
 
     alert("Your score is " + scores[myIndex]);
-
-
 }
 
 function bootMe() {
@@ -205,8 +203,8 @@ function bootMe() {
     document.getElementById("hasJoined").style.display = "none";
 }
 
-function startGame(isMulti) {
 
+function startGame(isMulti) {
     document.currRotation = 0;
     document.score = 0;
     document.fakeWords = []
@@ -277,21 +275,7 @@ function setupMobile() {
     }
 }
 
-function createLetterDiv(val, i, j, rot) {
-    var divContainer = document.createElement("div");
-    divContainer.id = "row_" + i + "_column_" + j + "_" + rot;
-    divContainer.className = "grid-item";
-    divContainer.innerText = val;
-
-    divContainer.onmousedown = (event) => {
-        if(!document.isMobile)
-            enterLetterViaClick(event.srcElement)
-    };
-    
-
-    return divContainer;
-}
-
+/** Find row & column, (x,y), in board **/
 function getBoardTile(x, y) {
     var i, j;
     i = 0;
@@ -324,26 +308,33 @@ function touchStart(event) {
         // add letter
         enterLetterViaClick(document.getElementById(id))
 
-
     // -1 indicates tile has been highlighted
     document.uniqueTiles[id] = -1;
 
 }
 
+/** 
+ * Called when user is touching device for mobile swiping.
+ * Only considers a tile selected on swipe when it 
+ * has been held on touch several times to 
+ * combat false positives
+ **/
 function touchmove(event) {
-
     var x = event.touches[0].clientX;
     var y = event.touches[0].clientY;
     var val = getBoardTile(x, y);
     var id = val[0];
 
-    // document.touches.push(val);
-
     if (!document.uniqueTiles[id]) document.uniqueTiles[id] = 1;
     else if (document.uniqueTiles[id] < 0) document.uniqueTiles[id] = -1;
     else document.uniqueTiles[id] += 1;
 
+    // User has finger on tile long enough
+    // to be considered selected
     if (document.uniqueTiles[id] == 4) {
+        // -1 indicates tile has been highlighted
+        document.uniqueTiles[id] = -1;
+
         enterLetterViaClick(document.getElementById(id))
     }
     event.preventDefault();
@@ -387,6 +378,7 @@ function submitWord(obj) {
     removeHighlightingFromAll();
 }
 
+/** Adds a given player to setup multiplayer screen **/
 function appendPlayerToTable(sender, username) {
 
     var tableRow = document.createElement("tr");
@@ -416,6 +408,7 @@ function appendPlayerToTable(sender, username) {
     document.getElementById("playersList").appendChild(tableRow);
 }
 
+/** Adds a given word to the corresponding wordlist in game **/
 function appendWordToTable(word) {
 
     var wordScore = getScore(word);
@@ -431,10 +424,10 @@ function appendWordToTable(word) {
     tableRow.appendChild(wordCell);
     tableRow.appendChild(scoreCell);
 
-    if (document.isMobile) {
+    if (document.isMobile) 
         document.getElementById("wordList_mobile").appendChild(tableRow);
-    } else
-    document.getElementById("wordList").appendChild(tableRow);
+    else
+        document.getElementById("wordList").appendChild(tableRow);
 }
 
 function ensureAllPagesLoaded(callback) {
@@ -454,6 +447,7 @@ function ensureAllPagesLoaded(callback) {
     }, 10);
 }
 
+/** Shows all elements corresponding to given page, hides others **/
 function toggleVisiblePage(visiblePage) {
 
     var loadPage = function() {
