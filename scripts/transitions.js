@@ -161,7 +161,8 @@ function transition(){
     removeBoardTiles();
 
     // hide pacman
-    document.getElementById("pacman").style.display = "none";
+    if(document.getElementById("pacman"))   
+    	document.getElementById("pacman").style.display = "none";
 
     // leave channel, if currently joined
     unsubscribe();
