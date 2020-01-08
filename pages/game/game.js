@@ -14,7 +14,6 @@ function togglePause(isPaused) {
         document.getElementById("play").style.display = "";
         document.getElementById("finishedBoard").style.display = "none";
         document.getElementById("wordInputDiv").style.display = "none";
-        console.log("wordInputDiv:none");
 
         clearInterval(document.timeinterval);
     }
@@ -24,7 +23,6 @@ function togglePause(isPaused) {
 
         var end = new Date((new Date()).getTime() + document.remaining);
         document.endtime = end;
-
         initializeClock();
         document.getElementById("pause").style.display = "";
         document.getElementById("play").style.display = "none";

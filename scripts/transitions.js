@@ -98,7 +98,6 @@ function game(isMulti){
 function transition(){
 	var hashString = window.location.hash;
 	var page;
-	
 	// read hashstring to get page
 	if(hashString){
 		var elements = hashString.split("/");
@@ -166,4 +165,7 @@ function transition(){
 
     // leave channel, if currently joined
     unsubscribe();
+
+    clearInterval(document.timeinterval);
+    document.timeinterval = null;
 }

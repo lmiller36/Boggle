@@ -22,7 +22,7 @@ function initializeClock(){
 
 		setClock(t.minutes,t.seconds,"clockdiv_game");
 
-		if(t.total<=0){
+		if(t.total<=0 && document.timeinterval){
 			clearInterval(timeinterval);
 			endGame();
 		}
@@ -59,6 +59,6 @@ function setClock_setup_multi(minutes,seconds){
 
 function setClockEnd(){
 	var durationInMilli = document.setupTime + 1000;
-    var end = new Date((new Date()).getTime() + durationInMilli);
-    document.endtime = end;
+	var end = new Date((new Date()).getTime() + durationInMilli);
+	document.endtime = end;
 }
