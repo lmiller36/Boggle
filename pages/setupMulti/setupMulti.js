@@ -116,7 +116,8 @@ function usernameDone() {
 }
 
 function startMultiGame() {
-    document.getElementById("pacman").style.display = "none";
+    if(document.getElementById("pacman"))  
+        document.getElementById("pacman").style.display = "none";
 
     document.isSinglePlayerGame = false;
     var msg = {
