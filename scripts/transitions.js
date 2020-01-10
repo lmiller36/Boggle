@@ -89,7 +89,8 @@ function highscores(){
 }
 
 function game(isMulti){
-	document.board = shuffledBoard();
+	if(!document.board)
+		document.board = shuffledBoard();
 	setupGame(isMulti);
 	setHashString(Pages.game);
 }

@@ -2,6 +2,7 @@ var pubnub;
 var isHost = false;
 
 $(document).ready(function() {
+    document.me = randomAlphanumeric();
     pubnub = new PubNub({
         publishKey: 'pub-c-10d297a3-4a59-41b5-8770-9a3cc3625270',
         subscribeKey: 'sub-c-68069aa6-269d-11ea-95be-f6a3bb2caa12'
@@ -11,7 +12,6 @@ $(document).ready(function() {
             receiveMessage(message)
         }
     });
-    document.me = randomAlphanumeric();
 });
 
 function startChannel() {

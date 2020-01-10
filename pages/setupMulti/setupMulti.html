@@ -232,6 +232,27 @@
                 </button>
             </div>
         </div>
+        <div id="onlineGame" class="" style="display: none">
+            <br />
+            <br />
+            <p id="title" class="title centerContent"> Games </p>
+            <button class="centered" onclick="createNewGame()">
+                <i class="fa fa-plus-square-o"></i> New Game
+            </button>
+            <div class="centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
+                <table id="onlineGames" class="onlineGames-table striped">
+                    <thead id="onlineGames-head">
+                        <tr id="onlineGames-head-row">
+                            <th>Host</th>
+                            <th>Players in game</th>
+                            <th>Join</th>
+                        </tr>
+                    </thead>
+                    <tbody id="onlineGames-rows">
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div id="viaLink" style="display: none">
             <div class="centerContent" id="hostJoinRadio">
                 <p>Please select one: </p>
@@ -298,24 +319,6 @@
             <br />
             <br />
             <p id="pls_start" class="centerContent"><b>Please ask host to start</b></p>
-        </div>
-
-        <div id="onlineGame" class="" style="display: none">
-            <br />
-            <br />
-            <p id="title" class="title centerContent"> Games </p>
-            <div class="centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
-                <table id="onlineGames" class="onlineGames-table striped">
-                    <thead id="onlineGames-head">
-                        <tr id="onlineGames-head-row">
-                            <th>Host</th>
-                            <th>Players in game</th>
-                        </tr>
-                    </thead>
-                    <tbody id="onlineGames-rows">
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </body>

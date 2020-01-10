@@ -4,6 +4,10 @@ html, body {
   position: relative;
 }
 
+.joinCheck{
+	margin-left:2vw;
+}
+
 .main{
 	margin-top:11vh;
 }

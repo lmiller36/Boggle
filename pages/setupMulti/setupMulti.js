@@ -26,56 +26,99 @@ function linkGame(){
 
 function onlineGame(){  
     document.getElementById("viaLink").style.display = "none";
-        document.getElementById("onlineGame").style.display = "";
+    document.getElementById("onlineGame").style.display = "";
 
     grayPic1(true);
     removeAllChildren("onlineGames-rows");
-    readFromGoogleSheets('OnlineGames!A2:D',(response)=>{
+    readFromGoogleSheets('OnlineGames!A2:E',(response)=>{
         var games = response.result.values;
+        var users = {};
         console.log(response);
-        var gameList = document.getElementById("onlineGames-rows");
-        var i = 0;
+        // get most recent game
         games.forEach((game)=>{
-            console.log(game);
-            var row = document.createElement("tr");
-            row.className = "element";
-            let host = game[0];
-            let playersInGame = game[1];
-            var toShow = [host,playersInGame];
+            var user = game[0];
+            if(!users[user]) users[user] = game;
+            else {
+                   users[user] = game; 
+           }
+       });
 
-            toShow.forEach((elem)=>{
-                var entry = document.createElement("td");
-                entry.innerText = elem;
-                entry.className = "font"
-                row.appendChild(entry)
-            });
-            row.onclick = () => {
-                var players = ["Lorne","Mom","Rhonda"];
-                players.forEach((player)=>{
-                    var playerRow = document.createElement("tr");
-                    var div = document.createElement()
-                    var playerEntry = document.createElement("td");
-                    playerEntry.innerText = player;
-                    playerEntry.className = "font"
-                    playerRow.appendChild(playerEntry);
-                    // gameList.appendChild(playerRow);
-                    gameList.insertBefore(playerRow, gameList.children[1]);
+        Object.values(users).forEach((game)=>{
+            var user = game[0];
+            addOnlineGameRow(game);
 
-                })
-                // var div = document.createElement("div");
-                // div.id = "dropdownPlayers";
-                // div.innerText = "Hello!"
-                
-            }
-            gameList.appendChild(row);
-            i++;
         })
         console.log(response);
     })
 }
 
-function changeSetupState(setupState) {
+function addOnlineGameRow(game){
+    var gameList = document.getElementById("onlineGames-rows");
+    var joinGameIcon;
+    var row = document.createElement("tr");
+    row.className = "element";
+    let host = game[0];
+    let playersInGame = game[1];
+    var gameID = game[2];
+    var toShow = [host,playersInGame];
 
+    toShow.forEach((elem)=>{
+        var entry = document.createElement("td");
+        entry.innerText = elem;
+        entry.className = "font"
+        row.appendChild(entry)
+    });
+    joinGameIcon = document.createElement("i");
+    joinGameIcon.id = "joinGame_host_"+host;
+    joinGameIcon.className = "fa fa-square-o joinCheck";
+    joinGameIcon.onclick = () =>{
+       handleOnlineGameJoin(joinGameIcon,gameID);
+   }
+
+   row.appendChild(joinGameIcon);
+
+   gameList.appendChild(row);
+   return joinGameIcon;
+}
+
+function createNewGame(){
+    var numPlayers = 1;
+    var gameID = startChannel();
+    document.board = shuffledBoard();
+    var now = Date.now();
+    var arr = [document.username, numPlayers, gameID, JSON.stringify(document.board),now];
+    let values = [arr];
+
+    
+    document.isHost = true;
+
+    var joinGameIcon = addOnlineGameRow(arr);
+    handleOnlineGameJoin(joinGameIcon,gameID);
+
+    var range = 'OnlineGames!A:E';
+    postToGoogleSheets(values,range);
+}
+
+function handleOnlineGameJoin(joinGameIcon,gameID){
+   // remove checkmark
+   var rows = document.getElementById("onlineGames-rows").children;
+   for(var i = 0;i < rows.length;i++){
+    rows[i].children[2].className = "fa fa-square-o joinCheck";
+    console.log();
+}
+
+document.getElementById("viaLink").style.display = "";
+document.channel = gameID;
+joinGameIcon.className = "fa fa-check-square joinCheck";
+if (document.username) {
+    usernameDone();
+} else {
+    changeSetupState(SetupStates.submitUsername);
+}
+
+}
+
+function changeSetupState(setupState) {
     document.getElementById("host").style.display = "none";
     document.getElementById("game_link").innerText = "";
     document.getElementById("startGameMultiButton").style.display = "none";
@@ -212,7 +255,8 @@ function toggleHost(isHost) {
     }
 
     if (document.username) {
-        usernameDone();
+        changeSetupState(SetupStates.waitingForStart);
+
     } else {
         changeSetupState(SetupStates.submitUsername);
     }
