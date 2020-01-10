@@ -24,8 +24,7 @@ $(document).ready(function() {
         console.log(document.me);
         var queryString = window.location.hash.substr(1);
         // join game
-        if (queryString.startsWith("/joinGame/")) {
-
+        if (queryString.startsWith("setupMulti/joinGame/")) {
             var channelID = queryString.substring(queryString.lastIndexOf("/") + 1);
             document.channel = channelID;
             document.isHost = false;
@@ -38,9 +37,6 @@ $(document).ready(function() {
     });
 });
 
-
-
-
 // load data
 $.ajax({
     url: "data/tiles.txt",
@@ -51,14 +47,17 @@ $.ajax({
 });
 
 $(document).ready(function() {
-    // load pacman
-    var pacmanlink = document.getElementById('pacman_import');
-    var content = pacmanlink.import;
 
-    if(content){
-        var el = content.querySelector('.pacman_svg');
-        document.getElementById("pacman_container").appendChild(el.cloneNode(true));
-    }   
+    var htmlUrl = "./data/pacman.html";
+    var divContainer ="pacman_container";
+        // var scriptId = "./pages/" + page + "/" + page + ".js";
+        fetch(htmlUrl)
+        .then(response => {
+            return response.text()
+        })
+        .then(data => {
+            document.getElementById(divContainer).innerHTML = data;
+        });
 });
 
 document.wordlist = [];
@@ -73,3 +72,19 @@ document.wordlist = [];
     });
 
 });
+
+window.addEventListener('hashchange',() => {
+ transition();
+})
+
+function checkFirstVisit(){
+    if(document.cookie.indexOf('mycookie') == -1){
+        document.cookie = 'mycookie=1';
+    }
+    else 
+    {
+        // when refreshed go to main menu
+        // TODO: dont always do this
+        mainMenu();
+    }
+}

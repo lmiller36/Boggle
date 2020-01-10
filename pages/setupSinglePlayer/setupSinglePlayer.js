@@ -1,7 +1,7 @@
 
 function startSingleGame(){
    document.isSinglePlayerGame = true;
-   startGame();
+   game();
 } 
 function changeTimeSingle(change){
    var time = document.setupTime / 60000;
@@ -14,8 +14,8 @@ function changeTimeSingle(change){
 
    document.setupTime = time * 60000;
 }  
+
 function mainMenu_setupSingle(){
       // Go to main menu
-      toggleVisiblePage(Pages.mainMenu);
-   
-   }
+     mainMenu();
+}

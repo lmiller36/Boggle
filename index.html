@@ -29,8 +29,8 @@
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
 
     <!-- pacman -->
-    <link rel="import" id="pacman_import" href="./data/pacman.html">
-
+<!--     <link rel="import" id="pacman_import" href="./data/pacman.html">
+ -->
     <!-- js files -->
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="startup.js"></script>
@@ -39,9 +39,10 @@
     <script type="text/javascript" src="scripts/game.js"></script>
     <script type="text/javascript" src="scripts/multiplayer.js"></script>
     <script type="text/javascript" src="scripts/utils.js"></script>
+    <script type="text/javascript" src="scripts/transitions.js"></script>
 </head>
 
-<body>
+<body onload="checkFirstVisit()">
     <div id="title" class="title-container">
         <p id="title" class="title"> Lorne's Boggle Game </p>
     </div>

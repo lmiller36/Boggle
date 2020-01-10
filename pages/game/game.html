@@ -5,6 +5,14 @@
     <title></title>
 </head>
 <style type="text/css">
+    html,
+    body {
+        max-width: 100%;
+        /*overflow-x: hidden;*/
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
     .words {
         position: absolute;
         right: 1vw;
@@ -67,7 +75,7 @@
 
 <body>
     <div class="game">
-        <div id="leftMenu_ingame" class="words" style="display: none">
+        <div id="leftMenu_ingame" class="words">
             <div>
                 <span>total:</span><span id="score">0</span>
             </div>
@@ -98,14 +106,8 @@
                     </table>
                 </div>
             </div>
-            <!--    <a href="#">About</a>
-               <a href="#">Services</a>
-               <a href="#">Clients</a>
-               <a href="#">Contact</a> -->
         </div>
-        <i id="mainMenu_ingame" class="fa fa-arrow-circle-left fa-4x icon" onclick="mainMenu()"></i>
-        <div class="centerContent">
-            <i class="fa fa-caret-square-o-left fa-2x icon" aria-hidden="true" onclick="mainMenu()" id="mainMenu_ingame_mobile"></i>
+        <div id="browser_controls_container" class="centerContent">
             <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
             <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
             <i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i>
@@ -120,23 +122,23 @@
                 <span class="timerFont" id="score_mobile_span">0</span>
             </div>
         </div>
-        <div id="finishedBoard" class="centerContent">
+        <div id="finishedBoard" class="centerContent" ontouchstart="touchStart(event)" ontouchend="endTouch(event)" ontouchmove="touchmove(event)">
             <div id="board-0" class="grid-container"></div>
             <div id="board-1" class="grid-container" style="display:none;"></div>
             <div id="board-2" class="grid-container" style="display:none;"></div>
             <div id="board-3" class="grid-container" style="display:none;"></div>
         </div>
-        <div id="wordInputDiv" class="wordInputDiv">
-            <p class="centerContent">Enter words here:</p>
+        <br id="spacer_game" />
+        <div id="wordInputDiv" class="wordInputDiv" style="">
             <div class="centerContent">
+                <i class="fa fa-2x fa-bars border_black give_me_space" aria-hidden="true" onclick="openNav()" id="sidebar_words_mobile_button"></i>
                 <i class="fa fa-2x fa-paper-plane border_black give_me_space" aria-hidden="true" onclick="submitViaButton()" id="submit_word_mobile"></i>
                 <br />
-                <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)" />
+                <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)"></input>
                 <br />
                 <i class="fa fa-2x fa-arrow-left border_black give_me_space" aria-hidden="true" onclick="removeLetter()" id="remove_letter_mobile"></i>
-            </div>
-            <div id="sidebar_words_mobile_button" class="centerContent">
-                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Words</span>
+                <i id="rotate1_mobile" class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
+                <i id="rotate2_mobile" class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
             </div>
         </div>
         <div id="playAgainButton" class="centerContent" style="display: none">

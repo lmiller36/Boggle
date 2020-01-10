@@ -19,22 +19,12 @@ Set.prototype.difference = function(otherSet)
 }
 
 function setupSinglePlayer(){
-	document.board = shuffledBoard();
-	document.setupTime = 5 * 60000;
-	toggleVisiblePage(Pages.setupSinglePlayer);
+	singlePlayer();
 }
 
-function multiplayer(){
-	document.setupTime = 5 * 60000;
-	// document.getElementById("host").style.display = "none";
-	// document.getElementById("join").style.display = "none";
-
-	document.getElementById("startGameMultiButton").style.display = "none";
-	document.getElementById("pacman_container").style.display = "none";
-	toggleVisiblePage(Pages.setupMulti);
-	changeSetupState(SetupStates.radioButton);
+function setupMultiplayer(){
+	multiplayer();
 }
-
 
 function loadHighScores(){
 
@@ -106,7 +96,6 @@ function loadHighScores(){
 	})
 	
 	toggleVisiblePage(Pages.highScores);
-
 }
 function openContributions(){
 	var words1 = ["hey","hi","yp"];
@@ -193,5 +182,5 @@ function openContributions(){
 
 		opponentsWords.appendChild(score_row);
 
-		toggleVisiblePage(Pages.contributions);
+		contributions();
 	}

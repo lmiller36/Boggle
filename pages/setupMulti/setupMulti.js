@@ -19,11 +19,15 @@ function grayPic1(should){
 
 function linkGame(){
     document.getElementById("viaLink").style.display = "";
+    document.getElementById("onlineGame").style.display = "none";
+
     grayPic1(false);
 }
 
 function onlineGame(){  
     document.getElementById("viaLink").style.display = "none";
+        document.getElementById("onlineGame").style.display = "";
+
     grayPic1(true);
     removeAllChildren("onlineGames-rows");
     readFromGoogleSheets('OnlineGames!A2:D',(response)=>{
@@ -109,6 +113,8 @@ function changeSetupState(setupState) {
         document.getElementById("join_id").style.display = "";
     } else if (setupState == SetupStates.waitingForStart) {
         joinChannel();
+        if(document.getElementById("pacman"))   
+            document.getElementById("pacman").style.display = "block";
         if (document.isHost) {
             document.getElementById("host").style.display = "";
             document.getElementById("game_link").innerText = document.joinUrl;
@@ -116,8 +122,8 @@ function changeSetupState(setupState) {
         } else {
             document.getElementById("hasJoined_container").style.display = "";
             document.getElementById("hasJoined").innerText = "Joined: " + document.channel;
-            if(document.getElementById("pacman"))   
-                document.getElementById("pacman").style.display = "block";
+            // if(document.getElementById("pacman"))   
+            document.getElementById("pacman").style.display = "block";
         }
     } else {
         alert('invalid state');
@@ -159,7 +165,8 @@ function usernameDone() {
 }
 
 function startMultiGame() {
-    document.getElementById("pacman").style.display = "none";
+    if(document.getElementById("pacman"))  
+        document.getElementById("pacman").style.display = "none";
 
     document.isSinglePlayerGame = false;
     var msg = {
@@ -199,7 +206,7 @@ function toggleHost(isHost) {
         var seed = startChannel();
         document.board = shuffledBoard();
         document.channel = seed;
-        var url = "lmiller36.github.io/Boggle/#/joinGame/" + seed;
+        var url = "lmiller36.github.io/Boggle/#/setupMulti/joinGame/" + seed;
         console.log(url);
         document.joinUrl = url;
     }
@@ -220,11 +227,6 @@ function exitMultiplayerSession() {
 }
 
 function mainMenu_setupMulti() {
-    document.getElementById("pacman").style.display = "none";
-
-    unsubscribe();
-
-    //TODO Unsubscribe stuff
     // Go to main menu
-    toggleVisiblePage(Pages.mainMenu);
+    mainMenu();
 }

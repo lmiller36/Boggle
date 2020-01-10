@@ -64,13 +64,14 @@ function bootPlayer(playerId) {
 }
 
 function unsubscribe() {
-    console.log("leave: " + document.channel);
-    document.hasJoined = false;
+    // only leave channel if currently joined
+    if(document.channel){
+        document.hasJoined = false;
 
-    pubnub.unsubscribe({
-        channels: [document.channel]
-    });
-
+        pubnub.unsubscribe({
+            channels: [document.channel]
+        });
+    }
     document.channel = null;
 }
 
@@ -105,7 +106,7 @@ function receiveMessage(message) {
         document.board = message.message.board;
         document.setupTime = message.message.time;
         document.numPlayers = message.message.numPlayers;
-        startGame(true);
+        game(true);
     } else if (message.type == MessageType.endGame) {
         if (message.message.sender != document.me) {
             if (!document.allWords) document.allWords = [];
