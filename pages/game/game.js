@@ -89,10 +89,10 @@ function playAgain() {
 }
 
 function setFocusOnInput(){
-     window.setTimeout(function() {
-        var elem = document.getElementById("wordsInput");
-        elem.focus();
-    }, 0);
+   window.setTimeout(function() {
+    var elem = document.getElementById("wordsInput");
+    elem.focus();
+}, 0);
 }
 
 function removeLetter(){
@@ -149,17 +149,22 @@ function enterLetterViaClick(clickedTile){
   var letter = clickedTile.innerText;
   var word = input.value + letter;
 
+  // set focus on input to allow easy entering
   setFocusOnInput();
-
     // check if can highlight, but we will enforce that 
     // the correct letter is highlighted
     if(wordOnBoard(word)){
-        input.value = word;
-        if(!document.lastHighlighted) document.lastHighlighted = [];
+          // if letter is same as previous, it will be removed
+          console.log(document.lastHighlighted);
+          console.log(arr)
+          console.log(adjustCoordinates([i,j]))
 
-        var coords = [i,j,true]
-        document.lastHighlighted.push(coords);
+          input.value = word;
+          if(!document.lastHighlighted) document.lastHighlighted = [];
 
-        highlightBoard(document.lastHighlighted);
-    }
-}
+          var coords = [i,j,true]
+          document.lastHighlighted.push(coords);
+
+          highlightBoard(document.lastHighlighted);
+      }
+  }

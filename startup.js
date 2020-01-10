@@ -25,7 +25,6 @@ $(document).ready(function() {
         var queryString = window.location.hash.substr(1);
         // join game
         if (queryString.startsWith("setupMulti/joinGame/")) {
-
             var channelID = queryString.substring(queryString.lastIndexOf("/") + 1);
             document.channel = channelID;
             document.isHost = false;
