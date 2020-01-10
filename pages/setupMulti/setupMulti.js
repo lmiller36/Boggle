@@ -66,6 +66,8 @@ function changeSetupState(setupState) {
         document.getElementById("join_id").style.display = "";
     } else if (setupState == SetupStates.waitingForStart) {
         joinChannel();
+        if(document.getElementById("pacman"))   
+            document.getElementById("pacman").style.display = "block";
         if (document.isHost) {
             document.getElementById("host").style.display = "";
             document.getElementById("game_link").innerText = document.joinUrl;
@@ -73,8 +75,8 @@ function changeSetupState(setupState) {
         } else {
             document.getElementById("hasJoined_container").style.display = "";
             document.getElementById("hasJoined").innerText = "Joined: " + document.channel;
-            if(document.getElementById("pacman"))   
-                document.getElementById("pacman").style.display = "block";
+            // if(document.getElementById("pacman"))   
+            document.getElementById("pacman").style.display = "block";
         }
     } else {
         alert('invalid state');
@@ -119,35 +121,35 @@ function startMultiGame() {
     if(document.getElementById("pacman"))  
         document.getElementById("pacman").style.display = "none";
 
-    document.isSinglePlayerGame = false;
-    var msg = {
-        "board": document.board,
-        "time": document.setupTime,
-        "numPlayers": document.otherPlayers.size + 1
+        document.isSinglePlayerGame = false;
+        var msg = {
+            "board": document.board,
+            "time": document.setupTime,
+            "numPlayers": document.otherPlayers.size + 1
+        }
+        console.log("start");
+        sendMessage(msg, MessageType.initialBoards);
     }
-    console.log("start");
-    sendMessage(msg, MessageType.initialBoards);
-}
 
-function changeTimeMulti(change) {
-    var time = document.setupTime / 60000;
+    function changeTimeMulti(change) {
+        var time = document.setupTime / 60000;
 
-    time += change;
-    if (time > 5) time = Math.min(10, time);
-    else time = 5;
+        time += change;
+        if (time > 5) time = Math.min(10, time);
+        else time = 5;
 
-    setClock(time, 0, "clockdiv_setup_multi");
+        setClock(time, 0, "clockdiv_setup_multi");
 
-    document.setupTime = time * 60000;
-}
+        document.setupTime = time * 60000;
+    }
 
-function toggleHost(isHost) {
-    console.log("toggle: " + isHost);
-    document.isHost = isHost;
+    function toggleHost(isHost) {
+        console.log("toggle: " + isHost);
+        document.isHost = isHost;
 
-    document.board = null;
+        document.board = null;
 
-    if (document.isHost) {
+        if (document.isHost) {
 
         // unsubscribe to old seed
         if (document.channel != null) {

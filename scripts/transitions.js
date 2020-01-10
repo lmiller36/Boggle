@@ -12,7 +12,6 @@ function multiplayer(){
 	document.setupTime = 5 * 60000;
 
 	document.getElementById("startGameMultiButton").style.display = "none";
-	document.getElementById("pacman_container").style.display = "none";
 	changeSetupState(SetupStates.radioButton);
 
 	setHashString(Pages.setupMulti);

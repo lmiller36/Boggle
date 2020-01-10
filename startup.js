@@ -48,14 +48,17 @@ $.ajax({
 });
 
 $(document).ready(function() {
-    // load pacman
-    var pacmanlink = document.getElementById('pacman_import');
-    var content = pacmanlink.import;
 
-    if(content){
-        var el = content.querySelector('.pacman_svg');
-        document.getElementById("pacman_container").appendChild(el.cloneNode(true));
-    }   
+    var htmlUrl = "./data/pacman.html";
+    var divContainer ="pacman_container";
+        // var scriptId = "./pages/" + page + "/" + page + ".js";
+        fetch(htmlUrl)
+        .then(response => {
+            return response.text()
+        })
+        .then(data => {
+            document.getElementById(divContainer).innerHTML = data;
+        });
 });
 
 document.wordlist = [];
@@ -72,7 +75,7 @@ document.wordlist = [];
 });
 
 window.addEventListener('hashchange',() => {
-   transition();
+ transition();
 })
 
 function checkFirstVisit(){
