@@ -25,7 +25,6 @@ function startChannel() {
 function joinChannel() {
     if (!document.hasJoined) {
         console.log("joined:" + document.channel);
-        // console.log(channelID);
         document.joinedPlayers = 0;
 
         pubnub.subscribe({
@@ -34,7 +33,6 @@ function joinChannel() {
 
         // Tell host that we've joined
         if (!document.isHost) {
-            // console.log(username);
             var ackMsg = {
                 "sender": document.me,
                 "username": document.username

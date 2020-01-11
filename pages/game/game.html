@@ -5,72 +5,109 @@
     <title></title>
 </head>
 <style type="text/css">
-    html,
-    body {
-        max-width: 100%;
-        /*overflow-x: hidden;*/
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
+html,
+body {
+    max-width: 100%;
+    /*overflow-x: hidden;*/
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
 
-    .words {
-        position: absolute;
-        right: 1vw;
-        top: 23vh;
-    }
+.words {
+    position: absolute;
+    right: 1vw;
+    top: 23vh;
+}
 
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 2px #FFFFFF;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.border_black {
+    border: black 1px solid;
+}
+
+.give_me_space {
+    margin: 2vw;
+}
+
+@media screen and (max-height: 450px) {
     .sidenav {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        right: 0;
-        background-color: white;
-        border-radius: 2px #FFFFFF;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
+        padding-top: 15px;
     }
 
     .sidenav a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
+        font-size: 18px;
     }
+}
 
-    .sidenav a:hover {
-        color: #f1f1f1;
-    }
+.opponentsWords-table {
+    margin-top: 40px;
+    border-spacing: 1em .5em;
+    padding: 0 2em 1em 0;
+    border: 3px solid black;
+}
 
-    .sidenav .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-    }
+#opponentsWords {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 
-    .border_black {
-        border: black 1px solid;
-    }
+#opponentsWords td,
+#opponentsWords th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
 
-    .give_me_space {
-        margin: 2vw;
-    }
+#opponentsWords tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
-    @media screen and (max-height: 450px) {
-        .sidenav {
-            padding-top: 15px;
-        }
+#opponentsWords tr:hover {
+    background-color: #ddd;
+}
 
-        .sidenav a {
-            font-size: 18px;
-        }
-    }
+#opponentsWords th {
+    font-size: xx-large;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
 </style>
 
 <body>
