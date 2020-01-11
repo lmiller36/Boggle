@@ -2,7 +2,6 @@ document.numberOfPlayers = 1;
 document.submittedWords = [];
 document.currRotation = 0;
 document.uniqueTiles = {};
-console.log(Date.now());
 
 const MessageType = Object.freeze({
     "joinGame": "joinGame",
@@ -49,6 +48,7 @@ var isMobile = {
 };
 
 function endGame() {
+    document.endGame = true;
     /** Common tasks to single & multi player games **/
 
     // Hide input bar

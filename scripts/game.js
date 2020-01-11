@@ -2,6 +2,7 @@ function setupGame(isMulti) {
     document.currRotation = 0;
     document.score = 0;
     document.fakeWords = []
+    document.endGame = false;
     document.getElementById("score").innerText = document.score;
     document.getElementById("playAgainButton").style.display = "none";
 

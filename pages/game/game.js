@@ -138,6 +138,10 @@ function submitViaButton(){
 }
 
 function enterLetterViaClick(clickedTile){
+
+ // check if game over
+ if(document.endGame) return;
+
   var arr = clickedTile.id.split("_");
   var i,j,rot;
   i = parseInt(arr[1]);

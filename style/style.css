@@ -11,10 +11,19 @@ html, body {
 .main{
 	margin-top:11vh;
 }
-
-.google{
+@media (max-width: 1000px) {
+    .google {
+       top:5vh;
+    }
+}
+@media (min-width: 1001px) {
+    .google {
+       top:11vh;
+    }
+}
+.google {
 	position: absolute;
-	top:11vh;
+	/*top:5vh;*/
 	right: 0;
 }
 
