@@ -11,9 +11,6 @@ function singlePlayer(){
 function multiplayer(){
 	document.setupTime = 5 * 60000;
 
-	document.getElementById("startGameMultiButton").style.display = "none";
-	changeSetupState(SetupStates.radioButton);
-
 	setHashString(Pages.setupMulti);
 }
 
@@ -159,13 +156,6 @@ function transition(){
 
     // Remove Tiles
     removeBoardTiles();
-
-    // hide pacman
-    if(document.getElementById("pacman"))   
-    	document.getElementById("pacman").style.display = "none";
-
-    // leave channel, if currently joined
-    unsubscribe();
 
     clearInterval(document.timeinterval);
     document.timeinterval = null;

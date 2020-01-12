@@ -6,319 +6,262 @@
 </head>
 
 <style type="text/css">
-    .multiplayer-options-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
+.multiplayer-options-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
-    .multiplayer-options-container .multiplayer-option {
-        position: relative;
-        width: 500px;
-        height: 200px;
-        background-color: #fff;
-        overflow: hidden;
-        margin-bottom: 4px;
-    }
+.multiplayer-options-container .multiplayer-option {
+    position: relative;
+    width: 500px;
+    height: 200px;
+    background-color: #fff;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
 
-    .multiplayer-options-container .multiplayer-option:before {
-        content: "";
-        z-index: 99;
-        position: absolute;
-        top: -10px;
-        left: 32px;
-        display: block;
-        width: 16px;
-        height: 16px;
-        border-radius: 16px;
-        background-color: #e6e5e1;
-    }
+.multiplayer-options-container .multiplayer-option:before {
+    content: "";
+    z-index: 99;
+    position: absolute;
+    top: -10px;
+    left: 32px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    background-color: #e6e5e1;
+}
 
-    .multiplayer-options-container .multiplayer-option:after {
-        content: "";
-        z-index: 99;
-        position: absolute;
-        bottom: -10px;
-        left: 32px;
-        display: block;
-        width: 16px;
-        height: 16px;
-        border-radius: 16px;
-        background-color: #e6e5e1;
-    }
+.multiplayer-options-container .multiplayer-option:after {
+    content: "";
+    z-index: 99;
+    position: absolute;
+    bottom: -10px;
+    left: 32px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    background-color: #e6e5e1;
+}
 
-    .multiplayer-options-container .multiplayer-option h2 {
-        z-index: 99;
-        font-family: "Poppins", sans-serif;
-        position: absolute;
-        bottom: 0;
-        right: 130px;
-        font-size: 60px;
-        font-weight: 700;
-        color: #fff;
-    }
+.multiplayer-options-container .multiplayer-option h2 {
+    z-index: 99;
+    font-family: "Poppins", sans-serif;
+    position: absolute;
+    bottom: 0;
+    right: 130px;
+    font-size: 60px;
+    font-weight: 700;
+    color: #fff;
+}
 
-    .multiplayer-options-container .multiplayer-option .fa-arrow-right {
-        z-index: 100;
-        position: absolute;
-        right: 75px;
-        bottom: 25px;
-        font-size: 40px;
-        cursor: pointer;
-    }
+.multiplayer-options-container .multiplayer-option .fa-arrow-right {
+    z-index: 100;
+    position: absolute;
+    right: 75px;
+    bottom: 25px;
+    font-size: 40px;
+    cursor: pointer;
+}
 
-    .multiplayer-options-container .multiplayer-option p {
-        z-index: 99;
-        position: absolute;
-        top: 20px;
-        right: 70px;
-        color: #333;
-        opacity: 0.7;
-        font-size: 12px;
-        letter-spacing: 1px;
-        writing-mode: vertical-lr;
-        -webkit-transition: all 0.2s ease;
-        transition: all 0.2s ease;
-    }
+.multiplayer-options-container .multiplayer-option p {
+    z-index: 99;
+    position: absolute;
+    top: 20px;
+    right: 70px;
+    color: #333;
+    opacity: 0.7;
+    font-size: 12px;
+    letter-spacing: 1px;
+    writing-mode: vertical-lr;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
 
-    .multiplayer-options-container .multiplayer-option .pic {
-        z-index: 100;
-        width: 400px;
-        height: 200px;
-        background-image: url("https://images.unsplash.com/photo-1525543907410-b2562b6796d6?ixlib=rb-0.3.5&s=9ff8e5e718a6a40cbd0e1471235912f4&auto=format&fit=crop&w=3452&q=80");
-        background-size: 100% 100%;
-        filter: grayscale(100%);
-    }
+.multiplayer-options-container .multiplayer-option .pic {
+    z-index: 100;
+    width: 400px;
+    height: 200px;
+    background-image: url("https://images.unsplash.com/photo-1525543907410-b2562b6796d6?ixlib=rb-0.3.5&s=9ff8e5e718a6a40cbd0e1471235912f4&auto=format&fit=crop&w=3452&q=80");
+    background-size: 100% 100%;
+    filter: grayscale(100%);
+}
 
-    .multiplayer-options-container .multiplayer-option .social {
-        position: absolute;
-        left: 60px;
-        top: 0;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-pack: distribute;
-        justify-content: space-around;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        width: 180px;
-        height: 64px;
-        border-radius: 80px;
-    }
+.multiplayer-options-container .multiplayer-option .social {
+    position: absolute;
+    left: 60px;
+    top: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 180px;
+    height: 64px;
+    border-radius: 80px;
+}
 
-    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(1) {
-        -webkit-transition-delay: 0.4s;
-        transition-delay: 0.4s;
-    }
+.multiplayer-options-container .multiplayer-option .social i:nth-of-type(1) {
+    -webkit-transition-delay: 0.4s;
+    transition-delay: 0.4s;
+}
 
-    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(2) {
-        -webkit-transition-delay: 0.3s;
-        transition-delay: 0.3s;
-    }
+.multiplayer-options-container .multiplayer-option .social i:nth-of-type(2) {
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+}
 
-    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(3) {
-        -webkit-transition-delay: 0.2s;
-        transition-delay: 0.2s;
-    }
+.multiplayer-options-container .multiplayer-option .social i:nth-of-type(3) {
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
 
-    .multiplayer-options-container .multiplayer-option .social i:nth-of-type(4) {
-        -webkit-transition-delay: 0.1s;
-        transition-delay: 0.1s;
-    }
+.multiplayer-options-container .multiplayer-option .social i:nth-of-type(4) {
+    -webkit-transition-delay: 0.1s;
+    transition-delay: 0.1s;
+}
 
-    .multiplayer-options-container .multiplayer-option:hover i {
-        opacity: 1;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
+.multiplayer-options-container .multiplayer-option:hover i {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
 
-    .multiplayer-options-container .multiplayer-option button {
-        position: absolute;
-        right: 14px;
-        bottom: 14px;
-        width: 30px;
-        height: 30px;
-        background-color: #da4d1d;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        outline: none;
-        transition: all 0.3s ease;
-        mix-blend-mode: hard-light;
-    }
+.multiplayer-options-container .multiplayer-option button {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    width: 30px;
+    height: 30px;
+    background-color: #da4d1d;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    mix-blend-mode: hard-light;
+}
 
-    .multiplayer-options-container .multiplayer-option button i {
-        font-size: 3rem;
-    }
+.multiplayer-options-container .multiplayer-option button i {
+    font-size: 3rem;
+}
 
-    .multiplayer-options-container .multiplayer-option:hover button {
-        transform: scale(16.5);
-    }
+.multiplayer-options-container .multiplayer-option:hover button {
+    transform: scale(16.5);
+}
 
-    .multiplayer-options-container .multiplayer-option:hover p {
-        color: #fff;
-    }
+.multiplayer-options-container .multiplayer-option:hover p {
+    color: #fff;
+}
 
-    .multiplayer-options-container .multiplayer-option:hover .pic {
-        filter: grayscale(0);
-    }
+.multiplayer-options-container .multiplayer-option:hover .pic {
+    filter: grayscale(0);
+}
 
-    .multiplayer-options-container .multiplayer-option2 .pic {
-        background-image: url("https://images.unsplash.com/photo-1528785198459-ec50485704c7?ixlib=rb-0.3.5&s=3a2fc3039516555bbb2e9cd2967bd321&auto=format&fit=crop&w=1537&q=80");
-    }
+.multiplayer-options-container .multiplayer-option2 .pic {
+    background-image: url("https://images.unsplash.com/photo-1528785198459-ec50485704c7?ixlib=rb-0.3.5&s=3a2fc3039516555bbb2e9cd2967bd321&auto=format&fit=crop&w=1537&q=80");
+}
 
-    .multiplayer-options-container .multiplayer-option2 button {
-        background-color: #2b26c3;
-    }
-
-    .onlineGames-table {
-        margin-top: 40px;
-        border-spacing: 1em .5em;
-        padding: 0 2em 1em 0;
-        border: 3px solid black;
-    }
-
-    #onlineGames {
-        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    #onlineGames td,
-    #onlineGames th {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-
-    #onlineGames tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    #onlineGames tr:hover {
-        background-color: #ddd;
-    }
-
-    #onlineGames th {
-        font-size: xx-large;
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        background-color: #4CAF50;
-        color: white;
-    }
+.multiplayer-options-container .multiplayer-option2 button {
+    background-color: #2b26c3;
+}
 </style>
 
 <body>
     <div class="setupMulti">
         <div id="multiGameTypeContainer" class="multiplayer-options-container">
-            <div class="multiplayer-option" onclick="linkGame()">
-                <h2>Via Link</h2>
+            <div class="multiplayer-option" onclick="hostGame()">
+                <h2>Host</h2>
                 <i class="fa fa-arrow-right"></i>
-                <p>Shared Via Host</p>
+                <p>Start a new game</p>
                 <div id="pic1" class="pic"></div>
                 <button onclick="">
                 </button>
             </div>
-            <div class="multiplayer-option multiplayer-option2" onclick="onlineGame()">
-                <h2>Online</h2>
+            <div class="multiplayer-option multiplayer-option2" onclick="joinGame()">
+                <h2>Join</h2>
                 <i class="fa fa-arrow-right"></i>
-                <p> See online games</p>
+                <p> Join an online game</p>
                 <div id="pic2" class="pic"></div>
                 <button>
                 </button>
             </div>
         </div>
-        <div id="onlineGame" class="" style="display: none">
+        <div id="joinGame" class="" style="display: none">
             <br />
-            <br />
-            <p id="title" class="title centerContent"> Games </p>
-            <button class="centered" onclick="createNewGame()">
-                <i class="fa fa-plus-square-o"></i> New Game
-            </button>
-            <div class="centerContent" style="display: block;text-align: -webkit-center; font-size: 75px;">
-                <table id="onlineGames" class="onlineGames-table striped onlineGames">
-                    <thead id="onlineGames-head">
-                        <tr id="onlineGames-head-row">
-                            <th>Host</th>
-                            <th>Players in game</th>
-                            <th>Join</th>
-                        </tr>
-                    </thead>
-                    <tbody id="onlineGames-rows">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div id="viaLink" style="display: none">
-            <div class="centerContent" id="hostJoinRadio">
-                <p>Please select one: </p>
-                <input id="isHostRadio" type="radio" name="host" value="1" onchange="toggleHost(true)"> Host<br>
-                <input id="isJoinRadio" type="radio" name="host" value="0" onchange="toggleHost(false)"> Join<br>
-            </div>
             <div class="centerContent" id="username_container">
-                <input id="username" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="usernameEntered(event,this)" placeholder="username" />
-            </div>
-            <div id="username_submitted" class="centerContent">
-                <span id="username_submitted_span"></span>
+                <input id="username_input" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="usernameEntered(event,this)" placeholder="username" />
+                <span id="username_span"></span>
             </div>
             <br />
-            <div class="centerContent">
-                <input id="join_id" style="border-radius: 1px; width: 150px; margin-bottom: 50px;" onkeyup="joinMultiplayer(event,this)" placeholder="game ID" />
-                <div id="hasJoined_container">
-                    <span id="hasJoined"></span>
-                    <i id="exitMultiplayer" class=" fa fa-times" onclick="exitMultiplayerSession()"></i>
-                </div>
-            </div>
-
-            <div id="host" class="" style="display: none">
-                <div class="centerContent">
-                    <div id="clockdiv_setup_multi" class="timer">
-                        <span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
-                    </div>
-                </div>
-                <div class="centerContent">
-                    <button onclick="changeTimeMulti(1)">+</button>
-                    <button onclick="changeTimeMulti(-1)">-</button>
-                </div>
-                <div class="centerContent">
-                    Game ID:
-                    <p id="game_id"></p>
-                </div>
-                <div class="centerContent">
-                    Share this link:
-                </div>
-                <div class="centerContent">
-                    <p id="game_link"></p>
-                </div>
-                <br />
-                <div class="centerContent">
-                    <div class="wrap">
-                        <table class="joinedPlayersTable">
-                            <tr>
-                                <td>Joined</td>
-                                <td>Remove</td>
-                            </tr>
-                        </table>
-                        <div class="inner_table">
-                            <table id="playersList">
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="centerContent" id="startGameMultiButton" style="display: none">
-                    <i class="fa fa-play fa-2x icon" onclick="startMultiGame()"></i>
-                </div>
-            </div>
-            <br />
-            <br />
-            <p id="pls_start" class="centerContent"><b>Please ask host to start</b></p>
+            <div id="onlineGamesTable" class="centerContent" style="display: none;text-align: -webkit-center; font-size: 75px;">
+                <table id="onlineGames" class="onlineGames-table striped 
+                onlineGames">
+                <thead id="onlineGames-head">
+                    <tr id="onlineGames-head-row">
+                        <th>Host</th>
+                        <th>Players in game</th>
+                        <th>Join</th>
+                    </tr>
+                </thead>
+                <tbody id="onlineGames-rows">
+                </tbody>
+            </table>
         </div>
     </div>
+    <div id="hostGame" style="display: none">
+        <div id = "timer">
+            <div class="centerContent">
+                <div id="clockdiv_setup_multi" class="timer">
+                    <span class="timerFont minutes">05</span>:<span class="timerFont seconds">00</span>
+                </div>
+            </div>
+            <div class="centerContent">
+                <button onclick="changeTimeMulti(1)">+</button>
+                <button onclick="changeTimeMulti(-1)">-</button>
+            </div>
+        </div>
+        <br/>
+        <div id ="createGameContainer" class="centerContent">
+            <button onclick = "createGame()">
+                create game
+            </button>
+        </div>
+    </div>
+    <br/>
+    <div id="joinedPlayers" class="" style="display: none">
+        <div class = "centerContent">
+            <div class="wrap">
+                <table class="joinedPlayersTable">
+                    <tr>
+                        <td>Joined</td>
+                        <td>Remove</td>
+                    </tr>
+                </table>
+                <div class="inner_table">
+                    <table id="playersList">
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="centerContent" id="startGameMultiButton" style="display: none">
+            <i class="fa fa-play fa-2x icon" onclick="startMultiGame()"></i>
+        </div>
+        <br/>
+        <div id ="waitingPacmanContainer" class = "centerContent">
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

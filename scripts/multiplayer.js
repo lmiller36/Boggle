@@ -63,6 +63,8 @@ function bootPlayer(playerId) {
 
 function unsubscribe() {
     // only leave channel if currently joined
+    console.log("left:" + document.channel);
+
     if(document.channel){
         document.hasJoined = false;
 

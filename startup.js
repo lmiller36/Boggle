@@ -56,9 +56,15 @@ $(document).ready(function() {
             return response.text()
         })
         .then(data => {
-            document.getElementById(divContainer).innerHTML = data;
-        });
-});
+         ensureAllPagesLoaded(() => {
+             document.getElementById(divContainer).innerHTML = data;
+             var element = $('#pacman').detach();
+             console.log(element);
+             $('#waitingPacmanContainer').append(element);
+         });
+
+     });
+    });
 
 document.wordlist = [];
 [10, 20, 35, 40, 50, 55, 60, 70].forEach(function(frequency) {

@@ -27,7 +27,6 @@ function setupMultiplayer(){
 }
 
 function loadHighScores(){
-
 	readFromGoogleSheets('Highscores!A1:F',(response)=>{
 		console.log(response)
 		let values = response.result.values;

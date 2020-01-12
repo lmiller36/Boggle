@@ -75,9 +75,6 @@ function signOut() {
 }
 
 function postFakeWords(words){
-    console.log(words);
-    console.log(document.username);
-
     // check if signed in
     if (!gapi.auth2.getAuthInstance().isSignedIn.get()) return;
     
@@ -89,8 +86,6 @@ function postFakeWords(words){
     let values = [
     [JSON.stringify(words),username,date,timeInUTC]
     ];
-
-    console.log(values);
 
      var range = 'FakeWords!A:D';
 
@@ -133,15 +128,12 @@ function postToGoogleSheets(values,range) {
         majorDimension: "ROWS"
     };
 
-    console.log(values);
-
     gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: SHEET_ID,
         range: range,
         valueInputOption: "USER_ENTERED",
         resource: resource
     }).then(function(response) {
-        console.log(response)
     }, function(response) {});
 }
 

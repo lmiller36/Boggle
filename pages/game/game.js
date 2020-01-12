@@ -71,10 +71,8 @@ function playAgain() {
 
         if (!document.isHost) {
             document.channel = document.replayChannel;
-            changeSetupState(SetupStates.waitingForStart);
+            joinChannel();
         }
-
-        changeSetupState(SetupStates.waitingForStart);
 
         multiplayer();
     }
@@ -89,7 +87,7 @@ function playAgain() {
 }
 
 function setFocusOnInput(){
-   window.setTimeout(function() {
+ window.setTimeout(function() {
     var elem = document.getElementById("wordsInput");
     elem.focus();
 }, 0);
@@ -142,16 +140,16 @@ function enterLetterViaClick(clickedTile){
  // check if game over
  if(document.endGame) return;
 
-  var arr = clickedTile.id.split("_");
-  var i,j,rot;
-  i = parseInt(arr[1]);
-  j = parseInt(arr[3]);
-  rot = (document.currRotation + 2) % 4;
+ var arr = clickedTile.id.split("_");
+ var i,j,rot;
+ i = parseInt(arr[1]);
+ j = parseInt(arr[3]);
+ rot = (document.currRotation + 2) % 4;
 
-  var input = document.getElementById("wordsInput");
+ var input = document.getElementById("wordsInput");
 
-  var letter = clickedTile.innerText;
-  var word = input.value + letter;
+ var letter = clickedTile.innerText;
+ var word = input.value + letter;
 
   // set focus on input to allow easy entering
   setFocusOnInput();

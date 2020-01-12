@@ -21,7 +21,7 @@ const Pages = Object.freeze({
 document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
 document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container"];
-document.pages[Pages.setupMulti] = ["setupMulti_container","pacman_container"];
+document.pages[Pages.setupMulti] = ["setupMulti_container"];
 document.pages[Pages.game] = ["game_container"];
 document.pages[Pages.highScores] = ["highScores_container"];
 document.pages[Pages.contributions] = ["contributions_container"];
@@ -189,6 +189,7 @@ function tallyScores() {
 
 
     if (!document.isHost) {
+        console.log(document.isHost);
         document.replayChannel = document.channel;
         unsubscribe();
     }
@@ -234,7 +235,7 @@ function getBoardTile(x, y) {
     while (i < 5) {
         j = 0;
         while (j < 5) {
-            var id = "row_" + i + "_column_" + j + "_"+document.currRotation;
+            var id = "row_" + i + "_column_" + j + "_" + document.currRotation;
             var elem = document.getElementById(id);
             var bound = elem.getBoundingClientRect();
             var xMatch = x >= bound.left && x <= bound.right;
@@ -255,10 +256,10 @@ function touchStart(event) {
     var val = getBoardTile(x, y);
     var id = val[0];
 
-    if(document.uniqueTiles[id] && document.uniqueTiles[id] == -1)
+    if (document.uniqueTiles[id] && document.uniqueTiles[id] == -1)
         return;
-        // add letter
-        enterLetterViaClick(document.getElementById(id))
+    // add letter
+    enterLetterViaClick(document.getElementById(id))
 
     // -1 indicates tile has been highlighted
     document.uniqueTiles[id] = -1;
@@ -271,7 +272,7 @@ function touchStart(event) {
  * has been held on touch several times to 
  * combat false positives
  **/
- function touchmove(event) {
+function touchmove(event) {
     var x = event.touches[0].clientX;
     var y = event.touches[0].clientY;
     var val = getBoardTile(x, y);
@@ -376,7 +377,7 @@ function appendWordToTable(word) {
     tableRow.appendChild(wordCell);
     tableRow.appendChild(scoreCell);
 
-    if (document.isMobile) 
+    if (document.isMobile)
         document.getElementById("wordList_mobile").appendChild(tableRow);
     else
         document.getElementById("wordList").appendChild(tableRow);

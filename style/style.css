@@ -232,22 +232,22 @@ table.joinedPlayersTable tr td {
 	display: block;
 }
 
-#highscores {
+#highscores,.onlineGames {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-#highscores td, #highscores th {
+#highscores,.onlineGames td, #highscores,.onlineGames th {
 	border: 1px solid #ddd;
 	padding: 8px;
 }
 
-#highscores tr:nth-child(even){background-color: #f2f2f2;}
+#highscores,.onlineGames tr:nth-child(even){background-color: #f2f2f2;}
 
-#highscores tr:hover {background-color: #ddd;}
+#highscores,.onlineGames tr:hover {background-color: #ddd;}
 
-#highscores th {
+#highscores,.onlineGames th {
 	font-size:xx-large;
 	padding-top: 12px;
 	padding-bottom: 12px;
