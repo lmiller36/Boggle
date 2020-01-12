@@ -10,7 +10,7 @@ function singlePlayer(){
 
 function multiplayer(){
 	document.setupTime = 5 * 60000;
-
+	document.endGame = false;
 	setHashString(Pages.setupMulti);
 }
 

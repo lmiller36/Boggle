@@ -48,6 +48,7 @@ function enterLetter(event, obj) {
 
 function playAgain() {
     document.hasTallied = false;
+    document.endGame = false;
     document.allWords = [];
     document.submittedWords = [];
     document.getElementById("wordInputDiv").style.display = "";
