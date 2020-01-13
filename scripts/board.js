@@ -89,10 +89,8 @@ function highlightLetter(row, col) {
 }
 
 function removeWords() {
-    var id = "wordList";
-    var node = document.getElementById(id);
-    var cNode = node.cloneNode(false);
-    node.parentNode.replaceChild(cNode, node);
+    removeAllChildren("wordList");
+    removeAllChildren("wordList_mobile");
 }
 
 /** Create tile element **/
