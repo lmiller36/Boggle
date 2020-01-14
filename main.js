@@ -215,6 +215,7 @@ function setupMobile() {
     document.getElementById("spacer_game").style.display = browser;
 
 
+    document.getElementById("sidebar_words_mobile_button_endgame").style.display = mobile;
     document.getElementById("sidebar_words_mobile_button").style.display = mobile;
     document.getElementById("rotate1_mobile").style.display = mobile;
     document.getElementById("rotate2_mobile").style.display = mobile;
@@ -223,7 +224,6 @@ function setupMobile() {
     document.getElementById("score_mobile").style.display = mobile;
 
     if (document.isMobile) {
-
         document.getElementById("center").style.marginTop = "5vh"
     }
 }
