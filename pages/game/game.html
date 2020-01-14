@@ -5,80 +5,79 @@
     <title></title>
 </head>
 <style type="text/css">
-html,
-body {
-    max-width: 100%;
-    /*overflow-x: hidden;*/
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
+    html,
+    body {
+        max-width: 100%;
+        /*overflow-x: hidden;*/
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
 
-.words {
-    position: absolute;
-    right: 1vw;
-    top: 23vh;
-}
+    .words {
+        position: absolute;
+        right: 1vw;
+        top: 23vh;
+    }
 
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: white;
-    border-radius: 2px #FFFFFF;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-.border_black {
-    border: black 1px solid;
-}
-
-.give_me_space {
-    margin: 2vw;
-}
-
-@media screen and (max-height: 450px) {
     .sidenav {
-        padding-top: 15px;
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        background-color: white;
+        border-radius: 2px #FFFFFF;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
     }
 
     .sidenav a {
-        font-size: 18px;
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
     }
-}
 
-.opponentsWords-table {
-    margin-top: 40px;
-    border-spacing: 1em .5em;
-    padding: 0 2em 1em 0;
-    border: 3px solid black;
-}
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
 
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    .border_black {
+        border: black 1px solid;
+    }
+
+    .give_me_space {
+        margin: 2vw;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    .opponentsWords-table {
+        margin-top: 40px;
+        border-spacing: 1em .5em;
+        padding: 0 2em 1em 0;
+        border: 3px solid black;
+    }
 </style>
 
 <body>
@@ -115,13 +114,12 @@ body {
                 </div>
             </div>
         </div>
-        <div id="browser_controls_container" class="centerContent">
-            <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
-            <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
-            <i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i>
-            <i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i>
-        </div>
         <div class="centerContent">
+            <div id="browser_controls_container">
+                <i class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>
+                <i class="fa fa-repeat fa-2x icon" onclick="rotateBoard(-1)"></i>
+            </div>
+
             <div id="clockdiv_game" class="timer">
                 <span class="timerFont minutes">00</span>:<span class="timerFont seconds">00</span>
             </div>
@@ -129,6 +127,8 @@ body {
                 <span class="timerFont">score:</span>
                 <span class="timerFont" id="score_mobile_span">0</span>
             </div>
+            <i id="pause" class="fa fa-pause fa-2x icon" onclick="togglePause(1)"></i>
+            <i id="play" class="fa fa-play fa-2x icon" onclick="togglePause(0)" style="display: none"></i>
         </div>
         <div id="finishedBoard" class="centerContent" ontouchstart="touchStart(event)" ontouchend="endTouch(event)" ontouchmove="touchmove(event)">
             <div id="board-0" class="grid-container"></div>

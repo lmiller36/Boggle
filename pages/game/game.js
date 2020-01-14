@@ -1,9 +1,9 @@
 function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySidenav").style.width = "250px";
 }
 
 function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").style.width = "0";
 }
 
 function togglePause(isPaused) {
@@ -87,23 +87,23 @@ function playAgain() {
     }
 }
 
-function setFocusOnInput(){
- window.setTimeout(function() {
-    var elem = document.getElementById("wordsInput");
-    elem.focus();
-}, 0);
+function setFocusOnInput() {
+    if (document.isMobile) return;
+    window.setTimeout(function() {
+        var elem = document.getElementById("wordsInput");
+        elem.focus();
+    }, 0);
 }
 
-function removeLetter(){
+function removeLetter() {
     var input = document.getElementById("wordsInput");
     var word = input.value.toUpperCase();
 
-    if(word.length > 0)
-    {
-        var wordMinusChar = word.substring(0,word.length - 1);
+    if (word.length > 0) {
+        var wordMinusChar = word.substring(0, word.length - 1);
 
-        if(word.length == document.lastHighlighted.length){
-            var remainder = document.lastHighlighted.splice(0,wordMinusChar.length);
+        if (word.length == document.lastHighlighted.length) {
+            var remainder = document.lastHighlighted.splice(0, wordMinusChar.length);
             highlightBoard(remainder);
             document.lastHighlighted = remainder;
         }
@@ -111,16 +111,15 @@ function removeLetter(){
     }
 }
 
-function removeLetter(){
+function removeLetter() {
     var input = document.getElementById("wordsInput");
     var word = input.value.toUpperCase();
 
-    if(word.length > 0)
-    {
-        var wordMinusChar = word.substring(0,word.length - 1);
+    if (word.length > 0) {
+        var wordMinusChar = word.substring(0, word.length - 1);
 
-        if(word.length == document.lastHighlighted.length){
-            var remainder = document.lastHighlighted.splice(0,wordMinusChar.length);
+        if (word.length == document.lastHighlighted.length) {
+            var remainder = document.lastHighlighted.splice(0, wordMinusChar.length);
             highlightBoard(remainder);
             document.lastHighlighted = remainder;
         }
@@ -128,46 +127,46 @@ function removeLetter(){
     }
 }
 
-/* Functions for mobile */ 
-function submitViaButton(){
+/* Functions for mobile */
+function submitViaButton() {
     var wordElem = document.getElementById("wordsInput");
-    if(wordElem.value == "") return;
+    if (wordElem.value == "") return;
     submitWord(wordElem);
     document.lastHighlighted = [];
 }
 
-function enterLetterViaClick(clickedTile){
+function enterLetterViaClick(clickedTile) {
 
- // check if game over
- if(document.endGame) return;
+    // check if game over
+    if (document.endGame) return;
 
- var arr = clickedTile.id.split("_");
- var i,j,rot;
- i = parseInt(arr[1]);
- j = parseInt(arr[3]);
- rot = (document.currRotation + 2) % 4;
+    var arr = clickedTile.id.split("_");
+    var i, j, rot;
+    i = parseInt(arr[1]);
+    j = parseInt(arr[3]);
+    rot = (document.currRotation + 2) % 4;
 
- var input = document.getElementById("wordsInput");
+    var input = document.getElementById("wordsInput");
 
- var letter = clickedTile.innerText;
- var word = input.value + letter;
+    var letter = clickedTile.innerText;
+    var word = input.value + letter;
 
-  // set focus on input to allow easy entering
-  setFocusOnInput();
+    // set focus on input to allow easy entering
+    setFocusOnInput();
     // check if can highlight, but we will enforce that 
     // the correct letter is highlighted
-    if(wordOnBoard(word)){
-          // if letter is same as previous, it will be removed
-          console.log(document.lastHighlighted);
-          console.log(arr)
-          console.log(adjustCoordinates([i,j]))
+    if (wordOnBoard(word)) {
+        // if letter is same as previous, it will be removed
+        console.log(document.lastHighlighted);
+        console.log(arr)
+        console.log(adjustCoordinates([i, j]))
 
-          input.value = word;
-          if(!document.lastHighlighted) document.lastHighlighted = [];
+        input.value = word;
+        if (!document.lastHighlighted) document.lastHighlighted = [];
 
-          var coords = [i,j,true]
-          document.lastHighlighted.push(coords);
+        var coords = [i, j, true]
+        document.lastHighlighted.push(coords);
 
-          highlightBoard(document.lastHighlighted);
-      }
-  }
+        highlightBoard(document.lastHighlighted);
+    }
+}
