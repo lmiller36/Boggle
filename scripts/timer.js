@@ -33,9 +33,9 @@ function initializeClock(){
 function setClock(minutes,seconds,divId){
 	var clock = document.getElementById(divId);
 
-	if(minutes == 0)minutes = "00";
+	if(minutes <= 0)minutes = "00";
 	else if(minutes <= 9)minutes = "0" + minutes;
-	if(seconds == 0) seconds = "00";
+	if(seconds <= 0) seconds = "00";
 	else if(seconds <= 9) seconds = "0" + seconds;
 
 	var minutesSpan = clock.querySelector('.minutes');
@@ -46,9 +46,9 @@ function setClock(minutes,seconds,divId){
 
 function setClock_setup_multi(minutes,seconds){
 	var clock = document.getElementById("");
-	if(minutes == 0)minutes = "00";
+	if(minutes <= 0)minutes = "00";
 	else if(minutes <= 9)minutes = "0" + minutes;
-	if(seconds == 0) seconds = "00";
+	if(seconds <= 0) seconds = "00";
 	else if(seconds <= 9) seconds = "0" + seconds;
 
 	var minutesSpan = clock.querySelector('.minutes');
