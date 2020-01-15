@@ -98,8 +98,20 @@ function addOnlineGames() {
         if (!games) return;
 
         var users = {};
+        games.forEach((game)=>{
+            let host = game[0];
+            if(!users[host])
+                users[host] = game;
+            else{
+                var newTime = parseInt(game[4]);
+                var oldTime = parseInt(users[host][4]);
+                if(newTime > oldTime)
+                    users[host] = game;
+            }
+        })
+
         // get most recent game
-        games.forEach((game) => {
+        Object.values(users).forEach((game) => {
             addOnlineGameRow(game);
         });
     })
