@@ -1,7 +1,15 @@
 html, body {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  position: relative;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	position: relative;
+}
+
+html,body{
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 
 .joinCheck{
@@ -12,14 +20,14 @@ html, body {
 	margin-top:11vh;
 }
 @media (max-width: 1000px) {
-    .google {
-       top:5vh;
-    }
+	.google {
+		top:5vh;
+	}
 }
 @media (min-width: 1001px) {
-    .google {
-       top:11vh;
-    }
+	.google {
+		top:11vh;
+	}
 }
 .google {
 	position: absolute;
@@ -55,9 +63,6 @@ html, body {
      -ms-user-select: none;
      user-select: none;
  }
-}
-.center{
-
 }
 .setup{
 	text-align: -moz-center; text-align: -webkit-center;
