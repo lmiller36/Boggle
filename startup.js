@@ -46,23 +46,13 @@ $.ajax({
 });
 
 $(document).ready(function() {
+ ensureAllPagesLoaded(() => {
+        // loadCustomPage();
+        load("./data/pacman.html","pacman_container","#pacman",'#waitingPacmanContainer')
+        load("./data/spinner.html","spinner_container","#spinner",'#waitingSpinnerContainer')
 
-    var htmlUrl = "./data/pacman.html";
-    var divContainer ="pacman_container";
-        // var scriptId = "./pages/" + page + "/" + page + ".js";
-        fetch(htmlUrl)
-        .then(response => {
-            return response.text()
-        })
-        .then(data => {
-         ensureAllPagesLoaded(() => {
-             document.getElementById(divContainer).innerHTML = data;
-             var element = $('#pacman').detach();
-             $('#waitingPacmanContainer').append(element);
-         });
-
-     });
     });
+});
 
 document.wordlist = [];
 [10, 20, 35, 40, 50, 55, 60, 70].forEach(function(frequency) {
@@ -91,4 +81,17 @@ function checkFirstVisit(){
         // TODO: dont always do this
         mainMenu();
     }
+}
+
+function load(htmlUrl,divContainer,elementName,toMove){
+    fetch(htmlUrl)
+    .then(response => {
+        return response.text()
+    })
+    .then(data => {
+        
+     document.getElementById(divContainer).innerHTML = data;
+     var element = $(elementName).detach();
+     $(toMove).append(element);
+ });
 }

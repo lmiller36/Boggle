@@ -5,6 +5,7 @@ document.uniqueTiles = {};
 
 const MessageType = Object.freeze({
     "joinGame": "joinGame",
+    "ackJoin": "ackJoin",
     "booted": "booted",
     "unsubscribe": "unsubscribe",
     "initialBoards": "initialBoards",

@@ -22,7 +22,11 @@ function startChannel() {
     return alphanumeric;
 }
 
-function joinChannel() {
+function joinChannel(channel) {
+    if(channel)
+        document.channel = channel;
+
+    document.hostAckedJoin = false;
     if (!document.hasJoined) {
         console.log("joined:" + document.channel);
         document.joinedPlayers = 0;
@@ -41,6 +45,15 @@ function joinChannel() {
         }
         document.hasJoined = true;
     }
+}
+
+// Tell a player that host has added them into game
+function ackPlayer(playerId){
+        var ackPlayerMsg = {
+        "ackedPlayer": playerId
+    }
+
+    sendMessage(ackPlayerMsg, MessageType.ackJoin);
 }
 
 function removePlayer(playerId) {
@@ -80,11 +93,24 @@ function receiveMessage(message) {
     console.log(message);
     if (message.type == MessageType.joinGame) {
         if (document.isHost) {
+            // check if player has been added previously
+            if(document.otherPlayers.has(message.message.sender))
+                return;
+            
             document.otherPlayers.add(message.message.sender);
             appendPlayerToTable(message.message.sender, message.message.username);
+            ackPlayer(message.message.sender);
         }
 
-    } else if (message.type == MessageType.booted) {
+    } else if (message.type == MessageType.ackJoin) {
+        var ackedPlayer = message.message.ackedPlayer;
+
+        // Entered Game
+        if(!document.isHost && ackedPlayer == document.me){
+            document.hostAckedJoin = true;
+        }
+    }
+    else if (message.type == MessageType.booted) {
         var bootedId = message.message.bootedId;
 
         console.log(message);
@@ -122,6 +148,9 @@ function receiveMessage(message) {
                 tallyScores();
             }
         }
+    }
+    else {
+        console.log("INVALID MESSAGE");
     }
 }
 
