@@ -21,7 +21,6 @@ $(document).ready(function() {
 
     // check if a game is joinable
     $(document.me && document.googleLoggedIn).ready(function() {
-        console.log(document.me);
         var queryString = window.location.hash.substr(1);
         // join game
         if (queryString.startsWith("setupMulti/joinGame/")) {
@@ -59,7 +58,6 @@ $(document).ready(function() {
          ensureAllPagesLoaded(() => {
              document.getElementById(divContainer).innerHTML = data;
              var element = $('#pacman').detach();
-             console.log(element);
              $('#waitingPacmanContainer').append(element);
          });
 

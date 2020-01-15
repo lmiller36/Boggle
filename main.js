@@ -16,7 +16,8 @@ const Pages = Object.freeze({
     "setupSinglePlayer": "setupSinglePlayer",
     "setupMulti": "setupMulti",
     "highScores": "highScores",
-    "contributions": "contributions"
+    "contributions": "contributions",
+    "404": "404"
 });
 document.pages = {};
 document.pages[Pages.mainMenu] = ["mainMenu_container"];
@@ -25,6 +26,8 @@ document.pages[Pages.setupMulti] = ["setupMulti_container"];
 document.pages[Pages.game] = ["game_container"];
 document.pages[Pages.highScores] = ["highScores_container"];
 document.pages[Pages.contributions] = ["contributions_container"];
+document.pages["404"] = ["404_container"];
+
 
 var isMobile = {
     Android: function() {

@@ -118,6 +118,9 @@ function transition(){
  function toggleVisiblePage(visiblePage) {
  	var loadPage = () => {
  		Object.keys(Pages).forEach((page) => {
+ 			// if page not found, show 404
+ 			if(!Pages[visiblePage])
+ 				visiblePage = "404";
             // make all elems visible
             if (page == visiblePage) {
             	document.pages[page].forEach((toShow) => {
@@ -131,6 +134,8 @@ function transition(){
             	});
             }
         });
+
+
  	};
 
  	ensureAllPagesLoaded(loadPage);
