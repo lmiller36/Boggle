@@ -47,9 +47,17 @@ $.ajax({
 
 $(document).ready(function() {
  ensureAllPagesLoaded(() => {
-        // loadCustomPage();
+        //load custom pages
         load("./data/pacman.html","pacman_container","#pacman",'#waitingPacmanContainer')
         load("./data/spinner.html","spinner_container","#spinner",'#waitingSpinnerContainer')
+
+        //load cached username
+        var cookieFields = document.cookie.split(" ");
+        cookieFields.forEach((field)=>{
+            if(field.indexOf("username=") != -1){
+                document.username = field.split("=")[1];
+            }
+        })
 
     });
 });
@@ -74,6 +82,7 @@ window.addEventListener('hashchange',() => {
 function checkFirstVisit(){
     if(document.cookie.indexOf('mycookie') == -1){
         document.cookie = 'mycookie=1';
+        // addFieldToCookie("mycookie",1)
     }
     else 
     {
@@ -89,7 +98,7 @@ function load(htmlUrl,divContainer,elementName,toMove){
         return response.text()
     })
     .then(data => {
-        
+
      document.getElementById(divContainer).innerHTML = data;
      var element = $(elementName).detach();
      $(toMove).append(element);

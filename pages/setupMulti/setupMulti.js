@@ -118,6 +118,7 @@ function addOnlineGames() {
 }
 
 function submitUsername() {
+    addFieldToCookie("username",document.username);
     console.log(document.username);
     document.getElementById("username_span").innerText = "Username: " + document.username
     document.getElementById("username_input").style.display = "none"

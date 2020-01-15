@@ -51,6 +51,33 @@ function removeAllChildren(nodeId){
 	} 
 }
 
+function eraseCookieFromAllPaths(name) {
+    // This function will attempt to remove a cookie from all paths.
+    var pathBits = location.pathname.split('/');
+    var pathCurrent = ' path=';
+
+    // do a simple pathless delete first.
+    document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+
+    for (var i = 0; i < pathBits.length; i++) {
+        pathCurrent += ((pathCurrent.substr(-1) != '/') ? '/' : '') + pathBits[i];
+        document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
+    }
+}
+
+function addFieldToCookie(key,value){
+	document.cookie
+	console.log(document.cookie)
+    var dict = {};
+    // if(document.cookie){
+    // 	dict = JSON.parse(document.cookie);
+    // 	dict[key] = value;
+    // }
+    document.cookie = key+"="+value;
+
+    // document.cookie = JSON.stringify(dict);
+}
+
 String.prototype.hashCode = function() {
   var hash = 0, i, chr;
   if (this.length === 0) return hash;
