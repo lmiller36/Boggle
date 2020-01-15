@@ -5,10 +5,10 @@ function startSingleGame(){
 } 
 function changeTimeSingle(change){
    var time = document.setupTime / 60000;
-
+   var minTime = 1;
    time += change;
-   if(time > 5) time = Math.min(10,time);
-   else time = 5;
+   if(time > minTime) time = Math.min(10,time);
+   else time = minTime;
 
    setClock(time,0,"clockdiv_setup");
 

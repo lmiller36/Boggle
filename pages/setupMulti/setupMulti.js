@@ -12,9 +12,9 @@ function joinGame() {
 
 function hostGame() {
 
- grayPic1(false);
+   grayPic1(false);
 
- if (!document.googleLoggedIn) {
+   if (!document.googleLoggedIn) {
     alert("You must be logged in with your Google account to host a game.")
     return;
 }
@@ -190,10 +190,11 @@ function startMultiGame() {
 
 function changeTimeMulti(change) {
     var time = document.setupTime / 60000;
+    var minTime = 1;
 
     time += change;
-    if (time > 5) time = Math.min(10, time);
-    else time = 5;
+    if (time > minTime) time = Math.min(10, time);
+    else time = minTime;
 
     setClock(time, 0, "clockdiv_setup_multi");
 
