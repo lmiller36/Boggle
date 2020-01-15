@@ -142,7 +142,7 @@
                 <i class="fa fa-2x fa-bars border_black give_me_space" aria-hidden="true" onclick="openNav()" id="sidebar_words_mobile_button"></i>
                 <i class="fa fa-2x fa-paper-plane border_black give_me_space" aria-hidden="true" onclick="submitViaButton()" id="submit_word_mobile"></i>
                 <br />
-                <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)"></input>
+                <input id="wordsInput" class="wordsInput" type="text" autocomplete="off" onkeyup="enterLetter(event,this)" onclick="handleInputClick()"></input>
                 <br />
                 <i class="fa fa-2x fa-arrow-left border_black give_me_space" aria-hidden="true" onclick="removeLetter()" id="remove_letter_mobile"></i>
                 <i id="rotate1_mobile" class="fa fa-undo fa-2x icon" onclick="rotateBoard(1)"></i>

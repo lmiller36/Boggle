@@ -6,6 +6,11 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
+function handleInputClick(){
+    if(document.isMobile)
+        document.getElementById("wordsInput").blur();
+}
+
 function togglePause(isPaused) {
     // Pause
     if (isPaused) {
