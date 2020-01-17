@@ -8,9 +8,10 @@ function singlePlayer(){
 	setHashString(Pages.setupSinglePlayer);
 }
 
-function multiplayer(){
+function multiplayer(dontChangeSetupTime){
 	console.log(document.cookie);
-	document.setupTime = 5 * 60000;
+	if(!dontChangeSetupTime)
+		document.setupTime = 5 * 60000;
 	document.endGame = false;
 	setHashString(Pages.setupMulti);
 }
@@ -86,7 +87,7 @@ function highscores(){
 	setHashString(Pages.highScores);
 }
 
-function game(isMulti){
+function  game(isMulti){
 	if(!document.board)
 		document.board = shuffledBoard();
 	setupGame(isMulti);
@@ -105,7 +106,7 @@ function transition(){
 		page = Pages.mainMenu; 
 
 	if(page != Pages.game){
-		removeGameElements();
+		resetGameElements();
 	}
 
 	// toggle page to be showed
@@ -150,19 +151,3 @@ function transition(){
  		window.location.hash = "#/"+page;
  	}
  }
-
- function removeGameElements(){
-    // Stop timer & set to zeros
-    togglePause(false);
-    clearInterval(document.timeinterval);
-    document.remaining = null;
-
-    // Remove words
-    removeWords();
-
-    // Remove Tiles
-    removeBoardTiles();
-
-    clearInterval(document.timeinterval);
-    document.timeinterval = null;
-}

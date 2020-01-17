@@ -52,42 +52,20 @@ function enterLetter(event, obj) {
 }
 
 function playAgain() {
-    document.hasTallied = false;
-    document.endGame = false;
-    document.allWords = [];
-    document.submittedWords = [];
-    document.getElementById("wordInputDiv").style.display = "";
-
-    // Remove words
-    removeWords();
-
-    // New board
-    document.board = shuffledBoard();
-
-    // Remove Tiles
-    removeBoardTiles();
+    resetGameElements();
 
     // play multiplayer again
     if (!document.isSinglePlayerGame) {
-
-        // Hide words
-        document.getElementById("opponentsWords_container").style.display = "none";
-        removeAllChildren("opponentsWords-head-row");
-        removeAllChildren("opponentsWords-rows");
 
         if (!document.isHost) {
             document.channel = document.replayChannel;
             joinChannel();
         }
 
-        multiplayer();
+        multiplayer(true);
     }
     // play single player
     else {
-        // show entry input box and remove play again button
-        document.getElementById("wordInputDiv").style.display = "";
-        document.getElementById("playAgainButton").style.display = "none";
-
         game();
     }
 }
@@ -162,10 +140,6 @@ function enterLetterViaClick(clickedTile) {
     // the correct letter is highlighted
     if (wordOnBoard(word)) {
         // if letter is same as previous, it will be removed
-        console.log(document.lastHighlighted);
-        console.log(arr)
-        console.log(adjustCoordinates([i, j]))
-
         input.value = word;
         if (!document.lastHighlighted) document.lastHighlighted = [];
 

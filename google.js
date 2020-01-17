@@ -75,6 +75,8 @@ function signOut() {
 }
 
 function postFakeWords(words){
+    if(!document.googleLoggedIn) return;
+
     // check if signed in
     if (!gapi.auth2.getAuthInstance().isSignedIn.get()) return;
     
@@ -93,6 +95,7 @@ function postFakeWords(words){
 }
 
 function postHighScore(score, board, words) {
+     if(!document.googleLoggedIn) return;
 
     var username = "anonymous";
 

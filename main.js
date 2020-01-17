@@ -276,7 +276,7 @@ function touchStart(event) {
  * has been held on touch several times to 
  * combat false positives
  **/
-function touchmove(event) {
+ function touchmove(event) {
     var x = event.touches[0].clientX;
     var y = event.touches[0].clientY;
     var val = getBoardTile(x, y);
@@ -402,4 +402,40 @@ function ensureAllPagesLoaded(callback) {
             callback();
         }
     }, 10);
+}
+
+function resetGameElements(){
+    // Stop timer & set to zeros
+    togglePause(false);
+    clearInterval(document.timeinterval);
+    document.remaining = null;
+
+    // reset game variables
+    document.timeinterval = null;
+    document.hasTallied = false;
+    document.endGame = false;
+    document.allWords = [];
+    document.submittedWords = [];
+    document.score = 0;
+
+    //Reset score
+    document.getElementById("score_mobile_span").innerText = document.score;
+
+    // Remove words
+    removeWords();
+
+    // New board
+    document.board = shuffledBoard();
+
+    // Remove Tiles
+    removeBoardTiles();
+
+    // Hide opponent words
+    document.getElementById("opponentsWords_container").style.display = "none";
+    removeAllChildren("opponentsWords-head-row");
+    removeAllChildren("opponentsWords-rows");
+
+    // Show input box & hide play again button
+    document.getElementById("wordInputDiv").style.display = "";
+    document.getElementById("playAgainButton").style.display = "none";
 }
