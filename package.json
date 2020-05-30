@@ -1,0 +1,23 @@
+{
+  "name": "boggle",
+  "version": "1.0.0",
+  "description": "Play [here](https://lmiller36.github.io/Boggle/)",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmiller36/Boggle.git"
+  },
+  "author": "Lorne Miller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lmiller36/Boggle/issues"
+  },
+  "homepage": "https://github.com/lmiller36/Boggle#readme",
+  "devDependencies": {
+    "eslint": "^7.0.0"
+  }
+}

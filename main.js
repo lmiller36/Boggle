@@ -4,33 +4,32 @@ document.currRotation = 0;
 document.uniqueTiles = {};
 
 const MessageType = Object.freeze({
-    "joinGame": "joinGame",
-    "ackJoin": "ackJoin",
-    "booted": "booted",
-    "unsubscribe": "unsubscribe",
-    "initialBoards": "initialBoards",
-    "endGame": "endGame"
+    'joinGame': 'joinGame',
+    'ackJoin': 'ackJoin',
+    'booted': 'booted',
+    'unsubscribe': 'unsubscribe',
+    'initialBoards': 'initialBoards',
+    'endGame': 'endGame'
 });
 const Pages = Object.freeze({
-    "mainMenu": "mainMenu",
-    "game": "game",
-    "setupSinglePlayer": "setupSinglePlayer",
-    "setupMulti": "setupMulti",
-    "highScores": "highScores",
-    "contributions": "contributions",
-    "404": "404"
+    'mainMenu': 'mainMenu',
+    'game': 'game',
+    'setupSinglePlayer': 'setupSinglePlayer',
+    'setupMulti': 'setupMulti',
+    'highScores': 'highScores',
+    'contributions': 'contributions',
+    '404': '404'
 });
 document.pages = {};
-document.pages[Pages.mainMenu] = ["mainMenu_container"];
-document.pages[Pages.setupSinglePlayer] = ["setupSinglePlayer_container"];
-document.pages[Pages.setupMulti] = ["setupMulti_container"];
-document.pages[Pages.game] = ["game_container"];
-document.pages[Pages.highScores] = ["highScores_container"];
-document.pages[Pages.contributions] = ["contributions_container"];
-document.pages["404"] = ["404_container"];
+document.pages[Pages.mainMenu] = ['mainMenu_container'];
+document.pages[Pages.setupSinglePlayer] = ['setupSinglePlayer_container'];
+document.pages[Pages.setupMulti] = ['setupMulti_container'];
+document.pages[Pages.game] = ['game_container'];
+document.pages[Pages.highScores] = ['highScores_container'];
+document.pages[Pages.contributions] = ['contributions_container'];
+document.pages['404'] = ['404_container'];
 
-
-var isMobile = {
+const isMobile = {
     Android: function() {
         return navigator.userAgent.match(/Android/i);
     },
@@ -56,7 +55,7 @@ function endGame() {
     /** Common tasks to single & multi player games **/
 
     // Hide input bar
-    document.getElementById("wordInputDiv").style.display = "none";
+    document.getElementById('wordInputDiv').style.display = 'none';
 
     // Post fake words to server for later review
     postFakeWords(document.fakeWords);
@@ -65,27 +64,27 @@ function endGame() {
     if (!document.isSinglePlayerGame) {
         if (!document.allWords) document.allWords = [];
         document.allWords.push({
-            "sender": document.me,
-            "words": document.words,
-            "username": document.username,
+            'sender': document.me,
+            'words': document.words,
+            'username': document.username,
         });
 
-        var msg = {
-            "words": document.words,
-            "sender": document.me,
-            "username": document.username
+        let msg = {
+            'words': document.words,
+            'sender': document.me,
+            'username': document.username
         };
 
         sendMessage(msg, MessageType.endGame);
 
         if (document.isHost) {
             document.otherPlayers = new Set();
-            removeAllChildren("playersList");
+            removeAllChildren('playersList');
         }
 
         // Show scores if all responses not received in 3 seconds
-        var countDown = 5;
-        var x = setInterval(function() {
+        let countDown = 5;
+        let x = setInterval(function() {
             countDown--;
 
             // If the count down is finished, write some text
@@ -98,51 +97,51 @@ function endGame() {
     }
     // Single player
     else {
-        alert("Your score is " + document.score);
+        alert('Your score is ' + document.score);
         postHighScore(document.score, document.board, document.words);
-        document.getElementById("playAgainButton").style.display = "";
+        document.getElementById('playAgainButton').style.display = '';
     }
 }
 
 function tallyScores() {
-    console.log("tallied");
+    console.log('tallied');
     if (document.hasTallied) return;
 
     document.hasTallied = true;
-    document.getElementById("playAgainButton").style.display = "";
+    document.getElementById('playAgainButton').style.display = '';
 
-    var scoresReceived = document.allWords.length;
+    let scoresReceived = document.allWords.length;
 
-    var sets = [];
-    var unique = [];
-    var scores = [];
-    var maxLength = 0;
-    var myIndex = -1;
+    let sets = [];
+    let unique = [];
+    let scores = [];
+    let maxLength = 0;
+    let myIndex = -1;
 
-    var namesHeader = document.getElementById("opponentsWords-head-row");
-    var count = 0;
+    let namesHeader = document.getElementById('opponentsWords-head-row');
+    let count = 0;
     document.allWords.forEach((obj) => {
         if (obj.sender == document.me) {
             myIndex = count;
         }
-        var th = document.createElement("th");
+        let th = document.createElement('th');
         th.innerText = obj.username;
         namesHeader.appendChild(th);
 
-        var wordList = obj.words;
+        let wordList = obj.words;
         maxLength = Math.max(maxLength, wordList.length);
         scores.push(0);
         sets.push(new Set(wordList));
         count++;
     })
 
-    var opponentsWords = document.getElementById("opponentsWords-rows");
+    let opponentsWords = document.getElementById('opponentsWords-rows');
 
-    var unique = [];
+    unique = [];
 
-    for (var i = 0; i < scoresReceived; i++) {
-        var currUnique = new Set(sets[i]);
-        for (var j = 0; j < scoresReceived; j++) {
+    for (let i = 0; i < scoresReceived; i++) {
+        let currUnique = new Set(sets[i]);
+        for (let j = 0; j < scoresReceived; j++) {
             if (i != j) {
                 currUnique = currUnique.difference(sets[j]);
             }
@@ -150,25 +149,25 @@ function tallyScores() {
         unique.push(currUnique);
     }
 
-    for (var i = 0; i < maxLength; i++) {
-        var row = document.createElement("tr");
-        row.className = "element";
+    for (let i = 0; i < maxLength; i++) {
+        let row = document.createElement('tr');
+        row.className = 'element';
 
-        for (var j = 0; j < scoresReceived; j++) {
+        for (let j = 0; j < scoresReceived; j++) {
 
-            var entry = document.createElement("td");
-            var word = "";
+            let entry = document.createElement('td');
+            let word = '';
             if (i < document.allWords[j].words.length) {
                 word = document.allWords[j].words[i];
                 // is not unique
                 if (!unique[j].has(word)) {
-                    entry.style.textDecoration = "line-through"
+                    entry.style.textDecoration = 'line-through'
                 } else {
                     scores[j] += getScore(word);
                 }
             }
             entry.innerText = word.toUpperCase();
-            entry.className = "font";
+            entry.className = 'font';
             row.appendChild(entry);
         }
 
@@ -176,20 +175,20 @@ function tallyScores() {
     }
 
     // add scores
-    var score_row = document.createElement("tr");
-    score_row.className = "element";
+    let score_row = document.createElement('tr');
+    score_row.className = 'element';
 
     scores.forEach((score) => {
-        var entry = document.createElement("td");
+        let entry = document.createElement('td');
         entry.innerText = score;
-        entry.className = "font"
-        entry.style.textAlign = "center";
+        entry.className = 'font'
+        entry.style.textAlign = 'center';
 
         score_row.appendChild(entry);
     });
 
     opponentsWords.appendChild(score_row);
-    document.getElementById("opponentsWords_container").style.display = "";
+    document.getElementById('opponentsWords_container').style.display = '';
 
 
     if (!document.isHost) {
@@ -198,52 +197,53 @@ function tallyScores() {
         unsubscribe();
     }
 
-    alert("Your score is " + scores[myIndex]);
+    alert('Your score is ' + scores[myIndex]);
 }
 
 function bootMe() {
     unsubscribe();
 
-    document.getElementById("exitMultiplayer").style.display = "none";
-    document.getElementById("join_id").style.display = "";
-    document.getElementById("hasJoined").style.display = "none";
+    document.getElementById('exitMultiplayer').style.display = 'none';
+    document.getElementById('join_id').style.display = '';
+    document.getElementById('hasJoined').style.display = 'none';
 }
 
 function setupMobile() {
-    var mobile = document.isMobile ? "" : "none";
-    var browser = (!document.isMobile) ? "" : "none";
+    const mobile = document.isMobile ? '' : 'none';
+    const browser = (!document.isMobile) ? '' : 'none';
 
-    document.getElementById("leftMenu_ingame").style.display = browser;
-    document.getElementById("google-login").style.display = browser;
-    document.getElementById("browser_controls_container").style.display = browser;
-    document.getElementById("spacer_game").style.display = browser;
+    document.getElementById('leftMenu_ingame').style.display = browser;
+    document.getElementById('google-login').style.display = browser;
+    document.getElementById('browser_controls_container').style.display = browser;
+    document.getElementById('spacer_game').style.display = browser;
 
 
-    document.getElementById("sidebar_words_mobile_button_endgame").style.display = mobile;
-    document.getElementById("sidebar_words_mobile_button").style.display = mobile;
-    document.getElementById("rotate1_mobile").style.display = mobile;
-    document.getElementById("rotate2_mobile").style.display = mobile;
-    document.getElementById("submit_word_mobile").style.display = mobile;
-    document.getElementById("remove_letter_mobile").style.display = mobile;
-    document.getElementById("score_mobile").style.display = mobile;
+    document.getElementById('sidebar_words_mobile_button_endgame').style.display = mobile;
+    document.getElementById('sidebar_words_mobile_button').style.display = mobile;
+    document.getElementById('rotate1_mobile').style.display = mobile;
+    document.getElementById('rotate2_mobile').style.display = mobile;
+    document.getElementById('submit_word_mobile').style.display = mobile;
+    document.getElementById('remove_letter_mobile').style.display = mobile;
+    document.getElementById('score_mobile').style.display = mobile;
 
     if (document.isMobile) {
-        document.getElementById("center").style.marginTop = "5vh"
+        document.getElementById('center').style.marginTop = '5vh'
     }
 }
 
 /** Find row & column, (x,y), in board **/
 function getBoardTile(x, y) {
-    var i, j;
+    let i;
+    let j;
     i = 0;
     while (i < 5) {
         j = 0;
         while (j < 5) {
-            var id = "row_" + i + "_column_" + j + "_" + document.currRotation;
-            var elem = document.getElementById(id);
-            var bound = elem.getBoundingClientRect();
-            var xMatch = x >= bound.left && x <= bound.right;
-            var yMatch = y >= bound.top && y <= bound.bottom;
+            let id = 'row_' + i + '_column_' + j + '_' + document.currRotation;
+            let elem = document.getElementById(id);
+            let bound = elem.getBoundingClientRect();
+            let xMatch = x >= bound.left && x <= bound.right;
+            let yMatch = y >= bound.top && y <= bound.bottom;
             if (xMatch && yMatch)
                 return [id, elem.innerText];
 
@@ -255,13 +255,14 @@ function getBoardTile(x, y) {
 
 function touchStart(event) {
     // get x, y & id of first touched tile
-    var x = event.touches[0].clientX;
-    var y = event.touches[0].clientY;
-    var val = getBoardTile(x, y);
-    var id = val[0];
+    let x = event.touches[0].clientX;
+    let y = event.touches[0].clientY;
+    let val = getBoardTile(x, y);
+    let id = val[0];
 
-    if (document.uniqueTiles[id] && document.uniqueTiles[id] == -1)
+    if (document.uniqueTiles[id] && document.uniqueTiles[id] == -1) {
         return;
+    }
     // add letter
     enterLetterViaClick(document.getElementById(id))
 
@@ -276,11 +277,11 @@ function touchStart(event) {
  * has been held on touch several times to 
  * combat false positives
  **/
- function touchmove(event) {
-    var x = event.touches[0].clientX;
-    var y = event.touches[0].clientY;
-    var val = getBoardTile(x, y);
-    var id = val[0];
+function touchmove(event) {
+    let x = event.touches[0].clientX;
+    let y = event.touches[0].clientY;
+    let val = getBoardTile(x, y);
+    let id = val[0];
 
     if (!document.uniqueTiles[id]) document.uniqueTiles[id] = 1;
     else if (document.uniqueTiles[id] < 0) document.uniqueTiles[id] = -1;
@@ -298,10 +299,10 @@ function touchStart(event) {
 }
 
 function endTouch(event) {
-    var obj = document.getElementById("wordsInput");
+    let obj = document.getElementById('wordsInput');
 
     // only submit if > 1 letter has been dragged
-    if (obj.value != "" && Object.keys(document.uniqueTiles).length > 1) {
+    if (obj.value != '' && Object.keys(document.uniqueTiles).length > 1) {
         submitWord(obj);
     }
 
@@ -315,7 +316,7 @@ function submitWord(obj) {
     let word = obj.value
 
     // Reset to blank
-    obj.value = ""
+    obj.value = ''
 
     // Add word to list, if word
     if (isWord(word.toLowerCase())) {
@@ -325,8 +326,8 @@ function submitWord(obj) {
         document.words.push(word);
         document.uniqueWords.push(word);
 
-        document.getElementById("score").innerText = document.score;
-        document.getElementById("score_mobile_span").innerText = document.score;
+        document.getElementById('score').innerText = document.score;
+        document.getElementById('score_mobile_span').innerText = document.score;
     }
 
     // Ensure no highlighting is saved;
@@ -338,21 +339,21 @@ function submitWord(obj) {
 /** Adds a given player to setup multiplayer screen **/
 function appendPlayerToTable(sender, username) {
 
-    var tableRow = document.createElement("tr");
-    var id = "id_" + sender;
+    let tableRow = document.createElement('tr');
+    let id = 'id_' + sender;
     tableRow.id = id;
 
-    var idCell = document.createElement("td");
+    let idCell = document.createElement('td');
     idCell.innerText = username;
 
-    var xCell = document.createElement("td");
+    let xCell = document.createElement('td');
 
-    var xIcon = document.createElement("i");
-    xIcon.className = "fa fa-times";
+    let xIcon = document.createElement('i');
+    xIcon.className = 'fa fa-times';
 
-    xIcon.id = "x_" + sender;
+    xIcon.id = 'x_' + sender;
 
-    xIcon.addEventListener("click", function(event) {
+    xIcon.addEventListener('click', function(event) {
         bootPlayer(sender);
         removeNode(id);
     });
@@ -362,29 +363,29 @@ function appendPlayerToTable(sender, username) {
     tableRow.appendChild(idCell);
     tableRow.appendChild(xCell);
 
-    document.getElementById("playersList").appendChild(tableRow);
+    document.getElementById('playersList').appendChild(tableRow);
 }
 
 /** Adds a given word to the corresponding wordlist in game **/
 function appendWordToTable(word) {
 
-    var wordScore = getScore(word);
+    let wordScore = getScore(word);
 
-    var tableRow = document.createElement("tr");
-    tableRow.id = "word_" + word;
+    let tableRow = document.createElement('tr');
+    tableRow.id = 'word_' + word;
 
-    var wordCell = document.createElement("td");
+    let wordCell = document.createElement('td');
     wordCell.innerText = word;
-    var scoreCell = document.createElement("td");
+    let scoreCell = document.createElement('td');
     scoreCell.innerText = wordScore;
 
     tableRow.appendChild(wordCell);
     tableRow.appendChild(scoreCell);
 
     if (document.isMobile)
-        document.getElementById("wordList_mobile").appendChild(tableRow);
+        document.getElementById('wordList_mobile').appendChild(tableRow);
     else
-        document.getElementById("wordList").appendChild(tableRow);
+        document.getElementById('wordList').appendChild(tableRow);
 }
 
 function ensureAllPagesLoaded(callback) {
@@ -395,8 +396,8 @@ function ensureAllPagesLoaded(callback) {
         callback();
     }
 
-    var readyStateCheckInterval = setInterval(function() {
-        if (document.readyState === "complete") {
+    let readyStateCheckInterval = setInterval(function() {
+        if (document.readyState === 'complete') {
             clearInterval(readyStateCheckInterval);
             document.hasLoaded = true;
             callback();
@@ -404,7 +405,7 @@ function ensureAllPagesLoaded(callback) {
     }, 10);
 }
 
-function resetGameElements(){
+function resetGameElements() {
     // Stop timer & set to zeros
     togglePause(false);
     clearInterval(document.timeinterval);
@@ -419,7 +420,7 @@ function resetGameElements(){
     document.score = 0;
 
     //Reset score
-    document.getElementById("score_mobile_span").innerText = document.score;
+    document.getElementById('score_mobile_span').innerText = document.score;
 
     // Remove words
     removeWords();
@@ -431,11 +432,11 @@ function resetGameElements(){
     removeBoardTiles();
 
     // Hide opponent words
-    document.getElementById("opponentsWords_container").style.display = "none";
-    removeAllChildren("opponentsWords-head-row");
-    removeAllChildren("opponentsWords-rows");
+    document.getElementById('opponentsWords_container').style.display = 'none';
+    removeAllChildren('opponentsWords-head-row');
+    removeAllChildren('opponentsWords-rows');
 
     // Show input box & hide play again button
-    document.getElementById("wordInputDiv").style.display = "";
-    document.getElementById("playAgainButton").style.display = "none";
+    document.getElementById('wordInputDiv').style.display = '';
+    document.getElementById('playAgainButton').style.display = 'none';
 }
